@@ -79,7 +79,7 @@ function getReportParam() {
     } else if(!_.isEmpty(ReportData.store)) {
 	var store = ReportData.store;
 	var terminals = store.terminals;
-	var numTerminals = _.size(terminals);
+	var numTerminals = _.isUndefined(terminals)?0:_.size(terminals);
 	return  {
 	    numberOfTerminals:numTerminals,
 	    startPage:"storeReport",

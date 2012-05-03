@@ -37,7 +37,7 @@ function validateCompany(newCompany_w_options, previous) {
     function companyNameExists(companyName) {
 	return Companies
 	    .find(function(company) {
-		      return company.get('companyName').toLowerCase() == companyName.toLowerCase();
+		      return company.get('companyName').toLowerCase() == companyName.trim().toLowerCase();
 		  });
     };
 
