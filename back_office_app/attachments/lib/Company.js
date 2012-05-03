@@ -247,7 +247,7 @@ var Company = couchDoc.extend(
      },
      validateTerminal : function (newTerminal,previous,terminals) {
 	 function terminalIDExists(terminals,terminalName){
-	     return _.find(terminals,function(terminal){return terminal.terminal_label == terminalName.trim();});
+	     return _.find(terminals,function(terminal){return terminal.terminal_label == _.str.trim(terminalName);});
 	 };
 	 var results = [];
 	 var terminalID = newTerminal.terminal_label;
