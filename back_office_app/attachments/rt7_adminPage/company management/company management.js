@@ -952,7 +952,7 @@ storesView =
                                                 title : "Edit the store",
                                                 store : updatedSelectedstore
                                             }));
-                    $('#dialog-hook').find('#store-name,#user,#password').attr("disabled", true);
+                    $('#dialog-hook').find('#store-name,#store-num,#user,#password').attr("disabled", true);
                     StoreModifyDialog("edit-thing", _.extend(editStore(companyID, groupID, storeID), {
                                              company : company,
                                              groupID : groupID,
