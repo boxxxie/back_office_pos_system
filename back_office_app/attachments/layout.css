@@ -1,0 +1,404 @@
+/* 
+   Title:	RT7 Social POS
+   Author: 	mmuralla@gmail.com
+
+   
+@import url("reset.css");
+*/
+
+div {
+zoom: 1;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	color: #333;
+	font-family: Verdana;
+	font-size: 12px;
+	background-color: #434950;
+	background-image: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, rgb(39,32,41)),
+      color-stop(0.83, rgb(76,84,94)));
+	background-image: -moz-linear-gradient(
+      center bottom,
+      rgb(39,32,41) 0%,
+      rgb(76,84,94) 83%);
+	background-repeat: repeat;
+	background-position: center top;
+	background-attachment: fixed;
+	font-weight: normal;
+}
+A:link {text-decoration: none}
+A:visited {text-decoration: none}
+A:active {text-decoration: none}
+A:hover {text-decoration: none; color: #444;}
+label
+{
+font-size:12px;
+font-weight: normal;
+}
+.header {
+    width:800px;
+    padding:20px;
+    font-size: 12px;
+    height: 170px;
+    text-align:center;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-bottom: 20px;
+    margin-left: auto;
+}
+.footer {
+    width:100%;
+    text-align:center;
+    padding:0px;
+    height: 130px;
+    background-image: url(images/footer.png);
+    background-repeat: repeat-x;
+    background-position: center 0px;
+    color: #c0ac98;
+}
+.footerin {
+    padding-top:0px;
+    width:800px;
+    text-align:left;
+    color: #c0ac98;
+    margin:0 auto;
+}
+.loginwrapper {
+	width:797px;
+	height:542px;
+	margin:40px auto;
+	font-size: 12px;
+	background-image: url(images/cloud-login.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.loginwrapper2 {
+	width:797px;
+	height:542px;
+	margin:40px auto;
+	font-size: 12px;
+	position:relative;
+	background-image: url(images/cloud2.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+.loginbox {
+    width:340px;
+    margin:0px;
+    padding-top:220px;
+    padding-bottom:0px;
+	position: relative;
+	left:240px;
+    font-size: 12px;
+}
+.loginbox2 {
+    width:340px;
+    margin:0px;
+    padding-top:50px;
+    padding-bottom:0px;
+	position:relative;
+	left:240px;
+    font-size: 12px;
+}
+hr {
+border: 0;
+color: #ccc;
+background-color: #ccc;
+height: 1px;
+width: 100%;
+text-align: left;
+}
+h1 {
+    font-size: 30px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    text-align: left;
+    font-weight: bold;
+    color: #F36D4C;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #ccc;
+    font-family: Arial, Helvetica, sans-serif;
+	text-shadow: #F4F4F4 1px -1px 1px;
+}
+
+
+h2 {
+	font-size: 20px;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	text-align: left;
+	font-weight: bold;
+	color: #444;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #ccc;
+	font-family: Arial, Helvetica, sans-serif;
+	text-transform: capitalize;
+}
+
+input.login {
+    font-size: 14px;
+    margin: 4px auto;
+    padding: 10px;
+    text-align: left;
+    color: #666;
+    border: 1px solid #ccc;
+    width:210px;
+	outline:none;
+    display:block;
+    border-radius:10px;
+	background-color:#f4f4f4;
+	background-image: url(images/table-bg.png);
+}
+
+input.btn {
+    font-size: 14px;
+    margin: 4px auto;
+    padding: 10px;
+	font-weight:bold;
+    text-align: center;
+    color: #fff;
+    border: 1px solid #ccc;
+    width:230px;
+	outline:none;
+    display:block;
+    border-radius:10px;
+	background-color:#fb8360;
+	cursor:pointer;
+}
+
+
+input.btn:hover {
+    font-size: 14px;
+    margin: 4px auto;
+    padding: 10px;
+	font-weight:bold;
+    text-align: center;
+    color: #fff;
+    border: 1px solid #ccc;
+    width:230px;
+	outline:none;
+    display:block;
+    border-radius:10px;
+	background-color:#4dccd2;
+}
+
+
+
+input.menuButtonToggle {
+    width:13px;
+}
+
+input.datepickerInput {
+    width:120px;
+}
+
+input.menuEditInput {
+    width:150px;
+    height:14px;
+}
+
+.installListItem
+{
+    border: solid 1px gray;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    padding: 5px;
+    margin: 5px;
+}
+
+ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+li
+{
+margin: 0 0.15em;
+}
+
+#nav-menu ul
+{
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+#nav-menu li
+{
+float: left;
+margin-right:6px;
+margin-bottom:10px;
+}
+
+#nav-menu li a
+{
+background: #4ac3c8 bottom left repeat-x;
+height: 2em;
+line-height: 2em;
+float: left;
+width: 11em;
+display: block;
+border: 0.1em solid #dcdce9;
+color: #fff;
+text-decoration: none;
+text-align: center;
+padding: 6px;
+border-radius:10px;
+}
+
+#nav-menu li a:hover
+{
+background: #4B545E bottom left repeat-x;
+border: 0.1em solid #dcdce9;
+color: #fff;
+}
+
+/* Hide from IE5-Mac \*/
+#nav-menu li a
+{
+float: none
+}
+/* End hide */
+
+#nav-menu
+{
+width:1000px;
+margin:0px auto;
+text-align:center;
+}
+
+.report-menu
+{
+	height: 120px;
+	line-height: 14px;
+	text-decoration: none;
+	float: left;
+	width: 104px;
+	display: inline-block;
+	border: 1px solid #ccc;
+	color: #666;
+	text-align: center;
+	padding: 20px;
+	border-radius: 20px;
+	margin: 10px;
+	font-size: 12px;
+	background-color: #F4F4F4;
+	background-image: url(images/reports/report-menu-bg.png);
+	background-position: 0px 0px;
+}
+
+.report-menu a
+{
+	line-height: 14px;
+	text-decoration: none;	
+	color: #666;
+	text-align: center;
+	font-size: 12px;
+}
+
+.report-menu:hover
+{
+	color: #333;
+	text-decoration: none;
+	background-color: #DEDEDE;
+	background-image: url(images/reports/report-menu-bg.png);
+	background-position: 0px 160px;
+}
+.report-menu-icon
+{width:100px;height:80px;display:block;margin:0 auto;padding-bottom:10px;}
+
+
+.reportstable
+{
+	width:100%;
+	border-collapse:collapse;
+}
+.reportstable td, #customers th 
+{
+font-size:12px;
+font-weight:normal;
+border:1px solid #4B545E;
+padding-top:10px;
+padding-bottom:10px;
+padding-right:4px;
+padding-left:4px;
+background-color:#f4f4f4;
+background-image: url(images/table-bg.png);
+}
+.reportstable th 
+{
+font-size:12px;
+font-weight:normal;
+padding-top:10px;
+padding-bottom:10px;
+padding-right:4px;
+padding-left:4px;
+background-color:#4B545E;
+border:1px solid #CCC;
+color:#ffffff;
+}
+
+
+
+.menutable
+{
+	width:680px;
+	border-collapse:collapse;
+}
+
+.menutable td, #customers th 
+{
+width:170px;
+height:70px;
+font-size:12px;
+font-weight:normal;
+border:1px solid #4B545E;
+padding-top:10px;
+padding-bottom:10px;
+padding-right:4px;
+padding-left:4px;
+}
+.menutable th 
+{
+font-size:12px;
+font-weight:normal;
+padding-top:10px;
+padding-bottom:10px;
+padding-right:4px;
+padding-left:4px;
+background-color:#4B545E;
+border:1px solid #CCC;
+color:#ffffff;
+}
+
+.menuLableBottomClass { 
+    border-top: 4px solid #666;
+    float:left;
+    width:100%;
+    height:74px;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin:0px;
+}
+
+.menuEditBottomClass { 
+    border-top: 4px solid #666;
+    float:left;
+    width:100%;
+    height:65px;
+    padding-top:10px;
+    padding-bottom:10px;
+    margin:0px;
+}

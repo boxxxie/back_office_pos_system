@@ -1,0 +1,1347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RT7 v2POS BackOffice</title>
+    <link href="../layout.css" rel="stylesheet" type="text/css" />
+    <link href="../css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+    
+    <!-- campain manager -->
+    <link href="../css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">
+    <link href="../css/jquery.multiselect.css" rel="stylesheet" type="text/css">
+    
+    <script language="javascript" type="text/javascript" src="../lib/jquery-1.7.1.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/jquery.timers-1.0.0.js.txt"></script>
+    <script language="javascript" type="text/javascript" src="../lib/sha1.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/json2.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/forms.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/format.20110630-1100.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/date.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/dateFormatter.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/date.format.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/numberFormatter.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="../lib/jquery-ui-1.8.16.custom.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/jquery.jstree.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/jquery.couch.0.11.0.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/couchDBhelpers.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/table2CSV.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="../lib/underscore.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/underscore.string.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/underscore_extended.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/backbone.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/mustache.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/ICanHaz-no-mustache.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="../lib/couch-backbone.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/async.js"></script>
+    
+    <!-- campain manager -->
+    <script language="javascript" type="text/javascript" src="../lib/jquery-ui-timepicker-addon.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/jquery.form.js"></script>
+    <!--<script language="javascript" type="text/javascript" src="../lib/jquery.MetaData.js"></script>-->
+    <script language="javascript" type="text/javascript" src="../lib/jquery.MultiFile.js"></script>
+    <!--<script language="javascript" type="text/javascript" src="../lib/jquery.MultiFile.pack.js"></script>-->
+    <!--<script language="javascript" type="text/javascript" src="../lib/jquery.blockUI.js"></script>-->
+    <script language="javascript" type="text/javascript" src="../lib/jquery.multiselect.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/js2form.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/form2object.js"></script>
+    <!--<script language="javascript" type="text/javascript" src="../lib/multifile.js"></script>-->
+    <script language="javascript" type="text/javascript" src="../lib/vertebrae.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/helpers/views.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="../lib/TerritoryUser.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/company management/heroburger_terminal.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/company management/sample_terminal.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/company management/dialogs.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/inventory management/dialogs.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/Company.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/Rewards.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/RetailerUser.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/Inventory.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/company management/rewards_helpers.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/company management/installTerminal.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/Menu.js"></script>
+    <script language="javascript" type="text/javascript" src="../site.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/login/rt7_admin_loginRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/mainMenuRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/company management/company management.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/inventory management/inventory management.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/importVouchers/vouchers_helper.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/importVouchers/ImportVouchersCSVRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/campaign_manager/dialogs.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/campaign_manager/createCampaignRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/docRdy.js"></script>
+    
+    <style>
+      label, input { display:block; }
+      input.text { margin-bottom:12px; width:95%; padding: .4em; }
+      fieldset { padding:0; border:0; margin-top:25px; }
+      i {color: gray;}
+      div#users-contain { width: 350px; margin: 20px 0; }
+      div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+      div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+      .ui-dialog .ui-state-error { padding: .3em; }
+      .validateTips { border: 1px solid transparent; padding: 0.3em; }
+    </style>
+    
+    
+    <!--------------------------------------------------------GENERAL--------------------------------------------------->
+    
+    <script id="mainheader" class="partial" type="text/html">
+      <div style="width:1000px;margin:20px auto;padding:0px;background-color:transparent;font-size:13px;font-weight:bold;text-align:center;" id="logo">
+	<img src="../images/logo.png"/>
+      </div>
+    </script>
+    
+    <script id="commonClasses_P" class="partial" type="text/html">
+      text ui-widget-content ui-corner-all
+    </script>
+    
+    <script id="userpass_P" class="partial" type="text/html">
+      <label for="user">Master User ID</label>
+      <input type="text" id="user" value="{{user}}" class="text ui-widget-content ui-corner-all" />
+      <label for="password">Master Password</label>
+      <input type="text"  id="password" value="{{password}}" class="text ui-widget-content ui-corner-all" />
+    </script>
+    
+    <script id="addressOnlyFields_P" class="partial" type="text/html">
+      <h2>Address</h2>
+      <label for="address.street0">Address 1</label>
+      <input type="text" id="address.street0" value="{{street0}}" class="text ui-widget-content ui-corner-all" />
+      <label for="address.street1">Address 2</label>
+      <input type="text" id="address.street1" value="{{street1}}" class="text ui-widget-content ui-corner-all" />
+      <label for="address.city">City</label>
+      <input type="text" id="address.city" value="{{city}}" class="text ui-widget-content ui-corner-all" />
+      <label for="address.province">State/Province</label>
+      <input type="text" id="address.province" value="{{province}}" class="text ui-widget-content ui-corner-all" />
+      <label for="address.postalcode">Postal Code</label>
+      <input type="text" id="address.postalcode" value="{{postalcode}}" class="text ui-widget-content ui-corner-all" />
+      <label for="address.country">Country</label>
+      <input type="text" id="address.country" value="{{country}}" class="text ui-widget-content ui-corner-all" />    
+    </script>
+    
+    <script id="addressFields_P" class="partial" type="text/html">
+      {{#address}}
+      {{>addressOnlyFields_P}}
+      {{/address}}
+    </script>
+    
+    <script id="contactOnlyFields_P" class="partial" type="text/html">
+      <h2>Contact</h2>
+      <label for="contact.firstname">First Name</label>
+      <input type="text" id="contact.firstname" value="{{firstname}}" class="text ui-widget-content ui-corner-all" />
+      <label for="contact.lastname">Last Name</label>
+      <input type="text" id="contact.lastname" value="{{lastname}}" class="text ui-widget-content ui-corner-all" />
+      <label for="contact.website">Website</label>
+      <input type="text" id="contact.website" value="{{website}}" class="text ui-widget-content ui-corner-all" />
+      <label for="contact.email">E-mail</label>
+      <input type="text" id="contact.email" value="{{email}}" class="text ui-widget-content ui-corner-all" />
+      <label for="contact.phone">Phone</label>
+      <input type="text" id="contact.phone" value="{{phone}}" class="text ui-widget-content ui-corner-all" />
+    </script>
+    
+    <script id="contactFields_P" class="partial" type="text/html">
+      {{#contact}}
+      {{>contactOnlyFields_P}}
+      {{/contact}}
+    </script>
+    
+    <script id="breadcrumb_P" class="partial" type="text/html">
+      <h2>{{#companyName}}
+	<i>Company</i> {{companyName}}
+	{{#groupName}}
+	- <i>Group</i> {{groupName}}
+	{{#storeName}}
+	- <i>Store</i> {{storeName}}({{storeNumber}})
+	{{#terminalName}}
+	- <i>Terminal</i> {{terminalName}}
+	{{/terminalName}}
+	{{/storeName}}
+	{{/groupName}}
+	{{/companyName}}
+      </h2>
+    </script>
+    
+    <script id="commonButtonClasses_P" class="partial"  type="text/html">
+      ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only
+    </script>
+    
+    <script id="backButton_P" class="partial" type="text/html">
+      <button class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" onClick="javascript:history.go(-1);">
+	<span class="ui-button-text">Back</span>
+      </button>
+    </script>
+    
+    <script id="menuButton_P" class="partial" type="text/html">
+      <button class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" 
+	       onClick="javascript:window.location.href ='#mainMenus';">
+	<span class="ui-button-text">Main Menu</span>
+      </button>
+    </script>
+    
+    <script id="createButton_P" class="partial" type="text/html">
+      <button id="create-thing">{{createButtonLabel}}</button>
+    </script>
+    
+    <script id="editButton_P" class="partial" type="text/html">
+      <button id="edit-thing">
+	Edit
+      </button>
+    </script>
+    
+    <script id="changePWButton_P" class="partial" type="text/html">
+      <button id="changepassword-thing">
+    Change Password
+      </button>
+    </script>
+    
+    <script id="quickViewButton_P" class="partial" type="text/html">
+      <button onclick=quickView("{{template}}","{{company_id}}","{{group_id}}","{{store_id}}","{{terminal_id}}") class="ui-state-default ui-corner-all">
+	<span class="ui-button-text">
+          View
+	</span>
+      </button>
+    </script>
+    
+    <script id="deleteButton_P" class="partial" type="text/html">
+      <button onclick=deleteThing("{{company_id}}","{{group_id}}","{{store_id}}") class="ui-state-default ui-corner-all">
+	<span class="ui-button-text">
+          Delete
+	</span>
+      </button>
+    </script>
+    
+    <script id="quickViewHook_P" class="partial" type="text/html">
+      <div id="dialog-quickView" title="QuickView"></div>
+    </script>
+    
+    <script id="createDialogHook_P" class="partial" type="text/html">
+      <div id="create-dialog"></div>
+    </script>
+    
+    <script id="managementTableHook_P" class="partial" type="text/html">
+      <div id="list-things"></div>
+    </script>
+    
+    <script id="backToInvMngButton_P" class="partial" type="text/html">
+      <button class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" onClick="javascript:window.location.href ='#inventorymanagement';">
+	<span class="ui-button-text">Back</span>
+      </button>
+    </script>
+
+    <script id="quickEditViewButton_P" class="partial" type="text/html">
+      <center><button id='edit-{{_id}}'>Edit</button></center>
+    </script>
+    
+    <script id="quickDeleteViewButton_P" class="partial" type="text/html">
+      <center><button class='del' id='del-{{_id}}'>Delete</button></center>
+    </script>
+    
+    <script id="quickSaveViewButton_P" class="partial" type="text/html">
+      <center><button id='save-{{_id}}'>Save</button></center>
+    </script>
+    
+    <script id="quickReplaceViewButton_P" class="partial" type="text/html">
+      <center><button id='replace-{{_id}}'>Replace</button></center>
+    </script>
+    
+    <script id="importButton_P" class="partial" type="text/html">
+      <button id="importButton">Import</button>
+    </script>
+    
+    <!--------------------------------------------------------DIALOG--------------------------------------------------->
+    
+    <script id="tips_TMP" type="text/html">
+      <ol>
+	{{#tips}}
+	<li>{{.}}</li>
+	{{/tips}}
+      </ol>
+    </script>
+    
+    <!------------------------------------------------------------------------------------------------------>
+    
+    <!------------------------------------------- LOGIN --------------------------------------------------->
+    <script id="adminLogin_TMP" type="text/html">
+      <div class="loginwrapper">
+	<div class="loginbox2">
+          <div class="iefix">
+	    <form name="formLogin" style="margin-top: 180px;">
+	      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		  <td align="right">User ID:</td>
+		  <td><input type="text" autofocus="autofocus" id="userID" class="login"/></td>
+		</tr>
+		<tr>
+		  <td align="right">Password:</td>
+		  <td><input type="password" id="password" class="login"/></td>
+		</tr>
+		<tr>
+		  <td></td>
+		  <td><input type="button" id="btnLogin" value="Login" class="btn"/></td>
+		</tr>
+	      </table>
+	    </form>
+	  </div>
+	</div>
+      </div>
+    </script>
+    
+    <!----------------------------------------------------------------------------------------------------->
+    
+    
+    <!------------------------------------------ MAIN MENU ----------------------------------------------->
+    <script id="mainMenu_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+        <h1>RT7 Backoffice Main Menu</h1>
+	<div class="report-menu"><a href="#companymanagement"><img src="../images/admin/company.png" class="report-menu-icon" border="0"/>Company Management</a></div>
+	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/company.png" class="report-menu-icon" border="0"/>T.R. Users Management</a></div>-->
+	<div class="report-menu"><a href="#inventorymanagement"><img src="../images/admin/inventory.png" class="report-menu-icon" border="0"/>Inventory Management</a></div>
+	<div class="report-menu"><a href="#importvouchers"><img src="../images/admin/importvoucher.png" class="report-menu-icon" border="0"/>Import Vouchers CSV</a></div>
+	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/user.png" class="report-menu-icon" border="0"/>Backoffice Admin User Info</a></div>-->
+	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/reports.png" class="report-menu-icon" border="0"/>Reports</a></div>-->
+	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/terminal.png" class="report-menu-icon" border="0"/>Install/Deactivate a Terminal</a></div>-->
+	<div class="report-menu"><a href="#createcampaigns"><img src="../images/admin/createcampaign.png" class="report-menu-icon" border="0"/>Create Campaign</a></div>
+	<div class="report-menu"><a style="cursor: pointer;" onClick="logout()"><img src="../images/admin/logout.png" class="report-menu-icon" border="0"/>Logout</a></div>
+	<div style="clear:both"></div>
+      </div>
+    </script>
+    <!---------------------------------------------------------------------------------------------------->
+    
+    <!------------------------------------------------ COMPANY MANAGEMENT --------------------------------->
+    <!--------------------------------------------------------COMPANY--------------------------------------------------->
+    
+    <script id="companiesTabel_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+          <tr>
+            <th>Name</th>
+            <th>Operational Name</th>
+            <th># of Groups</th>
+            <th># of Stores</th>
+            <th># of Terminals</th>
+            <th>Creation Date</th>
+            <th>Detail</th>
+            <th>Delete</th>
+          </tr>
+	</thead>
+	<tbody>
+          {{#list}}
+          <tr>
+            <td><a href="#companymanagement/company/{{company_id}}">{{companyName}}</a></td>
+            <td>{{operationalname}}</td>
+            <td>{{group_num}}</td>
+            <td>{{store_num}}</td>
+            <td>{{terminal_num}}</td>
+            <td>{{creationdate}}</td>
+            <td>{{>quickViewButton_P}}</td>
+            <td>{{>deleteButton_P}}</td>
+          </tr>
+          {{/list}}
+	</tbody>
+      </table>
+      {{>quickViewHook_P}}
+    </script>
+    
+    <script id="company_management_page_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<h1>Company Management</h1>
+	{{>createButton_P}}
+	{{>menuButton_P}}
+	<hr/>
+	{{>managementTableHook_P}}
+	{{>createDialogHook_P}}
+      </div>
+    </script>    
+    
+    <script id="companyForm_P" class="partial" type="text/html">
+      {{#company}}
+      <form id="form">
+	<h2>Company Info</h2>
+	<label for="company-name">Company name</label>
+	<input type="text" id="company-name" value="{{companyName}}" class="text ui-widget-content ui-corner-all" />
+	<label for="operationalname">Operational Name</label>
+	<input type="text" id="operationalname" value="{{operationalname}}" class="text ui-widget-content ui-corner-all" />
+	{{>userpass_P}}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+	      <td valign="top">{{>addressFields_P}}</td>
+	      <td valign="top">{{>contactFields_P}}</td>
+            </tr>
+          </tbody>
+	</table>
+      </form>
+      {{/company}}
+    </script>
+
+    <script id="companyForm_TMP" type="text/html">
+      {{>companyForm_P}}
+    </script>
+    
+    <script id="companyInputDialog_TMP" type="text/html">
+      <div id="dialog-form" title="{{title}}">
+	<p class="validateTips"></p>
+	{{>companyForm_P}}
+      </div>  
+    </script>
+    
+    <script id="modify_company_page_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<table class="reportstable">
+	  <h1>Modify Company</h1>
+	  {{>breadcrumb_P}}
+	  <button class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all"
+		  onClick="javascript:window.location.href ='#companymanagement/company/{{company_id}}/groups';">
+            <span class="ui-button-text">Group Manager</span>
+	  </button>
+	  {{>editButton_P}}
+	  {{>changePWButton_P}}
+	  <button id="btnModifyRewards" class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all">
+            <span class="ui-button-text">Modify Rewards</span>
+	  </button>
+	  {{>backButton_P}}
+	  {{>menuButton_P}}
+	</table>
+	{{>companyForm_P}}
+	<div id="dialog-hook"></div>
+	<div id="dialog-hook-forRewards"></div>
+      </div>
+    </script>   
+    
+    <!----------------------------- company : modify reward -------------------------------------->
+    
+    <script id="modifyRewardDropdownbox_P" class="partial" type="text/html">
+      <ul>
+	<li>Reward Program :  
+          <select id="rewardsdown" class="{{>commonClasses_P}}">
+            <option value = "none" selected>     </option>
+            <option value = "mobqredits">MobQredits</option>
+            <option value = "qriket">Qriket</option>
+          </select>
+	</li>
+      </ul>
+    </script>
+    
+    <script id="companyModifyRewardsDialog_TMP" type="text/html">
+      <div id="dialog-form-forRewards">
+	<form id="form_forRewards">
+          {{>modifyRewardDropdownbox_P}}
+          <hr />
+          {{#MobQredits}}
+          <input type="hidden" style="border: 0" class="menuButtonToggle" var="use_mobqredits" id="use_mobqredits" {{#use_mobqredits}}checked=true{{/use_mobqredits}} />
+          <label for="mobqredits_conversion">MobQredits Conversion: </label>          
+          <input type="text" maxlength="10" size="10" var="mobqredits_conversion" id="mobqredits_conversion" value="{{mobqredits_conversion}}"/>  
+          
+          <input type="hidden" style="border: 0" class="menuButtonToggle" var="use_qriket" id="use_qriket" {{#use_qriket}}checked=true{{/use_qriket}} />
+          <label for="qriket_conversion">Qriket Conversion: </label>          
+          <input type="text" maxlength="10" size="10" var="qriket_conversion" id="qriket_conversion" value="{{qriket_conversion}}"/>
+          
+          <label for="qriket_percentage">Qriket Percentage(%): </label>          
+          <input type="text" maxlength="10" size="10" var="qriket_percentage" id="qriket_percentage" value="{{qriket_percentage}}"/>
+          {{/MobQredits}}
+	</form>
+      </div>
+    </script>
+    
+    <!--------------------------------------------------------GROUP--------------------------------------------------->
+    
+    <script id="groupsTabel_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+          <tr>
+            <th>Name</th>
+            <th># of Stores</th>
+            <th># of Terminals</th>
+            <th>Creation Date</th>
+            <th>Details</th>
+            <th>Delete</th>
+          </tr>
+	</thead>
+	<tbody>
+          {{#list}}
+          <tr>
+            <td><a href="#companymanagement/company/{{company_id}}/groups/{{group_id}}">{{groupName}}</a></td>
+            <td>{{store_num}}</td>
+            <td>{{terminal_num}}</td>
+            <td>{{creationdate}}</td>
+            <td>{{>quickViewButton_P}}</td>
+            <td>{{>deleteButton_P}}</td>
+          </tr>
+          {{/list}}
+	</tbody>
+      </table>
+      {{>quickViewHook_P}}
+    </script>
+    
+    <script id="group_management_page_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<h1>Group Management</h1>
+	{{>breadcrumb_P}}
+	{{>createButton_P}}
+	{{>backButton_P}}
+	{{>menuButton_P}}
+	<hr/>
+	{{>managementTableHook_P}}
+	{{>createDialogHook_P}}
+      </div>
+    </script>
+    
+    <script id="groupForm_P" class="partial" type="text/html">
+      {{#group}}
+      <form id="form">
+	<label for="group-name">Group Name</label>
+	<input type="text" id="group-name" value="{{groupName}}" class="text ui-widget-content ui-corner-all" />
+	{{>userpass_P}}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td valign="top">{{>addressFields_P}}</td>
+            <td valign="top">{{>contactFields_P}}</td>
+          </tr>
+	</table>
+      </form>
+      {{/group}}
+    </script>
+
+    <script id="groupForm_TMP" type="text/html">
+      {{>groupForm_P}}
+    </script>
+
+    <script id="groupInputDialog_TMP" type="text/html">
+      <div id="dialog-form" title="{{title}}">
+	<p class="validateTips"></p>
+	{{>groupForm_P}}
+      </div>
+    </script>
+    
+    <script id="modify_group_page_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<table class="reportstable">
+	  <h1>Modify Group</h1>
+	  {{>breadcrumb_P}}
+	  <button class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all"
+		  onClick="javascript:window.location.href ='#companymanagement/company/{{company_id}}/groups/{{group_id}}/stores';">
+            <span class="ui-button-text">Store Manager</span>
+	  </button>
+	  {{>editButton_P}}
+	  {{>changePWButton_P}}
+	  {{>backButton_P}}
+	  {{>menuButton_P}}
+	</table>
+	{{>groupForm_P}}
+	<div id="dialog-hook"></div>
+      </div>
+    </script>   
+    
+    <!--------------------------------------------------------STORES--------------------------------------------------->
+    
+    <script id="storeForm_P" class="partial" type="text/html">
+      {{#store}}
+      <form id="form">
+	<label for="store-name">Store Name</label>
+	<input type="text" id="store-name" value="{{storeName}}" class="text ui-widget-content ui-corner-all" />
+	<label for="store-num">Store Number</label>
+	<input type="text" id="store-num" value="{{number}}" class="text ui-widget-content ui-corner-all" />
+	{{>userpass_P}}
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+	      <td valign="top">{{>addressFields_P}}</td>
+	      <td valign="top">{{>contactFields_P}}</td>
+            </tr>
+          </tbody>
+	</table>
+      </form>
+      {{/store}}
+    </script>
+
+    <script id="storeForm_TMP" type="text/html">
+      {{>storeForm_P}}
+    </script>
+    
+    <script id="storesTabel_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+          <tr>
+            <th>Name</th>
+            <th>Number</th>
+            <th># of Terminals</th>
+            <th>Creation Date</th>
+            <th>Details</th>
+            <th>Delete</th>
+          </tr>
+	</thead>
+	<tbody>
+          {{#list}}
+          <tr>
+            <td><a href="#companymanagement/company/{{company_id}}/groups/{{group_id}}/stores/{{store_id}}">{{storeName}}</a></td>
+            <td>{{number}}</td>
+            <td>{{terminal_num}}</td>
+            <td>{{creationdate}}</td>
+            <td>{{>quickViewButton_P}}</td>
+            <td>{{>deleteButton_P}}</td>
+          </tr>
+          {{/list}}
+	</tbody>
+      </table>
+      {{>quickViewHook_P}}
+    </script>
+    
+    <script id="storeInputDialog_TMP" type="text/html">
+      <div id="dialog-form" title="{{title}}">
+	<p class="validateTips"></p>
+	{{>storeForm_P}}
+      </div>
+    </script>  
+    
+    <script id="store_management_page_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<h1>Stores Management</h1>
+	{{>breadcrumb_P}}
+	{{>createButton_P}}
+	{{>backButton_P}}
+	{{>menuButton_P}}
+	<hr/>
+	{{>managementTableHook_P}}
+	
+	{{>createDialogHook_P}}
+      </div>
+    </script>
+    
+    <script id="modify_store_page_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<table class="reportstable">
+	  <h1>Modify Store</h1>
+	  {{>breadcrumb_P}}
+	  <button class="ui-button ui-button-text-only ui-widget ui-state-default ui-corner-all"
+		  onClick="javascript:window.location.href ='#companymanagement/company/{{company_id}}/groups/{{group_id}}/stores/{{store_id}}/terminals';">
+            <span class="ui-button-text">Terminal Manager</span>
+	  </button>
+	  {{>editButton_P}}
+	  {{>changePWButton_P}}
+	  {{>backButton_P}}
+	  {{>menuButton_P}}
+	</table>
+	{{>storeForm_P}}
+	<div id="dialog-hook"></div>
+      </div>
+    </script>   
+    
+    <!--------------------------------------------------------TERMINALS--------------------------------------------------->
+    
+    <script id="terminalForm_P" class="partial" type="text/html">
+      {{#terminal}}   
+      <form id="form">
+	<label for="terminal-id">Terminal ID</label>
+	<input type="text" id="terminal-id" value="{{terminal_label}}" class="text ui-widget-content ui-corner-all" />
+	<label for="companyCode">Company Code</label>
+	<input type="text" id="companyCode" value="{{companyCode}}" class="text ui-widget-content ui-corner-all" />
+	<label for="storeCode">Store Code</label>
+	<input type="text" id="storeCode" value="{{storeCode}}" class="text ui-widget-content ui-corner-all" />
+	<label for="countryCode">Country Code</label>
+    <input type="text" id="countryCode" value="{{countryCode}}" class="text ui-widget-content ui-corner-all" />
+	<label for="provinceCode">Province Code</label>
+    <input type="text" id="provinceCode" value="{{provinceCode}}" class="text ui-widget-content ui-corner-all" />
+	<label for="cityCode">City Code</label>
+	<input type="text" id="cityCode" value="{{cityCode}}"  class="text ui-widget-content ui-corner-all" />
+	<label for="areaCode">Area Code</label>
+    <input type="text" id="areaCode" value="{{areaCode}}" class="text ui-widget-content ui-corner-all" />
+	<label for="postalCode">Postal Code</label>
+	<input type="text" id="postalCode" value="{{postalCode}}" class="text ui-widget-content ui-corner-all" />
+      </form>
+      {{/terminal}}
+    </script>
+    
+    <script id="terminalInputForm_P" class="partial" type="text/html">
+      <form id="form">
+    <label for="terminal-id">Terminal ID</label>
+    <input type="text" id="terminal-id" class="text ui-widget-content ui-corner-all" />
+    <label for="companyCode">Company Code</label>
+    <input type="text" id="companyCode" value="{{companyCode}}" class="text ui-widget-content ui-corner-all" />
+    <label for="storeCode">Store Code</label>
+    <input type="text" id="storeCode" value="{{storeCode}}" class="text ui-widget-content ui-corner-all" />
+    <ul id="ulCodesDropDown">
+    <li>Country Code : 
+      <select id="countryCode" class="{{>commonClasses_P}}"></select>
+    </li>
+    <li>Province Code : 
+      <select id="provinceCode" class="{{>commonClasses_P}}"></select>
+    </li>
+    <li>City Code : 
+      <select id="cityCode" class="{{>commonClasses_P}}"></select>
+    </li>
+    <li>Area Code : 
+      <select id="areaCode" class="{{>commonClasses_P}}"></select>
+    </li>
+    <li>Postal Code : 
+      <input type="text" id="postalCode" class="text ui-widget-content ui-corner-all" />
+    </li>
+      </ul>
+      </form>
+    </script>
+    
+    <script id="terminalForm_TMP" type="text/html">
+      {{>terminalForm_P}}
+    </script>
+    
+    <script id="terminalsTabel_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+          <tr>
+            <th>ID</th>
+            <th>Installed</th>
+            <th>Creation Date</th>
+            <th>Details</th>
+          </tr>
+	</thead>
+	<tbody>
+          {{#list}}
+          <tr>
+            <td><a href="#companymanagement/company/{{company_id}}/groups/{{group_id}}/stores/{{store_id}}/terminals/{{terminal_id}}">{{terminal_label}}</a></td>
+            <td>{{installed}}</td>
+            <td>{{creationdate}}</td>
+            <td>{{>quickViewButton_P}}</td>
+          </tr>
+          {{/list}}
+	</tbody>
+      </table>
+      {{>quickViewHook_P}}
+    </script>
+    
+    <script id="terminalInputDialog_TMP" type="text/html">
+      <div id="dialog-form" title="{{title}}">
+	<p class="validateTips"></p>
+	{{>terminalInputForm_P}}
+      </div>
+    </script>
+    
+    <script id="terminal_management_page_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<h1>Terminals Management</h1>
+	{{>breadcrumb_P}}
+	{{>createButton_P}}
+	{{>backButton_P}}
+	{{>menuButton_P}}
+	<hr/>
+	{{>managementTableHook_P}}
+	
+	{{>createDialogHook_P}}
+      </div>
+    </script>
+    
+    <script id="modify_terminal_page_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<table class="reportstable">
+	  <h1>Modify Terminal</h1>
+	  {{>breadcrumb_P}}
+	  <button id="install_terminal" class="{{>commonButtonClasses_P}}"
+		  onClick="javascript:installTerminal('{{company_id}}','{{group_id}}','{{store_id}}','{{terminal_id}}');">
+            <span class="ui-button-text">Set for Installation</span>
+	  </button>
+	  {{>editButton_P}}
+	  {{>backButton_P}}
+	  {{>menuButton_P}}
+	</table>
+	{{>terminalForm_P}}
+	<div id="dialog-hook"></div>
+      </div>
+    </script> 
+    <!------------------------------------------------------------------------------------------------------>
+    
+    <!----------------------------------- INVENTORY MANAGEMENT -------------------------------------------->
+    <script id="inventoryRT7info_P" class="partial" type="text/html">
+      <input type="hidden" var="_id" value="{{_id}}" class="{{>commonClasses_P}}" />
+      {{#date}}
+      <input type="hidden" var="date" value="{{date}}" class="{{>commonClasses_P}}" />
+      {{/date}}
+      <label>UPC code</label>
+      <input type="text" disabled="true" value="{{_id}}" class="{{>commonClasses_P}}" />
+      <label>Description</label>
+      <input type="text" id="des_rt7" var="description" value="{{description}}" class="{{>commonClasses_P}}" />
+      <label>Price</label>
+      <input type="text" id="price_rt7" align="right" var="price.selling_price" value="{{price.selling_price}}" class="{{>commonClasses_P}}" />
+    </script>
+
+    <script id="inventoryForm_P" class="partial" type="text/html">
+      <form>
+	{{>inventoryRT7info_P}}
+      </form>
+    </script>
+    
+    <script id="inventoryReviewinfo_P" class="partial" type="text/html">
+      <input type="hidden" var="_id" value="{{_id}}" class="{{>commonClasses_P}}" />
+      {{#inventory.date}}
+      <input type="hidden" var="inventory.date" value="{{inventory.date}}" class="{{>commonClasses_P}}" />
+      {{/inventory.date}}
+      <label>UPC code</label>
+      <input type="text" var="inventory.upccode" disabled="true" value="{{inventory.upccode}}" class="{{>commonClasses_P}}" />
+      <label>Description</label>
+      <input type="text" id="des_review" var="inventory.description" value="{{inventory.description}}" class="{{>commonClasses_P}}" />
+      <label>Price</label>
+      <input type="text" id="price_review" align="right" var="inventory.price.selling_price" value="{{inventory.price.selling_price}}" class="{{>commonClasses_P}}" />
+    </script>
+    
+    <script id="inventoryReviewForm_P" class="partial" type="text/html">
+      <form>
+        {{>inventoryReviewinfo_P}}
+      </form>
+    </script>
+    
+    <script id="inventoryForm_user_P" class="partial" type="text/html">
+      <form>
+	<input type="hidden" var="_id" value="{{_id}}" class="{{>commonClasses_P}}" />
+	{{#location}}
+	<dl>
+	  <dt>Location</dt>
+	  <dd>
+            <label>Company</label>
+            <input type="text" var="location.company" value="{{company}}" class="{{>commonClasses_P}}" />
+            <label>Group</label>
+            <input type="text" var="location.group" value="{{group}}" class="{{>commonClasses_P}}" />
+            <label>Store</label>
+            <input type="text" var="location.store" value="{{store}}" class="{{>commonClasses_P}}" />
+	  </dd>
+	</dl>
+	{{/location}}
+	{{#apply_taxes}}
+	<dl>
+	  <dt>Apply Taxes</dt>
+	  <dd>
+            <label>Tax 1</label>
+            <input type="checkbox" var="apply_taxes.tax1" {{#tax1}}checked=true{{/tax1}} class="{{>commonClasses_P}}" />
+            <label>Tax 2</label>
+            <input type="checkbox" var="apply_taxes.tax2" {{#tax2}}checked=true{{/tax2}} class="{{>commonClasses_P}}" />
+            <label>Tax 3</label>
+            <input type="checkbox" var="apply_taxes.tax3" {{#tax3}}checked=true{{/tax3}} class="{{>commonClasses_P}}" />
+            <label>Exemption</label>
+            <input type="checkbox" var="apply_taxes.exemption" {{#exemption}}checked=true{{/exemption}} class="{{>commonClasses_P}}" />
+	  </dd>
+	</dl>
+	{{/apply_taxes}}
+	{{#price}}
+	<dl>
+	  <dt>Price</dt>
+	  <dd>
+            <label>Selling Price</label>
+            <input type="text" var="price.selling_price" value="{{selling_price}}" class="{{>commonClasses_P}}" />
+            <label>Standard price</label>
+            <input type="text" var="price.standard_price" value="{{standard_price}}" class="{{>commonClasses_P}}" />
+	  </dd>
+	</dl>
+	{{/price}}
+      </form>
+    </script>
+
+    <script id="inventoryForm_TMP" type="text/html">
+      {{>inventoryForm_P}}
+    </script>
+
+    <script id="upcInput_P" class="partial" type="text/html">
+      <label>UPC-code: (enter a upc code)</label>
+      <input id="upc" type="text" value="{{_id}}" />
+    </script>
+
+    <script id="addInventoryPage_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<div id="header">
+	  <h1>Add/View Inventory Items</h1>
+	  {{>backToInvMngButton_P}}
+	  {{>menuButton_P}}
+	  <hr/>
+	  {{>upcInput_P}}
+	</div>
+	<div id="mainintmp"></div>
+	<div id="footer">
+	  <div id="dialog-hook"></div>
+	</div>
+      </div>
+    </script>
+
+    <script id="reviewInventoryPage_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<div id="header">
+	  <h1>Exemption Inventory Items</h1>
+	  {{>backToInvMngButton_P}}
+	  {{>menuButton_P}}
+	  <hr/>
+	  {{>upcInput_P}}
+	</div>
+	<div id="mainintmp"></div>
+	<div id="footer">
+	  <div id="dialog-hook"></div>
+	</div>
+      </div>
+    </script>
+    
+    <script id="reviewInventoryTable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+            <th>Company</th>
+            <th>Store(#:Name)</th>
+            <th>Date</th>
+            <th>UPC code</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {{#list}}
+	  <tr>
+            <td>{{companyName}}</td>
+            
+            
+            {{#storeName}}
+            <td>{{storeName}}</td>
+            {{/storeName}}
+            {{^storeName}}
+            <td>NONE</td>
+            {{/storeName}} 
+            
+            <td>{{inventory.date}}</td>
+            <td>{{inventory.upccode}}</td>
+            <td>{{inventory.description}}</td>
+            <td align="right">{{inventory.price.selling_price}}</td>
+            <td>{{>quickEditViewButton_P}}</td>
+            <td>{{>quickDeleteViewButton_P}}</td>
+	  </tr>
+	  {{/list}}
+	  {{^list}}
+	  <tr>
+            <td align='center' colspan='8'>
+	      There is no inventory
+            </td>
+	  </tr>
+	  {{/list}}
+	</tbody>
+      </table>
+    </script>
+
+    <script id="inventoryManagementHome_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<div id="mainintmp">
+	  <h1>Inventory Management</h1>
+	  {{>menuButton_P}}
+	  <hr/>
+	  <div id="subbody" style="width:1000px;margin-bottom:10px auto;padding:0px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	    <div class="report-menu"><a href="#inventorymanagement/review/" id="review"><img src="../images/inventory-review.png" class="report-menu-icon" border="0"/>Exemption Inventory Items</a></div>
+	    <div class="report-menu"><a href="#inventorymanagement/add_view/"><img src="../images/inventory-addview.png" class="report-menu-icon" border="0"/>Add/View Inventory Items</a></div>
+	    <div style="clear:both"></div>
+	  </div>
+	</div>
+	<div id="footer">
+	  <div id="dialog-hook"></div>
+	</div>
+      </div>
+    </script>
+
+    <script id="inventoryViewPage_TMP" type="text/html">
+      <h3>code: {{upc}}</h3>
+      {{>inventoryForm_P}}
+      {{>editButton_P}}
+    </script>
+
+    <script id="inventoryAddPage_TMP" type="text/html">
+      <h2>The UPC code you entered was not found in the database</h2>
+      <h3>code: {{upc}}</h3>
+      {{>createButton_P}}
+    </script>
+
+    <script id="inventoryInputDialog_TMP" type="text/html">
+      <div id="dialog-form" title="{{title}}">
+	<p class="validateTips"></p>
+	{{>inventoryForm_P}}
+      </div>    
+    </script>
+    
+    
+    <script id="inventoryReviewModifyDialog_TMP" type="text/html">
+      <div id="dialog-form" title="{{title}}">
+	<p class="validateTips"></p>
+	{{#inventory_review}}
+	<div id="inv_review_form">
+	  <form>
+	    Exemption Inventory :
+	    {{>inventoryReviewinfo_P}}
+	  </form>
+	  {{>quickSaveViewButton_P}}
+	  {{/inventory_review}}
+	</div>
+	<hr/>
+	{{#inventory_rt7}}
+	<div id="inv_rt7_form">
+	  <form>
+	    RT7 Inventory :
+	    {{>inventoryRT7info_P}}
+	  </form>
+	  {{>quickReplaceViewButton_P}}
+	  {{>quickSaveViewButton_P}}
+	</div>
+	{{/inventory_rt7}}
+      </div>    
+    </script>
+    
+    <script id="inventoryReviewImportDialog_TMP" type="text/html">
+      <div id="dialog-form" title="{{title}}">
+	<p class="validateTips"></p>
+	<div id="inv_review_form">
+	  <form>
+	    Exemption Inventory :
+	    {{>inventoryReviewinfo_P}}
+	  </form>
+	</div>
+      </div>    
+    </script>
+    <!----------------------------------------------------------------------------------------------------->
+    
+    <!----------------------------------- IMPORT VOUCHERS CSV --------------------------------------------->
+    <script id="companyDropdownbox_P" class="partial" type="text/html">
+      <ul id="ulCompanyDropDown">
+    <li style="display: inline;">COMPANY : 
+      <select id="companiesdown" class="{{>commonClasses_P}}">
+      </select>
+    </li>
+      </ul>
+    </script>
+    
+    <script id="importVouchers_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+    <div id="mainintmp">
+      <h1>Import Vouchers CSV</h1>
+      {{>menuButton_P}}
+      <hr />
+      {{>companyDropdownbox_P}}
+      <hr/>
+      <form id="formFileChooser">
+      <input type="file" id="selectedFile" />
+      </form>
+      <textarea style="resize:none" id="csvtextarea" rows="20" cols="90"></textarea>
+      <hr />
+      {{>importButton_P}}
+    </div>
+      </div>
+    </script>
+    
+    <!----------------------------------------------------------------------------------------------------->
+    
+    <!---------------------------------- CAMPAIGN MANAGER ------------------------------------------------->
+    <script id="daySelectionDialog_TMP" type="text/html">
+        <form>
+        <label>DAY</label>
+        <br/>
+        <label style="display: inline;">ALL <input var="all_days" style="display: inline;" type="checkbox" class="checkAlldays" value="ALL" /></label>
+        <table width="100%">
+            <tr>
+                <td align="center">MON</td>
+                <td align="center">TUE</td>
+                <td align="center">WED</td>
+                <td align="center">THU</td>
+                <td align="center">FRI</td>
+                <td align="center">SAT</td>
+                <td align="center">SUN</td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <input var="days.MON" class="checkDay" type="checkbox" value="MON" var_type="checkbox" />    
+                </td>
+                <td align="center">
+                    <input var="days.TUE" class="checkDay" type="checkbox" value="TUE" var_type="checkbox" />    
+                </td>
+                <td align="center">
+                    <input var="days.WED" class="checkDay" type="checkbox" value="WED" var_type="checkbox" />    
+                </td>
+                <td align="center">
+                    <input var="days.THU" class="checkDay" type="checkbox" value="THU" var_type="checkbox" />    
+                </td>
+                <td align="center">
+                    <input var="days.FRI" class="checkDay" type="checkbox" value="FRI" var_type="checkbox" />    
+                </td>
+                <td align="center">
+                    <input var="days.SAT" class="checkDay" type="checkbox" value="SAT" var_type="checkbox" />    
+                </td>
+                <td align="center">
+                    <input var="days.SUN" class="checkDay" type="checkbox" value="SUN" var_type="checkbox" />    
+                </td>
+            </tr>
+        </table>
+        <br />
+        <label style="display: inline;"> 24 hours <input var="all_times_per_day" style="display: inline;" class="checkAlltimes" type="checkbox" name="all_times"/></label>
+        <br />
+        <label style="display: inline;">start <input style="display: inline;" var="time.start" class="startTime" type="text" size=10 var_type="time" /></label>
+        <label style="display: inline;">end <input style="display: inline;" var="time.end" class="endTime" type="text" size=10 var_type="time" /></label>
+        </form>
+    </script>
+    
+    <script id="daySelectionTable_TMP" type="text/html">
+        <table class="reportstable">
+            <thead>
+                <tr>
+                <th>Day</th>
+                <th>Time</th>
+                <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#list}}
+                <tr>
+                <td>{{day}}</td>
+                <td>{{startTime}} ~ {{endTime}}</td>
+                <td>{{>quickDeleteViewButton_P}}</td> <!--TODO:id="del-{{_id}}"-->
+                </tr>
+                {{/list}}
+                {{^list}}
+                <tr>
+                <td align="center" colspan="3">Empty</td>
+                </tr>
+                {{/list}}
+            </tbody>
+        </table>
+    </script>
+    
+    <script id="imagesTable_TMP" type="text/html">
+        <table class="reportstable">
+            <thead>
+                <tr>
+                <th>File</th>
+                <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#list}}
+                <tr>
+                <td>{{file}}</td>
+                <td>{{>quickDeleteViewButton_P}}</td> <!--TODO:id="del-{{_id}}"-->
+                </tr>
+                {{/list}}
+                {{^list}}
+                <tr>
+                <td align="center" colspan="2">Empty</td>
+                </tr>
+                {{/list}}
+            </tbody>
+        </table>
+    </script>
+    
+    <script id="locations_tree_TMP" type="text/html">
+        <ul>
+        <li location_type='top' name='ALL'>
+        <a>ALL</a>
+            <ul>
+            {{#country}}
+            <li id='{{id}}' location_type='country' name='{{name}}'>
+            <a>{{name}}</a>
+                <ul>
+                {{#province}}
+                <li id='{{id}}' location_type='province' name='{{name}}'>
+                <a>{{name}}</a>
+                    <ul>
+                    {{#city}}
+                    <li id='{{id}}' location_type='city' name='{{name}}'>
+                    <a>{{name}}</a>
+                        <ul>
+                        {{#areaCode}}
+                        <li id='{{id}}' location_type='areaCode' name='{{name}}'>
+                        <a>{{name}}</a>
+                            <ul>
+                            {{#postalCode}}
+                            <li id='{{id}}' location_type='postalCode' name='{{name}}'>
+                            <a>{{name}}</a>
+                            </li>
+                            {{/postalCode}}
+                            </ul>
+                        </li>
+                        {{/areaCode}}
+                        </ul>
+                    </li>
+                    {{/city}}
+                    </ul>
+                </li>
+                {{/province}}
+                </ul>
+            </li>
+            {{/country}}
+            </ul>
+        </li>
+        </ul>
+    </script>
+    
+    <script id="option_TMP" type="text/html">
+      <option value={{value}}>{{label}}</option>
+    </script>
+
+    <script id="options_TMP" type="text/html">
+      {{#list}}<option value={{value}}>{{label}}</option>{{/list}}
+    </script>
+
+    <script id="options_TMP1" type="text/html">
+      {{#list}}
+      <option value={{name}}
+          {{#selected}}
+          selected="true"
+          {{/selected}}
+          >{{name}}</option>
+      {{/list}}
+    </script>
+
+    <script id="optionGroup_TMP" type="text/html">
+      {{#optGroups}}
+      <optgroup label="{{label}}">
+     {{#options}}
+     <option value={{value}}>{{label}}</option>
+     {{/options}}
+       </optgroup>
+      {{/optGroups}}
+    </script>
+
+    <script id="companySelection_TMP" type="text/html">
+    <select id="companies" type="select"  name="companies" multiple="multiple" size=8>
+      {{#companies}}
+      <option value="{{id}}">{{name}}</option>
+      {{/companies}}
+    </select>
+    </script>
+    
+    <script id="upload_dialog_TMP" type="text/html">
+        <form id="upload_image" action="" method="post">
+            <input id="filechooser" type="file" accept="gif/bmp/png" name="_attachments" />
+            <input type="hidden" name="_rev" value="{{_rev}}">
+        </form>    
+    </script>
+    
+    <script id="campaign_form_P" class="partial" type="text/html">
+        <form id="campaignForm">
+        <ul>
+            <li>
+                <label style="display: inline;">Campaign ID : </label>
+                <input style="display: inline;" id="_id" type="text" name="_id" var="_id" />
+            </li>
+            <br />
+            <li>
+                <label style="display: inline;">Description : </label>
+                <input style="display: inline;" id="description" type="text" name="description" var="description" />
+            </li>
+            <br />
+            <li>
+                <label>Air Date </label>
+                <label style="display: inline;">from : <input style="display: inline;" id="dateFrom" type="text" name="time.start" var="time.start" var_type="date" value="" size=10/></label>
+                <label style="display: inline;">to <input style="display: inline;" id="dateTo" type="text" name="time.end" var="time.end" var_type="date" value="" size=10/></label>
+            </li>
+            <br />
+            <li>
+                <label style="display: inline;">Adevertiser</label>
+                <input style="display: inline;" id="advertiser" type="text" name="advertiser" var="advertiser" />
+            </li>
+            <br />
+            <li>
+                <label style="display: inline;">Salesperson</label>
+                <input style="display: inline;" id="salesperson" type="text" name="salesperson" var="salesperson" />
+            </li>
+            <br />
+            <li>
+                <label>Presentation type</label>
+                <label style="display: inline;">Captive <input style="display: inline;" id="radioCaptive" type="radio" name="presentation_type" value="captive" checked="checked" class="presentation_type" /></label>
+                <label style="display: inline;">Passive <input style="display: inline;" id="radioPassive" type="radio" name="presentation_type" value="passive" class="presentation_type" /></label>
+            </li>
+            <br />
+            <li>
+                <label>Broadcast hours</label>
+                <div id="days_and_hours">
+                    AllDays/Hours <input style="display: inline;" type="checkbox" id="chkalldaysandhours" />
+                    <div id="days_and_hours_table"></div>
+                    <br />
+                    <input style="display: inline;" type="button" id="btnAdd" value="add days/hours" />
+                <div>
+            </li>
+            <br />
+            <li>
+                <label>Broadcast Regions</label>
+                <div id="location_and_company">
+                All Terminals <input style="display: inline;" type="checkbox" id="chkallterminals" />
+                <table width="100%">
+                    <tr>
+                        <td width="50%">
+                            <div id="locationstree"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                       <td width="50%">
+                            <div id="companylist"></div>
+                        </td> 
+                    </tr>
+                </table>
+                </div>
+            </li>
+            <br />
+            <li>
+                <input style="display: inline;" id="btnnext" type="button" value="Next" />
+            </li>
+        </ul> 
+    </form>
+    </script>
+    
+    <script id="add_image_form_P" class="partial" type="text/html">
+        <ul>
+            <li>
+               <label>Images</label>
+               <input id="btnaddimage" type="button" value="Add Image" />
+               <div id="images_table"></div>
+            </li>
+            <li>
+                <input style="display: inline;" id="btnprev" type="button" value="Prev" />
+                <input style="display: inline;" id="btncomplete" type="button" value="Complete" />
+            </li>
+        </ul>
+    </script>
+        
+    <script id="createCampaign_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+      <h1>Create Campaign</h1>
+      <input style="display: inline;" id="btncancel" type="button" value="Cancel" />
+      <input style="display: inline;" id="btnmainmenu" type="button" value="Main Menu" />
+      <hr/>
+      <div id="first_page_in_tmp">
+          {{>campaign_form_P}}
+          <div id="dialog-hook"></div>
+      </div>
+      <div id="next_page_in_tmp">
+          {{>add_image_form_P}}
+          <div id="dialog-form"></div>
+      </div>
+      <hr />
+      </div>
+    </script>
+    
+    <!----------------------------------------------------------------------------------------------------->
+    
+  </head>
+  <body>
+    <div id="main"></div>
+    <div id="timespace" style="width:1000px;margin:0 auto; color:#666;text-align:center;">
+      <script>document.write((new Date()).toDateString() + " / " + (new Date()).toLocaleTimeString())</script>
+    </div>
+    <div class="footer">
+      <div class="footerin">
+	&copy; 2012 RT7 Incorporated.
+	<img src="../images/rt7.png" style="float:right;"/>
+      </div>
+    </div>
+  </body>
+</html>

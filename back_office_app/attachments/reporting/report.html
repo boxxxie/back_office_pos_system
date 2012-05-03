@@ -1,0 +1,3389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="../layout.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" media="screen" href="../css/colorpicker.css" type="text/css" />
+
+    <script language="javascript" type="text/javascript" src="../lib/sha1.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/format.20110630-1100.min.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../lib/json2.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../lib/jquery-1.7.1.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../lib/jquery-ui-1.8.16.custom.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/jquery.jstree.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/jquery.couch.0.11.0.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/table2CSV.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/couchDBhelpers.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../lib/colorpicker.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="../lib/underscore.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/underscore.string.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/underscore_extended.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/underscore_search.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/underscore_walk.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/backbone.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/backbone.marionette.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/mustache.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/ICanHaz-no-mustache.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../lib/multimethod.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../site.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/couch-backbone.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/forms.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/date.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/date.format.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/dateFormatter.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/async.js"></script>
+
+    
+    <script language="javascript" type="text/javascript" src="../lib/MenuButton.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/Menu.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/Inventory.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/RetailerUser.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../lib/ExportRequestDoc.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../lib/jquery.timers-1.0.0.js.txt"></script>
+
+    <script language="javascript" type="text/javascript" src="../lib/numberFormatter.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="../reporting/helpers/views.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/helpers/cashouts.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/misc_helpers.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/menu_helpers.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/dialogs.js"></script>
+
+
+    <script language="javascript" type="text/javascript" src="../reporting/helpers/reportdata.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/loginRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reportParamGetters.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/companyReportRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/groupReportRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/storeReportRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/menuRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/report.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../reporting/couchdb/transactionsReport.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/couchdb/generalReportHelpers.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/couchdb/generalReportHelpers_refactored.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/couchdb/inventoryReports.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../reporting/reports/Router.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="../reporting/admins/dialogs.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/admins/adminRouter.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="../reporting/reports/HowAreWeDoingTodayRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/SalesSummaryRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/SalesDetailRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/HourlyActivityRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/TaxCollectedRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/CashOutsRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/TransactionsDetailRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/CancelledTransactionsRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/RefundsRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/DiscountsRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/ElectronicPaymentsRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/InventoryRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/reports/VoucherHistoryRouter.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/helpers.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/IdleInventoryReportRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/InventoryStockManagementRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/menuPriceChangeRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/ScanPriceChangesRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/ScanTaxChangesRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/AddScanItemRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/PriceChangeLogRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/TaxChangeLogRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/dialogs.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../reporting/docRdy.js"></script>
+    
+    <!-- =============================================== GENERAL ================================================= -->
+    <!--[if IE 8]>
+    <style type="text/css">
+    .iefix {padding-top:40px;}/* css for IE 8 */
+    </style>
+    <![endif]-->
+
+    <script id="mainheader" class="partial" type="text/html">
+      <div style="width:1000px;margin:20px auto;padding:0px;background-color:transparent;font-size:13px;font-weight:bold;text-align:center;" id="logo">
+	<img src="../images/logo.png"/>
+      </div>
+      <!--<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">-->
+    </script>
+    
+    <script id="mainfooter" class="partial" type="text/html">
+      <!--</div>-->
+    </script>
+
+    <!--[if IE 8]>
+	<style type="text/css">
+	  .loginbox2{margin-top:40px;}/* css for IE 8 */
+	</style>
+	<![endif]-->
+
+    <script id="breadcrumb_P" class="partial" type="text/html">
+      {{#breadCrumb}}
+      {{#companyName}}
+      <i>Company</i> {{companyName}}
+      {{#groupName}}
+      - <i>Group</i> {{groupName}}
+      {{#storeName}}
+      - <i>Store</i> {{storeName}}({{storeNumber}})
+      {{#terminalName}}
+      - <i>Terminal</i> {{terminalName}}
+      {{/terminalName}}
+      {{/storeName}}
+      {{/groupName}}
+      {{/companyName}}
+      {{/breadCrumb}}
+    </script>
+    
+    <script id="commonClasses_P" class="partial" type="text/html">
+      text ui-widget-content ui-corner-all
+    </script>
+
+    <script id="commonButtonClasses_P" class="partial" type="text/html">
+      ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only
+    </script>
+
+    <script id="loginButton_P" class="partial" type="text/html">
+      <input type="button" value="Login" onClick="login()" class="btn"/>
+    </script>
+
+    <script id="logoutButton_P" class="partial" type="text/html">
+      <button class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" onClick="logout()">
+	<span class="ui-button-text">Logout</span>
+      </button>
+    </script>
+    
+    <script id="homeButton_P" class="partial" type="text/html">
+      <a href='#{{startPage}}/'>Home</a>
+    </script>
+    
+    <script id="adminButton_P" class="partial" type="text/html">
+      <a href='#menuAdministration/'>Administration</a>
+    </script>
+    
+    <script id="inventoryButton_P" class="partial" type="text/html">
+      <a href='#menuInventory/{{startPage}}Inventory'>Inventory</a>
+    </script>
+
+    <script id="reportsButton_P" class="partial" type="text/html">
+      <a href="#menuReports/{{startPage}}">Reports</a>
+    </script>
+    
+    <script id="setMenusButton_P" class="partial" type="text/html">
+      <a href="#menuSetMenus/{{startPage}}">Default Menus</a>
+    </script>
+    
+    <script id="main_navigation_buttons_P" class="partial" type="text/html">
+      <div id="nav-menu">
+	<ul>
+	  <li>{{>homeButton_P}}</li>
+	  <li>{{>adminButton_P}}</li>
+	  <li>{{>inventoryButton_P}}</li>
+	  <li>{{>reportsButton_P}}</li>
+	  <li>{{>setMenusButton_P}}</li>
+	  <li><a style="cursor: pointer;" onClick="logout()">Logout</a></li>
+	</ul>
+      </div>
+    </script>
+    
+    <script id="backButton_P" class="partial" type="text/html">
+      <div style="margin-top:20px;margin-bottom:20px;border-top: 4px dotted #ccc;"></div>
+      <button id="btnBackHistory" class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" onClick="javascript:history.go(-1);">
+	<span class="ui-button-text">&laquo; Go Back</span>
+      </button>
+    </script>
+    
+    <script id="backButton2_P" class="partial" type="text/html">
+      <button id="btnBack2" class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false">
+    <span class="ui-button-text">&laquo; Go Back</span>
+      </button>
+    </script>
+    
+    <script id="printDetailButton_P" class="partial" type="text/html">
+      <button id="printdetail" class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false">
+    <span class="ui-button-text">Print</span>
+      </button>
+    </script>
+    
+    <script id="menuButton_P" class="partial" type="text/html">
+      <button class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" onClick="javascript:window.location.href = '#{{startPage}}/';">
+	<span class="ui-button-text">Home</span>
+      </button>
+    </script>
+    
+    <script id="quickReportViewButton_P" class="partial" type="text/html">
+      {{#quickViewArgs}}
+      <button onclick="quickReportView('{{id}}','{{title}}');" class="ui-state-default ui-corner-all">
+	{{/quickViewArgs}}
+	<span class="ui-button-text">
+	  Details
+	</span>
+      </button>
+    </script>
+
+    <script id="quickReportViewButtonImage_P" class="partial" type="text/html">
+      {{#quickViewArgs}}
+      <a onclick="quickReportView('{{id}}','{{title}}');" style="cursor: pointer;"><img src="../images/details.png"/></a>
+      {{/quickViewArgs}}
+    </script>
+
+    <script id="quickDetailsViewButton_P" class="partial" type="text/html">
+      <center><button id='{{_id}}' class='btndetails'>Details</button></center>
+    </script>
+    
+    <script id="quickEditViewButton_P" class="partial" type="text/html">
+      <center><button id='edit-{{_id}}'>Edit</button></center>
+    </script>
+    
+    <script id="quickEditViewButtonByName_P" class="partial" type="text/html">
+      <center><button id='edit-{{name}}'>Edit</button></center>
+    </script>
+    
+    <script id="quickDeleteViewButton_P" class="partial" type="text/html">
+      <center><button id='del-{{_id}}'>Delete</button></center>
+    </script>
+    
+    <script id="quickDeleteViewButtonByName_P" class="partial" type="text/html">
+      <center><button id='del-{{name}}'>Delete</button></center>
+    </script>
+    
+    <script id="exportButton_P" class="partial" type="text/html">
+       <div style="margin-top:10px;margin-bottom:20px;padding-bottom:20px;border-bottom: 4px dotted #ccc;">
+      <button id='export'>Export</button>
+      </div>
+    </script>
+    
+    <script id="generalGoButton_P" class="partial" type="text/html">
+      <div style="margin-top:20px;margin-bottom:20px;padding-bottom:20px;border-bottom: 4px dotted #ccc;">
+	<button id='generalgobtn' class='generate_report'>Generate Report</button>
+      </div>
+    </script>
+
+    <script id="generate_report_btn_P" class="partial" type="text/html">
+      <button id='generate_report'>Generate Report</button>
+    </script>
+    
+    <script id="quickReportViewHook_P" class="partial" type="text/html">
+      <div id="dialog-quickView" title="{{title}}"></div>
+    </script>
+    
+    <script id="salesFields_P" class="partial" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th width="25%">Yesterday's Sales:</th>
+	    <th width="25%">MTD Sales:</th>
+	    <th width="25%">YTD Sales:</th>
+	    <th width="25%" align="center">More Details</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr>
+	    {{#sales}}
+	    <td align="center"><span style="font-size:26px;">${{yesterdaysales}}</span></td>
+	    <td align="center"><span style="font-size:26px;">${{mtdsales}}</span></td>
+	    <td align="center"><span style="font-size:26px;">${{ytdsales}}</span></td>
+            {{/sales}}
+	    <td width="25%" align="center">{{>quickReportViewButtonImage_P}}</td>
+	  </tr>
+	</tbody>
+      </table>
+      <h2>More Reports:</h2>
+    </script>
+    
+    <script id="numberOfGroupsFields_P" class="partial" type="text/html">
+      <div class="report-menu"><a href="#{{startPage}}/groups"><img src="../images/reports/groups.png" class="report-menu-icon" border="0"/>Number of Groups: {{numberOfGroups}}</a></div>
+    </script>
+
+    <script id="numberOfStoresFields_P" class="partial" type="text/html">
+      <div class="report-menu"><a href="#{{startPage}}/stores"><img src="../images/reports/stores.png" class="report-menu-icon" border="0"/>Number of Stores: {{numberOfStores}}</a></div>
+    </script>
+
+    <script id="numberOfTerminalsFields_P" class="partial" type="text/html">
+      <div class="report-menu"><a href="#{{startPage}}/terminals"><img src="../images/reports/terminals.png" class="report-menu-icon" border="0"/>Number of Terminals: {{numberOfTerminals}}</a></div>
+    </script>
+    
+    <script id="dateRangePicker_P" class="partial" type="text/html">
+      <div id="dateRangePicker" style="margin-top: 20px;margin-bottom: 20px;">
+	<div id="dateRange">
+	  Date Range:
+	  <label for="dateFrom">From:</label>
+	  <input type="text" id="dateFrom" name="from" class="datepickerInput"/>
+	  <label for="dateTo">To:</label>
+	  <input type="text" id="dateTo" name="to" class="datepickerInput"/>
+	</div>
+      </div>
+    </script>
+    
+    <script id="voucherOptionDropdown_P" class="partial" type="text/html">
+      <ul id="ulVoucherDropDown">
+    <li style="display: inline;">OPTION : 
+      <select id="vouchersdown" class="{{>commonClasses_P}}">
+        <option value = "0" selected>ALL</option>
+        <option value = "1" >Balance > 0</option>
+        <option value = "2" >Balance = 0</option>
+      </select>
+    </li>
+      </ul>
+    </script>
+    
+    <script id="report_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>{{title}}</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<div id='report'>
+	  <div>
+	    <h3>Hierarchy</h3>
+	    <div id='company-navigation'></div>
+	  </div>	
+	  {{>dateRangePicker_P}}
+	  {{>generate_report_btn_P}}
+	  {{>exportButton_P}}			
+	  <div id='report_table'></div>	
+	</div>	
+	{{>backButton_P}}
+      </div>
+    </script>
+
+    <!--------------------------- DIALOG QUICKVIEW(yesterday/mtd/ytd) ---------------------------------------->
+    <script id="cashoutheader_P" class="partial" type="text/html">
+      <tr>
+	<td>Store ID</td>
+	<td colspan="2" align="right">{{storename}}</td>    		
+      </tr>
+      <tr>
+	<td>Terminal ID</td>
+	<td colspan="2" align="right">{{terminalname}}</td>    		
+      </tr>
+      <tr>
+	<td>Process Date</td>
+	<td colspan="2" align="right">{{processdate}}</td>    		
+      </tr>
+      <tr>
+	<td>Process Time</td>
+	<td colspan="2" align="right">{{processtime}}</td>    		
+      </tr>
+      <tr>
+	<td>User Name</td>
+	<td colspan="2" align="right">{{username}}</td>
+      </tr>
+    </script>
+    
+    <script id="netSales_P" class="partial" type="text/html">
+      <tr>
+	<td align="left">Net Sales</td>
+	<td colspan="2" align="right">{{netsales}}</td>
+      </tr>
+      <tr>
+	<td align="left">Total Tax 1</td>
+	<td colspan="2" align="right">{{netsaletax1}}</td>
+      </tr>
+      <tr>
+	<td align="left">Total Tax 3</td>
+	<td colspan="2" align="right">{{netsaletax3}}</td>
+      </tr>
+      <tr>
+	<td align="left">Total Sales</td>
+	<td colspan="2" align="right">{{netsalestotal}}</td>
+      </tr>
+    </script>
+    
+    <script id="netRefunds_P" class="partial" type="text/html">
+      <tr>
+	<td align="left">Net Refunds</td>
+	<td colspan="2" align="right">{{netrefund}}</td>
+      </tr>
+      <tr>
+	<td align="left">Total Tax 1</td>
+	<td colspan="2" align="right">{{netrefundtax1}}</td>
+      </tr>
+      <tr>
+	<td align="left">Total Tax 3</td>
+	<td colspan="2" align="right">{{netrefundtax3}}</td>
+      </tr>
+      <tr>
+	<td align="left">Total Refunds</td>
+	<td colspan="2" align="right">{{netrefundtotal}}</td>
+      </tr>
+    </script>
+    
+    <script id="netSaleActivity_P" class="partial" type="text/html">
+      <tr>
+	<td align="left">Net SALE ACTIVITY</td>
+	<td colspan="2" align="right">{{netsaleactivity}}</td>
+      </tr>
+    </script>
+    
+    <script id="cashBalance_P" class="partial" type="text/html">
+      <tr>
+    <td colspan="3">CASH BALANCE</td>
+      </tr>
+      <tr>
+    <td align="left">ACTUAL CASH COUNT</td>
+    <td colspan="2" align="right">{{actual_cash_count}}</td>
+      </tr>
+      <tr>
+    <td align="left">ACTUAL TENDER</td>
+    <td colspan="2" align="right">{{actual_tender}}</td>
+      </tr>
+      <tr>
+    <td align="left">OVER / SHORT</td>
+    <td colspan="2" align="right">{{over_short}}</td>
+      </tr>
+    </script>
+    
+    <script id="paymentDetails_P" class="partial" type="text/html">
+      <tr>
+	<td colspan="3">PAYMENT/TENDER DETAILS</td>
+      </tr>
+      <tr>
+	<td align="left">CASH</td>
+	<td colspan="2" align="right">{{cashpayment}}</td>
+      </tr>
+      <tr>
+	<td align="left">CREDIT CARD</td>
+	<td colspan="2" align="right">{{creditpayment}}</td>
+      </tr>
+      <tr>
+	<td align="left">DEBIT CARD</td>
+	<td colspan="2" align="right">{{debitpayment}}</td>
+      </tr>
+      <tr>
+	<td align="left">MOBILE</td>
+	<td colspan="2" align="right">{{mobilepayment}}</td>
+      </tr>
+      <tr>
+	<td align="left">OTHER</td>
+	<td colspan="2" align="right">{{otherpayment}}</td>
+      </tr>
+      <tr>
+	<td align="left">No. of Trans</td>
+	<td colspan="2" align="right">{{noofsale}}</td>
+      </tr>
+      <tr>
+	<td align="left">Avg Trans</td>
+	<td colspan="2" align="right">{{avgpayment}}</td>
+      </tr>
+    </script>
+
+    <script id="refundDetails_P" class="partial" type="text/html">
+      <tr>
+	<td colspan="3">REFUND/TENDER DETAILS</td>
+      </tr>
+      <tr>
+	<td align="left">CASH</td>
+	<td colspan="2" align="right">{{cashrefund}}</td>
+      </tr>
+      <tr>
+	<td align="left">CREDIT CARD</td>
+	<td colspan="2" align="right">{{creditrefund}}</td>
+      </tr>
+      <tr>
+	<td align="left">DEBIT CARD</td>
+	<td colspan="2" align="right">{{debitrefund}}</td>
+      </tr>
+      <tr>
+	<td align="left">MOBILE</td>
+	<td colspan="2" align="right">{{mobilerefund}}</td>
+      </tr>
+      <tr>
+	<td align="left">OTHER</td>
+	<td colspan="2" align="right">{{otherrefund}}</td>
+      </tr>
+      <tr>
+	<td align="left">No. of Trans</td>
+	<td colspan="2" align="right">{{noofrefund}}</td>
+      </tr>
+      <tr>
+	<td align="left">Avg Trans</td>
+	<td colspan="2" align="right">{{avgrefund}}</td>
+      </tr>
+    </script>
+
+    <script id="totalDiscount_P" class="partial" type="text/html">
+      <tr>
+	<td align="left">Total Discount</td>
+	<td colspan="2" align="right">{{allDiscount}}</td>
+      </tr>
+    </script>
+
+    <script id="totalCash_P" class="partial" type="text/html">
+      <tr>
+	<td align="left">Total Cash</td>
+	<td colspan="2" align="right">{{cashtotal}}</td>
+      </tr>
+    </script>
+
+    <script id="transactionDetails_P" class="partial" type="text/html">
+      <tr>
+	<td colspan="3">Transaction Details</td>
+      </tr>
+      <tr>
+	<td align="left">No. of Canelled Trans</td>
+	<td colspan="2" align="right">{{noofcancelled}}</td>
+      </tr>
+      <tr>
+	<td align="left">Cancelled Trans Totals</td>
+	<td colspan="2" align="right">{{cancelledtotal}}</td>
+      </tr>
+      <tr>
+	<td align="left">Avg. Transaction</td>
+	<td colspan="2" align="right">{{avgcancelled}}</td>
+      </tr>
+      <tr>
+	<td align="left">1st Transaction Time</td>
+	<td colspan="2" align="right">{{firsttanstime}}</td>
+      </tr>
+      <tr>
+	<td align="left">1st Transaction Type</td>
+	<td colspan="2" align="right">{{firsttranstype}}</td>
+      </tr>
+      <tr>
+	<td align="left">Last Transaction Time</td>
+	<td colspan="2" align="right">{{lasttranstime}}</td>
+      </tr>
+      <tr>
+	<td align="left">Last Transaction Type</td>
+	<td colspan="2" align="right">{{lasttranstype}}</td>
+      </tr>
+    </script>
+
+    <script id="salesByCategory_P" class="partial" type="text/html">
+      <tr>
+	<td colspan="3">Sales by Category(No taxes)</td>
+      </tr>
+      <tr>
+	<td></td>
+	<td align="right">Amount</td>
+	<td align="right">%</td>
+      </tr>
+      <tr>
+	<td align="left">Menu Sales</td>
+	<td align="right">{{menusalesamount}}</td>
+	<td align="right">{{menusalespercent}}</td>
+      </tr>
+      <tr>
+	<td align="left">Scan Sales</td>
+	<td align="right">{{scansalesamount}}</td>
+	<td align="right">{{scansalespercent}}</td>
+      </tr>
+      <tr>
+	<td align="left">ECR Sales</td>
+	<td align="right">{{ecrsalesamount}}</td>
+	<td align="right">{{ecrsalespercent}}</td>
+      </tr>
+    </script>
+
+
+    <script id="cashOutTable_P" class="partial" type="text/html">
+      {{>netSales_P}}
+      <tr><td colspan="3">===========================</td></tr>
+      {{>netRefunds_P}}
+      <tr><td colspan="3">===========================</td></tr>
+      {{>netSaleActivity_P}}
+      <tr><td colspan="3">===========================</td></tr>
+      {{>cashBalance_P}}
+      <tr><td colspan="3">===========================</td></tr>
+      {{>paymentDetails_P}}
+      <tr><td colspan="3">===========================</td></tr>
+      {{>refundDetails_P}}
+      <tr><td colspan="3">===========================</td></tr>
+      {{>totalCash_P}}
+      <tr><td colspan="3">===========================</td></tr>
+      {{>totalDiscount_P}}
+      <tr><td colspan="3">===========================</td></tr>
+      {{>salesByCategory_P}}
+    </script>
+
+    <script id="cashOutReportDialog_TMP" type="text/html">
+      <div id='cashoutdialog'>
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      <th>YESTERDAY</th>
+	      <th>MTD</th>
+	      <th>YTD</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>
+		{{#yesterday}}<table width="100%">{{>cashOutTable_P}}</table>{{/yesterday}}
+	      </td>
+	      <td>
+		{{#mtd}}<table width="100%">{{>cashOutTable_P}}</table>{{/mtd}}
+	      </td>
+	      <td>
+		{{#ytd}}<table width="100%">{{>cashOutTable_P}}</table>{{/ytd}}
+	      </td>
+	    </tr>
+	  </tbody>
+	</table>
+      </div>
+    </script>
+    
+    
+    <!----------------------------------- TaxCollected quickviewDialog -------------------------------->
+    <script id="taxCollectedQuickViewDialog_TMP" type="text/html">
+      <div id='taxcollecteddialog'>
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      <th>Transaction #</th>
+	      <th>Type</th>
+	      <th>Date</th>
+	      <th>Sale</th>
+	      <th>Tax 1</th>
+	      <th>Tax 3</th>
+	      <th>Total Sale</th>
+	    </tr>
+	  </thead>
+	  <tfoot>
+	    {{#totals}}
+	    <tr>
+	      <td colspan="3">Total</td>
+	      <td align="right">{{sales}}</td>
+	      <td align="right">{{tax1}}</td>
+	      <td align="right">{{tax3}}</td>
+	      <td align="right">{{totalsales}}</td>
+	    </tr>
+	    {{/totals}}
+	  </tfoot>
+	  <tbody>
+	    {{#items}}
+	    <tr>
+	      <td>{{transaction}}</td>
+	      <td>{{type}}</td>
+	      <td>{{date}}</td>
+	      <td align="right">{{sales}}</td>
+	      <td align="right">{{tax1}}</td>
+	      <td align="right">{{tax3}}</td>
+	      <td align="right">{{totalsales}}</td>
+	    </tr>
+	    {{/items}}
+	  </tbody>
+	</table>
+      </div>
+    </script>
+    
+    <!-------------------------------------- menureports cashout quickview dialog tmp -------------------->
+    <script id="menuReportsCashoutQuickViewDialog_TMP" type="text/html">
+      <div id='menucashoutdialog'>
+	<table>
+  	  {{>cashoutheader_P}}
+	  <!-- FIXME: maybe use some css dotted line here -->
+  	  <tr><td colspan="3">----------------------------------------------------------------------</td></tr>
+	  {{>netSales_P}}
+	  <tr><td colspan="3">===================================</td></tr>
+	  {{>netRefunds_P}}
+	  <tr><td colspan="3">===================================</td></tr>
+	  {{>netSaleActivity_P}}
+	  <tr><td colspan="3">===================================</td></tr>
+	  {{>cashBalance_P}}
+      <tr><td colspan="3">===================================</td></tr>
+	  {{>paymentDetails_P}}
+	  <tr><td colspan="3">===================================</td></tr>
+	  {{>refundDetails_P}}
+	  <tr><td colspan="3">===================================</td></tr>
+	  {{>totalCash_P}}
+	  <tr><td colspan="3">===================================</td></tr>
+	  {{>totalDiscount_P}}
+	  <tr><td colspan="3">===================================</td></tr>
+	  {{>transactionDetails_P}}
+	  <tr><td colspan="3">===================================</td></tr>
+	  {{>salesByCategory_P}}
+	</table>
+      </div>
+    </script>
+    
+    <!-------------------------------------- general transaction quickview dialog tmp -------------------->
+    <!-------------------------------------- RECIEPT ----------------------------------------------------->
+    <script id="generalTransactionQuickViewDialog_TMP" type="text/html">
+      <div id="transactiondialog">
+	<table>
+      	  <tr>
+      	    <td colspan="2" align="left">Store ID: {{storename}}</td>
+      	    <td colspan="2" align="right">{{processday}}</td>
+      	  </tr>
+      	  <tr>
+      	    <td colspan="2" align="left">Terminal ID: {{name}}</td>
+      	    <td colspan="2" align="right">{{processtime}}</td>
+      	  </tr>
+      	  <tr>
+      	    <td colspan="2" align="left">{{transactionNumber}}</td>
+      	    <td colspan="2" align="right">{{user}}</td>
+      	  </tr>
+      	  <tr>
+      	    <td coslpan="4">{{type}}</td>
+      	  </tr>
+  	  <tr>
+  	    <td>ITEM</td>
+  	    <td align="right">QTY</td>
+  	    <td align="right">PRICE</td>
+  	    <td align="right">AMOUNT</td>
+  	  </tr>
+  	  {{#order}}
+  	  <tr>
+  	    <td>
+  	      <ul style="list-style-type: none; padding-left: 0px; margin: 0px">
+		{{#description}}<li>{{description}}</li>{{/description}}
+		{{#upccode}}<li>{{upccode}}</li>{{/upccode}}
+  	      </ul>
+  	    </td>
+  	    <td align="right">{{quantity}}</td>
+  	    <td align="right">{{price}}</td>
+  	    <td align="right">{{orderamount}}</td>
+  	  </tr>
+  	  {{#discount}}
+  	  <tr>
+	    <!-- FIXME: maybe use align or padding or something -->
+  	    <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discount</td>
+  	    <td align="right">-{{discount}}</td>
+  	  </tr>
+  	  {{/discount}}
+	  {{#modifiers}}
+	  <tr>
+	    <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{description}}</td>
+	    <td align="right">{{price}}</td>
+	  </tr>
+	  {{/modifiers}}
+  	  {{/order}}
+  	  <tr><td colspan="4" align="center">----------------------------------------------------------------</td></tr>
+  	  <tr>
+  	    <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sub Total</td>
+  	    <td align="right">$ {{subTotal}}</td>
+  	  </tr>
+  	  <tr>
+  	    <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tax 1</td>
+  	    <td align="right">{{tax1and2}}</td>
+  	  </tr>
+  	  <tr>
+  	    <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tax 3</td>
+  	    <td align="right">{{tax3}}</td>
+  	  </tr>
+  	  <tr>
+  	    <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Total</td>
+  	    <td align="right">$ {{total}}</td>
+  	  </tr>
+  	  {{#payments}}
+  	  {{#approved}}
+  	  <tr>
+  	    <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{type}}</td>
+  	    <td align="right">$ {{amount}}</td>
+  	  </tr>
+  	  {{/approved}}
+  	  {{/payments}}
+  	  <tr>
+  	    <td colspan="3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change Due</td>
+  	    <td align="right">$ {{change}}</td>
+  	  </tr>
+  	  {{#payments}}
+  	  {{#paymentdetail}}
+  	  <tr>
+  	    <td colspan="4">===================================</td>
+  	  </tr>
+  	  <tr>
+  	    <td>CARD: </td>
+  	    <td colspan="3">{{card}}</td>
+  	  </tr>
+  	  {{#crt}}
+  	  <tr>
+  	    <td>CRT: </td>
+  	    <td colspan="3">{{crt}}</td>
+  	  </tr>
+  	  {{/crt}}
+  	  {{#entry}}
+  	  <tr>
+  	    <td>ENTRY: </td>
+  	    <td colspan="3">{{entry}}</td>
+  	  </tr>
+  	  {{/entry}}
+  	  <tr>
+  	    <td>TYPE: </td>
+  	    <td colspan="3">{{type}}</td>
+  	  </tr>
+  	  {{#acct}}
+  	  <tr>
+  	    <td>ACCT: </td>
+  	    <td colspan="3">{{acct}}</td>
+  	  </tr>
+  	  {{/acct}}
+  	  <tr>
+  	    <td>AMOUNT: </td>
+  	    <td colspan="3">{{amount}}</td>
+  	  </tr>
+  	  {{#seq}}
+  	  <tr>
+  	    <td>SEQ: </td>
+  	    <td colspan="3">{{seq}}</td>
+  	  </tr>
+  	  {{/seq}}
+  	  {{#author}}
+  	  <tr>
+  	    <td>AUTHOR: </td>
+  	    <td colspan="3">{{author}}</td>
+  	  </tr>
+  	  {{/author}}
+  	  <tr>
+  	    <td>DATE: </td>
+  	    <td colspan="3">{{date}}</td>
+  	  </tr>
+  	  {{#ref}}
+  	  <tr>
+  	    <td>REF: </td>
+  	    <td colspan="3">{{ref}}</td>
+  	  </tr>
+  	  {{/ref}}
+  	  {{#trace}}
+  	  <tr>
+  	    <td>TRACE: </td>
+  	    <td colspan="3">{{trace}}</td>
+  	  </tr>
+  	  {{/trace}}
+  	  {{#mercid}}
+  	  <tr>
+  	    <td>MERC ID: </td>
+  	    <td colspan="3">{{mercid}}</td>
+  	  </tr>
+  	  {{/mercid}}
+  	  {{#termid}}
+  	  <tr>
+  	    <td>TERM ID: </td>
+  	    <td colspan="3">{{termid}}</td>
+  	  </tr>
+  	  {{/termid}}
+  	  {{#errmsg}}
+  	  <tr>
+  	    <td colspan="4">{{errmsg}}</td>
+  	  </tr>
+  	  {{/errmsg}}
+  	  {{/paymentdetail}}
+  	  
+  	  {{^paymentdetail}}
+        {{#response}}
+            <tr>
+        <td colspan="4">===================================</td>
+      </tr>
+      <tr>
+        <td>Voucher : </td>
+        <td colspan="3">$ {{redeemed}}</td>
+      </tr>
+      <tr>
+        <td>Voucher ID: </td>
+        <td colspan="3">{{voucher_id}}</td>
+      </tr>
+      {{#voucher_name}}
+      <tr>
+        <td>Voucher Name: </td>
+        <td colspan="3">{{voucher_name}}</td>
+      </tr>
+      {{/voucher_name}}
+      {{#voucher_type}}
+      <tr>
+        <td>Voucher Type: </td>
+        <td colspan="3">{{voucher_type}}</td>
+      </tr>
+      {{/voucher_type}}
+      <tr>
+        <td>Voucher Balance: </td>
+        <td colspan="3">$ {{voucher_balance}}</td>
+      </tr>
+        {{/response}}
+      {{/paymentdetail}}
+  	  <tr>
+  	    <td colspan="4">===================================</td>
+  	  </tr>
+  	  {{/payments}}
+	</table>
+      </div>
+    </script>
+    
+    <!----------------------------------------- MENU ADMINISTRATION ------------------------------------------>
+       <script id="hierarchy_list_TMP" type="text/html">
+      <ul style="cursor: pointer; cursor: hand; margin-left: 1em; list-style-type: none; padding: 0;">
+    {{#company}}<li id="{{_id}}" name="{{companyName}}"><a>{{companyName}}</a>{{/company}}
+    {{#company}}
+    <ul style="cursor: pointer; cursor: hand; margin-left: 1em; list-style-type: none; padding: 0;">
+      {{#hierarchy}}
+      {{#groups}}
+      <li id="{{group_id}}" name="{{groupName}}"><a>{{groupName}}</a>
+      <ul style="cursor: pointer; cursor: hand; margin-left: 1em; list-style-type: none; padding: 0;">
+        {{#stores}}
+        <li id="{{store_id}}" name="{{storeName}}({{number}})"><a>{{storeName}}({{number}})</a></li>
+        {{/stores}}
+      </ul>
+      </li>
+      {{/groups}}
+      {{/hierarchy}}
+      </li>
+    </ul>
+    {{/company}}
+    
+    {{#group}}
+    <li id="{{group_id}}" name="{{groupName}}"><a>{{groupName}}</a>
+    <ul style="cursor: pointer; cursor: hand; margin-left: 1em; list-style-type: none; padding: 0;">
+      {{#stores}}
+      <li id="{{store_id}}" name="{{storeName}}({{number}})"><a>{{storeName}}({{number}})</a></li>
+      {{/stores}}
+    </ul>
+    </li>
+    {{/group}}
+    
+    {{#store}}
+    <li id="{{store_id}}" name="{{storeName}}({{number}})"><a>{{storeName}}({{number}})</a></li>
+    {{/store}}
+      </ul>
+    </script>
+
+    <script id="logged_in_user_info_TMP" type="text/html">
+      <table id="current_user" class="reportstable">
+	<thead>
+          <tr>
+            <th>LOGGED IN AS</th>
+            <th>PASSWORD</th>
+            <th>CHANGE PASSWORD</th>
+          </tr>
+	</thead>
+	<tbody>
+	  <tr>
+	    <td align="center">{{userName}}</td>
+	    <td align="center">{{exposed_password}}</td>
+	    <td align="center"><button id="{{_id}}" class="change_logged_in_user_password">change password</button></td>
+	  </tr>
+	</tbody>
+      </table>
+    </script>
+
+    <script id="adminManagement_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Administration</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<table class="reportstable">
+	    <tr>
+	        <td valign="top" rowspan="2">
+	            <h3>Hierarchy</h3>
+	            <div id='company-navigation'></div>
+	        </td>
+	        <td>
+	            <h3>LoggedIn User</h3>
+	            <div id="current_user"></div>
+                <div>
+                  <button style="float:right;" id="addusers">Add User</button>
+                </div>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>
+	            <h3>Other Users</h3>
+	            <h4><div id='naviStringInOtherUser'></div></h4>
+	            <div id='usersInfoTable'></div>
+	        </td>
+	    </tr>
+	</table>
+	{{>quickReportViewHook_P}}
+	<br/>
+	{{>backButton_P}}   
+      </div>
+    </script>
+    
+    <script id="adminUsersInfotable_TMP" type="text/html">
+      <div style="margin-bottom:40px">
+          <h4>{{naviString}}</h4>
+	<table style="margin-bottom:20px;" class="reportstable">
+	  <thead>
+            <tr>
+              <th>USER</th>
+              <th>NAME</th>
+	      <th>PASSWORD</th>
+              <th>ENABLED</th>
+	      <th>CHANGE PASSWORD</th>
+              <th>EDIT</th>
+            </tr>
+	  </thead>
+	  <tbody>
+            {{#list}}
+            <tr>
+              <td align="center">{{userName}}</td>
+              <td align="center">{{firstname}} {{lastname}}</td>
+	      <td align="center">{{exposed_password}}</td>
+              <td align="center">{{#enabled}}enabled{{/enabled}}{{^enabled}}disabled{{/enabled}}</td>
+	      <td align="center"><button id="{{_id}}" class="edit_user_password">change password</button></td>
+              <td align="center"><button id="{{_id}}" class="edit_user">edit</button></td>
+            </tr>
+            {{/list}}
+	    {{^list}}
+	    <tr><td align="center" colspan="6">There are no users for this location</td></tr>
+	    {{/list}}
+	  </tbody>
+	</table>
+      </div>
+    </script>
+    
+    <script id='generic_checkbox_P' class='partial' type='text/html'>
+      <input type="checkbox" var="{{var}}" {{^enabled}}disabled="disabled"{{/enabled}} {{#value}}checked{{/value}}/>
+    </script>
+    <script id='generic_textbox_P' class='partial' type='text/html'>
+      <input type="text" class="text ui-widget-content ui-corner-all" var="{{var}}"  value="{{value}}"{{^enabled}}disabled="disabled"{{/enabled}}/>
+    </script>
+    <script id='generic_passwordbox_P' class='partial' type='text/html'>
+      <input type={{^hidden}}"password"{{/hidden}}{{#hidden}}"hidden"{{/hidden}} class="text ui-widget-content ui-corner-all"  var="{{var}}"  value="{{value}}"{{^enabled}}disabled="disabled"{{/enabled}}/>
+    </script>
+        
+    <script id="inputUserInfo_TMP" class="partial" type="text/html">
+      <form id="form">
+	<h2>User Info</h2>
+	<ul>
+	  {{#user_name}}
+          <li>{{label}}</li>
+	  <li>{{>generic_textbox_P}}</li>
+	  {{/user_name}}
+	  {{#password}}
+	  <li>{{label}}</li>
+	  <li>{{>generic_passwordbox_P}}</li>
+	  {{/password}}
+	  {{#is_enabled}}
+	  <li>
+	    {{label}}{{>generic_checkbox_P}}
+	  </li>
+	  {{/is_enabled}}
+	  <span>Roles</span>
+	  <ul>
+	    {{#roles}}
+	    <li>
+	       {{>generic_checkbox_P}}{{label}}
+	    </li>
+            {{/roles}}
+	  </ul>
+
+	</ul>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td valign="top">
+		<h2>Address</h2>
+		<ul>
+		  {{#address}}
+		  <li>{{label}}</li>
+		  <li>{{>generic_textbox_P}}</li>
+		  {{/address}}
+		</ul>
+	      </td>
+	      <td valign="top">
+		<h2>Contact</h2>
+		<ul>
+		  {{#contact}}
+		  <li>{{label}}</li>
+		  <li>{{>generic_textbox_P}}</li>
+		  {{/contact}}
+		</ul>
+	      </td>
+            </tr>
+          </tbody>
+	</table>
+      </form>
+    </script>
+    
+    <!-------------------------------------------- MENU REPORTS ------------------------------------------------>
+    <script id="menuReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Reports</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}SalesSummary'>
+	    <img src="../images/reports/salessummary.png" border="0" class="report-menu-icon"/>Sales Summary
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}SalesDetail'>
+	    <img src="../images/reports/salesdetails.png" border="0" class="report-menu-icon"/>Sales Detail
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}HowAreWe'>
+	    <img src="../images/reports/howarewedoingtoday.png" border="0" class="report-menu-icon"/>How Are We Doing Today?
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}HourlyActivity'>
+	    <img src="../images/reports/hourlyactivity.png" border="0" class="report-menu-icon"/>Hourly Activity
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}ElectronicPayments'>
+	    <img src="../images/reports/epayment.png" border="0" class="report-menu-icon"/>Electronic Payments
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}TaxCollected'>
+	    <img src="../images/reports/tax.png" border="0" class="report-menu-icon"/>Tax Collected
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}CashOuts'>
+	    <img src="../images/reports/cashouts.png" border="0" class="report-menu-icon"/>Cash Outs
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}TransactionsDetail'>
+	    <img src="../images/reports/transactionsdetails.png" border="0" class="report-menu-icon"/>Transactions Detail
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}Cancelled'>
+	    <img src="../images/reports/cancelledtransactions.png" border="0" class="report-menu-icon"/>Cancelled Transactions
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}Refunds'>
+	    <img src="../images/reports/refunds.png" border="0" class="report-menu-icon"/>Refunds
+	  </a>
+	</div>
+	<div class="report-menu">
+	  <a href='#menuReports/{{startPage}}Discounts'>
+	    <img src="../images/reports/discounts.png" border="0" class="report-menu-icon"/>Discounts
+	  </a>
+	</div>
+	<div class="report-menu">
+      <a href='#menuReports/{{startPage}}VouchersHistory'>
+        <img src="../images/reports/voucherhistory.png" border="0" class="report-menu-icon"/>Vouchers History
+      </a>
+    </div>
+	<div style="clear: both;"></div>
+      </div>
+    </script>
+    
+    <!----------------------------------------------- SALES SUMMARY REPORTS -------------------------------------------->
+    <script id="groupDropdownbox_P" class="partial" type="text/html">
+      <ul id="ulGroupDropDown">
+	<li style="display: inline;">GROUP : 
+	  <select id="groupsdown" class="{{>commonClasses_P}}">
+	    <option value = "ALL" selected>ALL</option>
+	  </select>
+	</li>
+	<li style="display: inline;">
+	  STORE : 
+	  <select id="storesdown" class="{{>commonClasses_P}}">
+	    <option value = "ALL" selected>ALL</option>
+	  </select>	
+	</li>
+      </ul>
+    </script>
+    
+    <script id="salesSummarytable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Group</th>
+	    <th>Store Name</th>
+	    <th>Store #</th>
+	    <th># of Trans</th>
+	    <th>Sales</th>
+	    <th>Tax 1</th>
+	    <th>Tax 3</th>
+	    <th>Total Sales</th>
+	    <th>Cash</th>
+	    <th>Credit</th>
+	    <th>Debit</th>
+	    <th>Mobile</th>
+	    <th>Other</th>
+	  </tr>
+	</thead>
+	<tfoot>
+	  <tr>
+	    {{#totals}}
+	    <th align="center" colspan="3">TOTAL</th>
+	    <th align="right">{{numberoftransactions}}</th>
+	    <th align="right">{{sales}}</th>
+	    <th align="right">{{tax1}}</th>
+	    <th align="right">{{tax3}}</th>
+	    <th align="right">{{totalsales}}</th>
+	    <th align="right">{{cash}}</th>
+	    <th align="right">{{credit}}</th>
+	    <th align="right">{{debit}}</th>
+	    <th align="right">{{mobile}}</th>
+	    <th align="right">{{other}}</th>
+	    {{/totals}}
+	  </tr>
+	</tfoot>
+	<tbody>
+	  {{#list}}
+	  <tr>
+	    <td>{{groupName}}</td>
+	    <td>{{storeName}}</td>
+	    <td>{{storeNumber}}</td>
+	    {{#summary}}
+	    <td align="right">{{numberoftransactions}}</td>
+	    <td align="right">{{sales}}</td>
+	    <td align="right">{{tax1}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{totalsales}}</td>
+	    <td align="right">{{cash}}</td>
+	    <td align="right">{{credit}}</td>
+	    <td align="right">{{debit}}</td>
+	    <td align="right">{{mobile}}</td>
+	    <td align="right">{{other}}</td>
+	    {{/summary}}
+	  </tr>
+	  {{/list}}
+	  {{^list}}
+	  <tr>
+	    <td align='center' colspan='11'>
+	      There are no stores registered for this company/group
+	    </td>
+	  </tr>
+	  {{/list}}
+	</tbody>
+      </table>
+    </script> 
+
+    <script id="salesSummaryReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Sales Summary Report</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<div id='report'>
+	  <div>
+	    <h3>Hierarchy</h3>
+	    <div id='company-navigation'></div>
+	  </div>	
+	  {{>dateRangePicker_P}}
+	  {{>generate_report_btn_P}}
+	  {{>exportButton_P}}			
+	  <div id='report_table'></div>	
+	</div>	
+	{{>backButton_P}}
+      </div>
+    </script>	
+
+
+    <!----------------------------------------------- SALES DETAIL REPORTS -------------------------------------------->
+
+    <script id="salesDetailtable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Date</th>
+	    <th>Group</th>
+	    <th>Store Name</th>
+	    <th>Store #</th>
+	    <th>Type</th>
+	    <th># of Trans</th>
+	    <th>Net</th>
+	    <th>Tax 1</th>
+	    <th>Tax 3</th>
+	    <th>Total</th>
+	    <th>Cash</th>
+	    <th>Credit</th>
+	    <th>Debit</th>
+	    <th>Mobile</th>
+	    <th>Other</th>
+	  </tr>
+	</thead>
+	<tfoot>
+	  <tr>
+	    {{#totals}}
+	    <th colspan="5" align="center">TOTAL</th>
+	    <th align="right">{{numberoftransactions}}</th>
+	    <th align="right">{{sales}}</th>
+	    <th align="right">{{tax1}}</th>
+	    <th align="right">{{tax3}}</th>
+	    <th align="right">{{totalsales}}</th>
+	    <th align="right">{{cash}}</th>
+	    <th align="right">{{credit}}</th>
+	    <th align="right">{{debit}}</th>
+	    <th align="right">{{mobile}}</th>
+	    <th align="right">{{other}}</th>
+	    {{/totals}}
+	  </tr>
+	</tfoot>
+	<tbody>
+	  {{#list}}
+	  <tr>
+	    <td rowspan="3">{{date}}</td>
+	    <td rowspan="3">{{groupName}}</td>
+	    <td rowspan="3">{{storeName}}</td>
+	    <td rowspan="3">{{storeNumber}}</td>
+	    {{#sales}}
+	    <td>SALE</td>
+	    <td align="right">{{numberoftransactions}}</td>
+	    <td align="right">{{sales}}</td>
+	    <td align="right">{{tax1}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{totalsales}}</td>
+	    <td align="right">{{cash}}</td>
+	    <td align="right">{{credit}}</td>
+	    <td align="right">{{debit}}</td>
+	    <td align="right">{{mobile}}</td>
+	    <td align="right">{{other}}</td>
+	    {{/sales}}
+	    {{#refunds}}
+	  <tr>
+	    <td>REFUND</td>
+	    <td align="right">{{numberoftransactions}}</td>
+	    <td align="right">{{sales}}</td>
+	    <td align="right">{{tax1}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{totalsales}}</td>
+	    <td align="right">{{cash}}</td>
+	    <td align="right">{{credit}}</td>
+	    <td align="right">{{debit}}</td>
+	    <td align="right">{{mobile}}</td>
+	    <td align="right">{{other}}</td>
+	  </tr>
+	  {{/refunds}}
+	  {{#totals}}
+	  <tr>
+	    <td>TOTAL</td>
+	    <td align="right">{{numberoftransactions}}</td>
+	    <td align="right">{{sales}}</td>
+	    <td align="right">{{tax1}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{totalsales}}</td>
+	    <td align="right">{{cash}}</td>
+	    <td align="right">{{credit}}</td>
+	    <td align="right">{{debit}}</td>
+	    <td align="right">{{mobile}}</td>
+	    <td align="right">{{other}}</td>
+	  </tr>
+	  {{/totals}}
+	  </tr>
+	  {{/list}}
+	</tbody>
+      </table>
+    </script> 
+
+    <script id="salesDetailReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Sales Detail Report</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>groupDropdownbox_P}}
+	{{>dateRangePicker_P}}
+	{{>generalGoButton_P}}		
+	<div id='salesdetailtable'></div>		
+	{{>backButton_P}}
+      </div>
+    </script>
+
+
+    <!------------------------------------- HowAreWeTodayTable TMP -------------------------------------------->
+    <script id="generaltable_HowAreWeToday_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>How Are We Doing Today</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      <th rowspan="2">{{namefield}}</th>
+	      <th colspan="5">Net Sales (No Taxes)</th>
+	      <th colspan="5">Net Refunds (No Taxes)</th>
+	      <th rowspan="2">Net Total</th>
+	      <th rowspan="2">AVG Sale</th>
+	    </tr>
+	    <tr>
+	      <th># of Trans</th>
+	      <th>Menu</th>
+	      <th>Scan</th>
+	      <th>ECR</th>
+	      <th>Total</th>
+	      <th># of Trans</th>
+	      <th>Menu</th>
+	      <th>Scan</th>
+	      <th>ECR</th>
+	      <th>Total</th>
+	    </tr>
+	  </thead>
+	  <tfoot>
+	    <tr>
+	      <th>Total</th>
+	      {{#total}}
+	      <th align="right">{{transactions}}</th>
+	      {{#origin_sales}}
+	      <th align="right">{{menu}}</th>
+	      <th align="right">{{scan}}</th>
+	      <th align="right">{{ecr}}</th>
+	      <th align="right">{{origintotal}}</th>
+	      {{/origin_sales}}
+	      <th align="right">{{refunds}}</th>
+	      {{#origin_refunds}}
+	      <th align="right">{{menu}}</th>
+	      <th align="right">{{scan}}</th>
+	      <th align="right">{{ecr}}</th>
+	      <th align="right">{{origintotal}}</th>
+	      {{/origin_refunds}}
+	      <th align="right">{{sales_minus_refunds}}</th>
+	      <th align="right">{{avgsale}}</th>
+	      {{/total}}
+	    </tr>
+	  </tfoot>
+	  <tbody>
+	    {{#items}}
+	    <tr>
+	      <td>
+		{{#linkaddress}}
+		<a href="{{linkaddress}}">
+		  {{/linkaddress}}
+		  {{name}}
+		  {{#linkaddress}}
+		</a>
+		{{/linkaddress}}
+	      </td>
+	      <td align="right">{{transactions}}</td>
+	      {{#origin_sales}}
+	      <td align="right">{{menu}}</td>
+	      <td align="right">{{scan}}</td>
+	      <td align="right">{{ecr}}</td>
+	      <td align="right">{{origintotal}}</td>
+	      {{/origin_sales}}
+	      <td align="right">{{refunds}}</td>
+	      {{#origin_refunds}}
+	      <td align="right">{{menu}}</td>
+	      <td align="right">{{scan}}</td>
+	      <td align="right">{{ecr}}</td>
+	      <td align="right">{{origintotal}}</td>
+	      {{/origin_refunds}}
+	      <td align="right">{{sales_minus_refunds}}</td>
+	      <td align="right">{{avgsale}}</td>
+	    </tr>
+	    {{/items}}
+	    {{^items}}
+	    <tr>
+	      <td colspan="13" align="center">
+		there are no terminals installed for this/these location(s)
+	      </td>
+	    </tr>
+	    {{/items}}
+	  </tbody>
+	</table>
+	{{#cancelledtransactions}}
+	<p>Number of Cancelled Transactions : {{cancelledtransactions}}</p>
+	{{/cancelledtransactions}}
+	{{>backButton_P}}
+      </div>
+    </script>
+
+    <!----------------------------------------------- HOURLY ACTIVITY REPORTS -------------------------------------------->
+
+    <script id="dropdownHourlyActiviy_P" class="partial" type="text/html">
+      <ul id="ulhierarchy">
+	<li style="display: inline;">
+	  GROUP : 
+	  <select id="groupsdown" class="{{>commonClasses_P}}">
+	    <option value = "ALL" selected>ALL</option>
+	  </select>
+	</li>
+	<li style="display: inline;">
+	  STORE : 
+	  <select id="storesdown" class="{{>commonClasses_P}}">
+	    <option value = "ALL" selected>ALL</option>
+	  </select>
+	</li>
+	<li style="display: inline;">
+	  TERMINAL : <select id="terminalsdown" class="{{>commonClasses_P}}">
+	    <option value = "ALL" selected>ALL</option>
+	  </select>
+	</li>
+      </ul>
+    </script>
+
+    <script id="hourlyActivitytable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Time</th>
+	    <th><ul><li>Sales</li><li>Transactions</li></ul></th>
+	    <th><ul><li>Refund</li><li>Transactions</li></ul></th>
+	    <th><ul><li>Menu</li><li>no taxes</li></ul></th>
+	    <th><ul><li>Scan</li><li>no taxes</li></ul></th>
+	    <th><ul><li>ECR</li><li>no taxes</li></ul></th>
+	    <th><ul><li>Total</li><li>no taxes</li></ul></th>
+	    <th>AVG Sale</th>
+	  </tr>
+	</thead>
+	<tfoot>
+	  {{#totalrow}}
+	  <tr>
+	    <th>Total</th>
+	    <th align="right">{{transactions}}</th>
+	    <th align="right">{{refunds}}</th>
+	    <th align="right">{{menu}}</th>
+	    <th align="right">{{inventory}}</th>
+	    <th align="right">{{ecr}}</th>
+	    <th align="right">{{total}}</th>
+	    <th align="right">{{avgsale}}</th>
+	  </tr>
+	  {{/totalrow}}
+	</tfoot>
+	<tbody>
+	  {{#items}}
+	  <tr>
+	    <td>{{timerange}}</td>
+	    <td align="right">{{transactions}}</td>
+	    <td align="right">{{refunds}}</td>
+	    <td align="right">{{menu}}</td>
+	    <td align="right">{{inventory}}</td>
+	    <td align="right">{{ecr}}</td>
+	    <td align="right">{{total}}</td>
+	    <td align="right">{{avgsale}}</td>
+	  </tr>
+	</tbody>
+	{{/items}}
+      </table>
+    </script> 
+    
+    <script id="hourlyActivityReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Hourly Activity Report</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>dropdownHourlyActiviy_P}} 
+	{{>generalGoButton_P}}
+	<div id='hourlytable'></div>		
+	{{>backButton_P}}
+      </div>
+    </script>	
+    
+    
+    <!----------------------------------------------- TAX COLLECTED REPORTS -------------------------------------------->
+    
+    <script id="taxCollectedtable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Group</th>
+	    <th>Store</th>
+	    <th>Store #</th>
+	    <th>Terminal</th>
+	    <th>Sales</th>
+	    <th>Tax 1</th>
+	    <th>Tax 3</th>
+	    <th>Total Sales</th>
+	    <th>Details</th>
+	  </tr>
+	</thead>
+	<tfoot>
+	  {{#totalrow}}
+	  <tr>
+	    <th colspan="4">Total</th>
+	    <th align="right">{{sales}}</th>
+	    <th align="right">{{tax1}}</th>
+	    <th align="right">{{tax3}}</th>
+	    <th align="right">{{totalsales}}</th>
+	    <th></th>
+	  </tr>
+	  {{/totalrow}}
+	</tfoot>
+	<tbody>
+	  {{#items}}
+	  <tr>
+	    <td>{{groupName}}</td>
+	    <td>{{storeName}}</td>
+	    <td>{{storeNumber}}</td>
+	    <td>{{name}}</td>
+	    <td align="right">{{sales}}</td>
+	    <td align="right">{{tax1}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{totalsales}}</td>
+	    <td>{{>quickDetailsViewButton_P}}</td>
+	  </tr>
+	  {{/items}}
+	</tbody>
+      </table>
+      {{>quickReportViewHook_P}}
+    </script> 
+    
+    <script id="taxCollectedReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Tax Collected</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>dropdownHourlyActiviy_P}}
+	{{>dateRangePicker_P}}
+	{{>generalGoButton_P}}	
+	<div id='taxcollectedtable'></div>	
+	{{>backButton_P}}
+      </div>
+    </script>
+
+    <!----------------------------------------------- ELECTRONIC PAYMENTS REPORTS -------------------------------------------->
+    <script id="electronicPaymentstable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Date</th>
+	    <th>Group</th>
+	    <th>Store</th>
+	    <th>Store #</th>
+	    <th>Terminal</th>
+	    <th>Transaction</th>
+	    <th>Sale</th>
+	    <th>Tax 1</th>
+	    <th>Tax 3</th>
+	    <th>Total Sale</th>
+	    <th>Debit</th>
+	    <th>Credit</th>
+	    <th>Auth #</th>
+	    <th>Details</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {{#items}}
+	  <tr>
+	    <td align="center">{{date}}</td>
+	    <td>{{groupName}}</td>
+	    <td>{{storeName}}</td>
+	    <td>{{storeNumber}}</td>
+	    <td>{{name}}</td>
+	    <td align="center">{{transaction_index}}</td>
+	    <td align="right">{{sales}}</td>
+	    <td align="right">{{tax1and2}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{total}}</td>
+	    <td align="right">{{debit}}</td>
+	    <td align="right">{{credit}}</td>
+	    <td align="right">{{authCode}}</td>
+	    <td>{{>quickDetailsViewButton_P}}</td>
+	  </tr>
+	  {{/items}}
+	  {{^items}}
+	  <tr>
+	    <td align='center' colspan='14'>
+	      There are no Electronic Payments for this time period.
+	    </td>
+	  </tr>
+	  {{/items}}
+	</tbody>
+      </table>
+
+      {{#totals}}
+      <table class="reportstable">
+	<thead>
+  	  <th align="left">Type</th>
+  	  <th>Sale</th>
+  	  <th>Refund</th>
+  	  <th>Declined</th>
+	</thead>
+	<tbody>
+	  <tr><td>Debit</td><td align="right">{{debit_sale}}</td><td align="right">{{debit_refund}}</td><td align="right">{{debit_declined}}</td></tr>
+	  <tr><td>Visa</td><td align="right">{{visa_sale}}</td><td align="right">{{visa_refund}}</td><td align="right">{{visa_declined}}</td></tr>
+	  <tr><td>MasterCard</td><td align="right">{{mastercard_sale}}</td><td align="right">{{mastercard_refund}}</td><td align="right">{{mastercard_declined}}</td></tr>
+	  <tr><td>Amex</td><td align="right">{{amex_sale}}</td><td align="right">{{amex_refund}}</td><td align="right">{{amex_declined}}</td></tr>
+	  <tr><td>Discover</td><td align="right">{{discover_sale}}</td><td align="right">{{discover_refund}}</td><td align="right">{{discover_declined}}</td></tr>
+	  <tr><td>Deposit</td><td align="right">{{deposit_sale}}</td><td align="right">{{deposit_refund}}</td><td align="right">{{deposit_declined}}</td></tr>
+	</tbody>
+      </table>
+      <label>Voids : {{voids}}</label>
+      {{/totals}}
+      {{>quickReportViewHook_P}}
+    </script> 
+    
+    <script id="electronicPaymentsReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Electronic Payments</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>dropdownHourlyActiviy_P}}
+	{{>dateRangePicker_P}}
+	{{>generalGoButton_P}}		
+	<div id="reporttable"></div>	
+	{{>backButton_P}}
+      </div>
+    </script>
+    
+    <!----------------------------------------------- CASHOUTS REPORTS -------------------------------------------->
+    <script id="menuReportsCashOutstable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Date</th>
+	    <th>Group</th>
+	    <th>Store</th>
+	    <th>Store #</th>
+	    <th>Terminal</th>
+	    <th>Cashout #</th>
+	    <th>Details</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {{#items}}
+	  <tr>
+	    <td>{{cashouttime}}</td>
+	    <td>{{groupName}}</td>
+	    <td>{{storeName}}</td>
+	    <td>{{storeNumber}}</td>
+	    <td>{{name}}</td>
+	    <td>{{cashoutnumber}}</td>
+	    <td>{{>quickDetailsViewButton_P}}</td>
+	  </tr>
+	  {{/items}}
+	  {{^items}}
+      <tr>
+        <td align='center' colspan='7'>
+          There are no Cashouts.
+        </td>
+      </tr>
+      {{/items}}
+	</tbody>
+      </table>
+      {{#numofcashout}}
+      <p>Number of Cashouts : {{numofcashout}}</p>
+      {{/numofcashout}}
+      {{>quickReportViewHook_P}}
+    </script> 
+    
+    <script id="menuReportsCashOutsReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>CashOuts</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>dropdownHourlyActiviy_P}}
+	{{>dateRangePicker_P}}
+	{{>generalGoButton_P}}		
+	<div id='cashoutstable'></div>	
+	{{>backButton_P}}
+      </div>
+    </script>
+    
+    <!------------------------------------ TRANSACTIONS DETAILS REPORT --------------------------------------->
+    
+    <script id="transactionsSummaryTable_TMP" type="text/html">
+      <table class="reportstable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th># of Trans</th>
+        <th>Net</th>
+        <th>Tax 1</th>
+        <th>Tax 3</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        {{#total}}
+        <th align="center">TOTAL</th>
+        <th align="right">{{count}}</th>
+        <th align="right">{{subTotal}}</th>
+        <th align="right">{{tax1and2}}</th>
+        <th align="right">{{tax3}}</th>
+        <th align="right">{{total}}</th>
+        {{/total}}
+      </tr>
+    </tfoot>
+    <tbody>
+      {{#list}}
+      <tr>
+        <td><a id="{{dateString}}" style="text-decoration:underline; color:#0000FF; cursor:pointer;">{{dateString}}</a></td>
+        <td align="right">{{count}}</td>
+        <td align="right">{{subTotal}}</td>
+        <td align="right">{{tax1and2}}</td>
+        <td align="right">{{tax3}}</td>
+        <td align="right">{{total}}</td>
+      </tr>
+      {{/list}}
+      {{^list}}
+      <tr>
+        <td align='center' colspan='11'>
+          There are no transactions
+        </td>
+      </tr>
+      {{/list}}
+    </tbody>
+      </table>
+    </script>
+    
+    <script id="transactionsDetailTable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Date</th>
+	    <th>Time</th>
+	    <th>Terminal</th>
+	    <th>Trans. No.</th>
+	    <th>Type</th>
+	    <th>Net</th>
+	    <th>Tax 1</th>
+	    <th>Tax 3</th>
+	    <th>Total</th>
+	    <th id="detail">Detail</th>
+	  </tr>
+	</thead>
+	<tfoot>
+	  <tr>
+	    {{#total}}
+	    <th align="center" colspan="5">TOTAL</th>
+	    <th align="right">{{subTotal}}</th>
+	    <th align="right">{{tax1and2}}</th>
+	    <th align="right">{{tax3}}</th>
+	    <th align="right">{{total}}</th>
+	    <th id="detail"></th>
+	    {{/total}}
+	  </tr>
+	</tfoot>
+	<tbody>
+	  {{#transactions}}
+	  <tr>
+	    <td>{{transdate}}</td>
+	    <td>{{transtime}}</td>
+	    <td>{{name}}</td>
+	    <td>{{receipt_id}}-{{transactionNumber}}</td>
+	    <td>{{type}}</td>
+	    <td align="right">{{subTotal}}</td>
+	    <td align="right">{{tax1and2}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{total}}</td>
+	    <td id="detail" align="right">{{>quickDetailsViewButton_P}}</td>
+	  </tr>
+	  {{/transactions}}
+	  {{^transactions}}
+	  <tr>
+	    <td align='center' colspan='11'>
+	      There are no transactions
+	    </td>
+	  </tr>
+	  {{/transactions}}
+	</tbody>
+      </table>
+      {{>quickReportViewHook_P}}
+      {{>printDetailButton_P}}
+    </script>
+    
+    <script id="transactionsDetailReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Transactions Detail Report</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>groupDropdownbox_P}}
+    {{>dateRangePicker_P}}
+    {{>generalGoButton_P}}
+	<div id='transactionssummarytable'></div>
+	<div id='transactionsdetailtable'></div>
+	{{>backButton_P}}
+	{{>backButton2_P}}
+      </div>
+    </script>
+    
+    
+    <!--------------------------- CANCELLED TRANSACTIONS REPORTS ---------------------------------->
+    <script id="menuReportsCancelledtable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Date</th>
+	    <th>Group</th>
+	    <th>Store</th>
+	    <th>Store #</th>
+	    <th>Terminal</th>
+	    <th>Cancelled Tran #</th>
+	    <th>Sales</th>
+	    <th>Tax 1</th>
+	    <th>Tax 3</th>
+	    <th>Total Sales</th>
+	    <th>Details</th>
+	  </tr>
+	</thead>
+	<tfoot>
+	  {{#totalrow}}
+	  <tr>
+	    <th colspan="6">Total</th>
+	    <th align="right">{{subTotal}}</th>
+	    <th align="right">{{tax1and2}}</th>
+	    <th align="right">{{tax3}}</th>
+	    <th align="right">{{total}}</th>
+	    <th></th>
+	  </tr>
+	  {{/totalrow}}
+	</tfoot>
+	<tbody>
+	  {{#items}}
+	  <tr>
+	    <td align="center">{{date}}</td>
+	    <td align="center">{{groupName}}</td>
+	    <td align="center">{{storeName}}</td>
+	    <td align="center">{{storeNumber}}</td>
+	    <td align="center">{{name}}</td>
+	    <td align="right">{{transactionNumber}}</td>
+	    <td align="right">{{subTotal}}</td>
+	    <td align="right">{{tax1and2}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{total}}</td>
+	    <td align="right">{{>quickDetailsViewButton_P}}</td>
+	  </tr>
+	  {{/items}}
+	  {{^items}}
+      <tr>
+        <td align='center' colspan='11'>
+          There are no Cancelled Transactions.
+        </td>
+      </tr>
+      {{/items}}
+	</tbody>
+      </table>
+      {{#totalrow}}
+      <p>Number of Cancelled Transactions : {{numofcancelled}}</p>
+      {{/totalrow}}
+      {{>quickReportViewHook_P}}
+    </script> 
+    
+    <script id="menuReportsCancelledReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Cancelled Transactions</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>dropdownHourlyActiviy_P}}
+	{{>dateRangePicker_P}}
+	{{>generalGoButton_P}}	
+	<div id='cancelledtable'></div>	
+	{{>backButton_P}}
+      </div>
+    </script>
+    
+    <!--------------------------- REFUNDS REPORTS ---------------------------------->
+    <script id="menuReportsRefundstable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Date</th>
+	    <th>Group</th>
+	    <th>Store</th>
+	    <th>Store #</th>
+	    <th>Terminal</th>
+	    <th>Refund Transaction #</th>
+	    <th>Sales</th>
+	    <th>Tax 1</th>
+	    <th>Tax 3</th>
+	    <th>Total Sales</th>
+	    <th>Details</th>
+	  </tr>
+	</thead>
+	<tfoot>
+	  {{#totalrow}}
+	  <tr>
+	    <th colspan="6" align="center">Total</th>
+	    <th align="right">{{subTotal}}</th>
+	    <th align="right">{{tax1and2}}</th>
+	    <th align="right">{{tax3}}</th>
+	    <th align="right">{{total}}</th>
+	    <th></th>
+	  </tr>
+	  {{/totalrow}}
+	</tfoot>
+	<tbody>
+	  {{#items}}
+	  <tr>
+	    <td align="center">{{date}}</td>
+	    <td align="center">{{groupName}}</td>
+	    <td align="center">{{storeName}}</td>
+	    <td align="center">{{storeNumber}}</td>
+	    <td align="center">{{name}}</td>
+	    <td align="right">{{transactionNumber}}</td>
+	    <td align="right">{{subTotal}}</td>
+	    <td align="right">{{tax1and2}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{total}}</td>
+	    <td align="right">{{>quickDetailsViewButton_P}}</td>
+	  </tr>
+	  {{/items}}
+	  {{^items}}
+      <tr>
+        <td align='center' colspan='11'>
+          There are no Refunds Transactions.
+        </td>
+      </tr>
+      {{/items}}
+	</tbody>
+      </table>
+      {{#totalrow}}
+      <p>Number of Refund Transactions : {{numofrefund}}</p>
+      {{/totalrow}}
+      {{>quickReportViewHook_P}}
+    </script> 
+    
+    <script id="menuReportsRefundsReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Refunds Transactions</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>dropdownHourlyActiviy_P}}
+	{{>dateRangePicker_P}}
+	{{>generalGoButton_P}}		
+	<div id='refundstable'></div>	
+	{{>backButton_P}}
+      </div>
+    </script>
+    
+    
+    <!--------------------------- DISCOUNTS REPORTS ---------------------------------->
+    <script id="menuReportsDiscountstable_TMP" type="text/html">
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>Date</th>
+	    <th>Group</th>
+	    <th>Store</th>
+	    <th>Store #</th>
+	    <th>Terminal</th>
+	    <th>Trans #</th>
+	    <th>Sales</th>
+	    <th>Discount</th>
+	    <th>Tax 1</th>
+	    <th>Tax 3</th>
+	    <th>Total Sales</th>
+	    <th>% of Discount</th>
+	    <th>Details</th>
+	  </tr>
+	</thead>
+	<tfoot>
+	  {{#totalrow}}
+	  <tr>
+	    <th colspan="6" align="center">Total</th>
+	    <th align="right">{{sales}}</th>
+	    <th align="right">-{{discount}}</th>
+	    <th align="right">{{tax1and2}}</th>
+	    <th align="right">{{tax3}}</th>
+	    <th align="right">{{total}}</th>
+	    <th align="right">{{percentdiscount}}</th>
+	    <th></th>
+	  </tr>
+	  {{/totalrow}}
+	</tfoot>
+	<tbody>
+	  {{#items}}
+	  <tr>
+	    <td align="center">{{date}}</td>
+	    <td align="center">{{groupName}}</td>
+	    <td align="center">{{storeName}}</td>
+	    <td align="center">{{storeNumber}}</td>
+	    <td align="center">{{name}}</td>
+	    <td align="right">{{transactionNumber}}</td>
+	    <td align="right">{{sales}}</td>
+	    <td align="right">{{totaldiscount}}</td>
+	    <td align="right">{{tax1and2}}</td>
+	    <td align="right">{{tax3}}</td>
+	    <td align="right">{{total}}</td>
+	    <td align="right">{{percentdiscount}}</td>
+	    <td align="right">{{>quickDetailsViewButton_P}}</td>
+	  </tr>
+	  {{/items}}
+	  {{^items}}
+      <tr>
+        <td align='center' colspan='11'>
+          There are no Discounts Transactions.
+        </td>
+      </tr>
+      {{/items}}
+	</tbody>
+      </table>
+      {{#totalrow}}
+      <p> Number of Discount Transactions : {{numofdiscount}}</p>
+      {{/totalrow}}
+      {{>quickReportViewHook_P}}
+    </script> 
+    
+    <script id="menuReportsDiscountsReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Discounts Transactions</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>dropdownHourlyActiviy_P}}
+	{{>dateRangePicker_P}}
+	{{>generalGoButton_P}}		
+	<div id='discountstable'></div>	
+	{{>backButton_P}}
+      </div>
+    </script>
+    
+    <!-------------------------------- VOUCHER HISTORY REPORTS ----------------------------------------->
+     <script id="menuReportsVouchertable_TMP" type="text/html">
+      <table class="reportstable">
+    <thead>
+      <tr>
+        <th>Date</th>
+       <!-- <th>Group</th> -->
+        <th>Store</th>
+        <th>Store #</th>
+        <th>Terminal</th>
+        <th>Tran #</th>
+        <th>Sales Amount</th>
+        <th>Voucher ID</th>
+        <th>Voucher Name</th>
+        <th>Voucher Type</th>
+        <th>Redeemed</th>
+        <th>Details</th>
+      </tr>
+    </thead>
+    <tfoot>
+      {{#totalrow}}
+      <tr>
+        <th colspan="9">Total</th>
+        <th align="right">{{redeemed}}</th>
+        <th></th>
+      </tr>
+      {{/totalrow}}
+    </tfoot>
+    <tbody>
+      {{#items}}
+      <tr>
+        <td align="center">{{date}}</td>
+        <!--<td align="center">{{groupName}}</td>-->
+        <td align="center">{{storeName}}</td>
+        <td align="center">{{storeNumber}}</td>
+        <td align="center">{{name}}</td>
+        <td align="right">{{transactionNumber}}</td>
+        <td align="right">{{total}}</td>
+        <td align="center">{{voucherID}}</td>
+        <td align="center">{{voucherName}}</td>
+        <td align="center">{{voucherType}}</td>
+        <td align="right">{{voucherRedeemed}}</td>
+        <td align="right">{{>quickDetailsViewButton_P}}</td>
+      </tr>
+      {{/items}}
+      {{^items}}
+      <tr>
+        <td align='center' colspan='11'>
+          There are no Other Transactions.
+        </td>
+      </tr>
+      {{/items}}
+    </tbody>
+      </table>
+      {{>quickReportViewHook_P}}
+    </script>
+    
+    <script id="voucherHistoryReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+    {{>main_navigation_buttons_P}}
+    <h1>Vouchers History Report</h1>
+    <h2>{{>breadcrumb_P}}</h2>
+    {{>dropdownHourlyActiviy_P}}
+    {{>dateRangePicker_P}}
+    {{>voucherOptionDropdown_P}}
+    {{>generalGoButton_P}}          
+    <div id='voucherstable'></div>       
+    {{>backButton_P}}
+      </div>
+    </script>
+    
+    <!---------------------------------- INVENTORY REPORTS ------------------------------------------------>
+    <script id="menuReportsInventory_GenericFooter_properties_P" type="text/html" class="partial">
+      <th align="right">{{sales.quantity}}</th>
+      <th align="right">{{sales.price}}</th>
+      <th align="right">{{refunds.quantity}}</th>
+      <th align="right">{{refunds.price}}</th>
+      <th align="right">{{totals.quantity}}</th>
+      <th align="right">{{totals.price}}</th>
+      <th align="right">{{typedSalesPercentage}}</th>
+      <th align="right">{{totalSalesPercentage}}</th>
+    </script>
+
+    <script id="menuReportsInventory_GenericFooter_P" type="text/html" class="partial">
+      <tr>
+	<th align="center">Total</th>
+	{{>menuReportsInventory_GenericFooter_properties_P}}
+      </tr>
+    </script>
+
+    <script id="menuReportsInventory_ScanSalesfooter_P" type="text/html" class="partial">
+      <tr>
+	<th align="center" colspan="2">Total</th>
+	{{>menuReportsInventory_GenericFooter_properties_P}}
+      </tr>
+    </script>	
+    
+    <script id="menuReportsInventory_GenericHeaderEnd_P" type="text/html" class="partial">
+      <th>Description</th>
+      <th>Qty</th>
+      <th>Sales</th>
+      <th>Qty</th>
+      <th>Refunds</th>
+      <th>Qty Total</th>
+      <th>Total</th>
+      <th id="percent_part">% of Set Sales</th>
+      <th>% of Total Sales</th>
+    </script>
+
+    <script id="menuReportsInventory_GenericBodyEnd_P" type="text/html" class="partial">
+      <td align="center">{{label}}</td>
+      <td align="right">{{sales.quantity}}</td>
+      <td align="right">{{sales.price}}</td>
+      <td align="right">{{refunds.quantity}}</td>
+      <td align="right">{{refunds.price}}</td>
+      <td align="right">{{totals.quantity}}</td>
+      <td align="right">{{totals.price}}</td>
+      <td align="right">{{typedSalesPercentage}}</td>
+      <td align="right">{{totalSalesPercentage}}</td>
+    </script>
+
+    <script id="inventoryDropdownbox_P" class="partial" type="text/html">
+      <ul style="list-style-type: none; padding-left: 0px; margin: 0px">
+	<li style="display: inline;">Category : 
+	  <select id="inventorydown" class="{{>commonClasses_P}}">
+	    <option value = "ALL" selected>ALL</option>
+	    <option value = "Menu" >Menu</option>
+	    <option value = "Scan" >Scan</option>
+	    <option value = "ECR" >ECR</option>
+	  </select>
+	</li>
+      </ul>
+    </script>
+    
+    <script id="menuReportsInventoryMenutable_TMP" type="text/html">
+      <ul style="list-style-type: none; padding-left: 0px; margin: 0px">
+	<li style="display: inline;">
+	  Menu Sales - Total Sales For Date Range : $ {{#menu_sales}}{{price}}{{/menu_sales}}
+	</li>
+      </ul>	
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    {{>menuReportsInventory_GenericHeaderEnd_P}}
+	  </tr>
+	</thead>
+	<tfoot>
+	  {{#menu_list_totals}}
+	  {{>menuReportsInventory_GenericFooter_P}}
+	  {{/menu_list_totals}}
+	</tfoot>
+	<tbody>
+	  {{#menu_sales_list}}
+	  <tr>
+	    {{>menuReportsInventory_GenericBodyEnd_P}}
+	  </tr>
+	  {{/menu_sales_list}}
+	</tbody>
+      </table>
+    </script>
+    
+    <script id="menuReportsInventoryScantable_TMP" type="text/html">
+      <ul style="list-style-type: none; padding-left: 0px; margin: 0px">
+	<li style="display: inline;">Scan Sales - Total Sales For Date Range : $ {{#scan_sales}}{{price}}{{/scan_sales}}
+	</li>
+      </ul>	
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    <th>SKU</th>
+	    {{>menuReportsInventory_GenericHeaderEnd_P}}
+	  </tr>
+	</thead>
+	<tfoot>
+	  {{#scan_list_totals}}
+	  {{>menuReportsInventory_ScanSalesfooter_P}}
+	  {{/scan_list_totals}}
+	</tfoot>
+	<tbody>
+	  {{#scan_sales_list}}
+	  <tr>
+	    <td align="center">{{upc}}</td>
+	    {{>menuReportsInventory_GenericBodyEnd_P}}
+	  </tr>
+	  {{/scan_sales_list}}
+	</tbody>
+      </table>
+    </script>
+    
+    <script id="menuReportsInventoryEcrtable_TMP" type="text/html">
+      {{#ecr_sales}}
+      <ul style="list-style-type: none; padding-left: 0px; margin: 0px">
+	<li style="display: inline;">ECR Sales - Total Sales For Date Range : $ {{price}}</li>
+      </ul>
+      {{/ecr_sales}}	
+      <table class="reportstable">
+	<thead>
+	  <tr>
+	    {{>menuReportsInventory_GenericHeaderEnd_P}}
+	  </tr>
+	</thead>
+	<tfoot>
+	  {{#ecr_list_totals}}
+	  {{>menuReportsInventory_GenericFooter_P}}
+	  {{/ecr_list_totals}}
+	</tfoot>
+	<tbody>
+	  {{#department_sales_list}}
+	  <tr>
+	    {{>menuReportsInventory_GenericBodyEnd_P}}
+	  </tr>
+	  {{/department_sales_list}}
+	  {{#scale_sales_list}}
+	  <tr>
+	    {{>menuReportsInventory_GenericBodyEnd_P}}
+	  </tr>
+	  {{/scale_sales_list}}
+	  {{#ecr_sales_list}}
+	  <tr>
+	    {{>menuReportsInventory_GenericBodyEnd_P}}
+	  </tr>
+	  {{/ecr_sales_list}}
+	</tbody>
+      </table>
+    </script>
+    
+    <script id="inventoryReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Inventory Sold Report</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<table class="reportstable">
+	  <tr>
+	    <td valign="top" rowspan="2">
+	      <h3>Hierarchy</h3>
+	      <div id='company-navigation'></div>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	      <div>
+		{{>dateRangePicker_P}}
+		{{>generate_report_btn_P}}
+		{{>inventoryDropdownbox_P}}
+		{{>exportButton_P}}
+	      </div>
+	      <div id='inventorymenutable' style="margin-bottom:30px;"></div>
+	      <div id='inventoryscantable' style="margin-bottom:30px;"></div>
+	      <div id='inventoryecrtable' style="margin-bottom:30px;"></div>
+	    </td>
+	  </tr>
+	</table>
+	{{>backButton_P}}
+      </div>
+    </script>
+    
+    <!------------------------------------------ MENU INVENTORY - IDLE INVENTORY ----------------------------->
+    
+    <script id="idleInventoryReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+    {{>main_navigation_buttons_P}}
+    <h1>Idle Inventory Report</h1>
+    <h2>{{>breadcrumb_P}}</h2>
+    {{>groupDropdownbox_P}}
+    <ul>
+        <li style="display: inline;">Look for items that hasn't been sold : Date Last Sold > </li>
+        <li style="display: inline;"><input type="text" id="txtInputday" /> days</li>
+    </ul>
+    {{>generalGoButton_P}}
+    <div id='idleinventorymain'></div>
+    {{>backButton_P}}
+      </div>
+    </script>
+    
+    <script id="idleInventorytable_TMP" type="text/html">
+      <table class="reportstable">
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Date Last Sold</th>
+        <th>Days</th>
+        <th>Qty on Hand</th>
+        <th>etc</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#items}}
+      <tr>
+        <td align="center">{{inventory.upccode}}</td>
+        <td align="center">{{inventory.description}}</td>
+        <td align="right">{{inventory.price.selling_price}}</td>
+        <td align="center">{{date_last_sold}}</td>
+        <td align="right">{{days}}</td>
+        <td align="right">{{qty}}</td>
+        <td align="center">reserved</td>
+      </tr>
+      {{/items}}
+      {{^items}}
+      <tr>
+        <td align='center' colspan='7'>
+          There are no Inventories.
+        </td>
+      </tr>
+      {{/items}}
+    </tbody>
+      </table>
+    </script>
+    
+    <!---------------------------------------------- MENU INVENTORY - STOCK MANAGEMENT ----------------------->
+    <script id="inventoryStockMngReports_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+    {{>main_navigation_buttons_P}}
+    <h1>Inventory Stock Management</h1>
+    <h2>{{>breadcrumb_P}}</h2>
+    {{>groupDropdownbox_P}}
+    {{>generalGoButton_P}}
+    <div id='inventorystockmain'></div>
+    {{>backButton_P}}
+      </div>
+    </script>
+    
+    <script id="inventoryStockMain_TMP" type="text/html">
+        <label>UPC-code: (enter a upc code)</label>
+        <input id="upc" type="text" value="{{_id}}" />
+        <div id='inventorystocktable'></div>
+        <div style="margin-bottom:40px">
+        <button style="float:right;" id="submitAddStock">Submit</button>
+        </div>
+    </script>
+    
+    <script id="inventoryStockstable_TMP" type="text/html">
+      <table class="reportstable">
+    <thead>
+      <tr>
+        <th>SKU</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Qty on Hand</th>
+        <th>Add Stock</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#items}}
+      <tr>
+        <td align="center">{{inventory.upccode}}</td>
+        <td align="center">{{inventory.description}}</td>
+        <td align="right">{{inventory.price.selling_price}}</td>
+        <td align="right">{{qty}}</td>
+        <td align="center"><input var="upc-{{inventory.upccode}}" type="text"/></td>
+      </tr>
+      {{/items}}
+      {{^items}}
+      <tr>
+        <td align='center' colspan='5'>
+          There are no Inventories.
+        </td>
+      </tr>
+      {{/items}}
+    </tbody>
+      </table>
+    </script>
+    
+    <!------------------------------------------------ MENU INVENTORY ----------------------------------------->
+    <script id="menuInventory_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Inventory</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<!--<div style="height:200px;">-->
+	  <div class="report-menu"><a href='#menuReports/{{startPage}}Inventory'><img src="../images/reports/inventorysold.png" border="0" class="report-menu-icon"/>Inventory Sold Report</a></div>
+	  <div class="report-menu"><a href='#menuInventory/IdleInventory'><img src="../images/inventory-idle.png" border="0" class="report-menu-icon"/>Idle Inventory Report</a></div>
+	  <div class="report-menu"><a href='#menuInventory/InventoryStockMng'><img src="../images/inventory-idle.png" border="0" class="report-menu-icon"/>Inventory Stock Management</a></div>
+	  <div class="report-menu"><a href='#menuInventory/{{startPage}}scanPriceChange'><img src="../images/reports/scanprice.png" border="0" class="report-menu-icon"/>SCAN Item Price Changes</a></div>
+	  <div class="report-menu"><a href='#menuInventory/{{startPage}}scanTaxChange'><img src="../images/reports/scantax.png" border="0" class="report-menu-icon"/>SCAN Sales Tax Changes</a></div>
+	  <div class="report-menu"><a href='#menuInventory/addScanItem'><img src="../images/reports/scanaddnew.png" border="0" class="report-menu-icon"/>Add New Inventory SCAN Items</a></div>
+	  <div class="report-menu"><a href='#menuInventory/{{startPage}}priceChangeLog'><img src="../images/reports/pricelog.png" border="0" class="report-menu-icon"/>Price Change Log</a></div>
+	  <div class="report-menu"><a href='#menuInventory/{{startPage}}taxChangeLog'><img src="../images/reports/taxlog.png" border="0" class="report-menu-icon"/>Tax Change Log</a></div>
+	  {{#showMenuPriceChange}}
+	  <div class="report-menu"><a href='#menuInventory/{{startPage}}menuPriceChange'><img src="../images/reports/menupricechange.png" border="0" class="report-menu-icon"/>Menu Price Change</a></div>
+	  {{/showMenuPriceChange}}
+	<!--</div>-->
+	<div style="clear: both;"></div>
+      </div>
+    </script>
+    
+    <script id="menuInventorymenuPriceChange_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Menu Price Change</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<div style='float:left;width:680px;'>
+	  <div id='menusetmenuscenter'></div>
+	  <div id='menusetmenusbottom'></div>
+	</div>
+	<div style='float:right;width:300px;'>
+	  <div id='menusetmenusleft'></div>
+	  <div id='menusetmenusright'></div>
+	</div>
+	<!--<div style='clear:both'></div>-->
+	{{>quickReportViewHook_P}}
+	<div style="clear: both;"></div>
+	{{>backButton_P}}
+      </div>
+    </script>
+    
+    <script id="menuInventoryApplyStoresQuickViewDialog_TMP" type="text/html">
+      <div id="menuinventoryapplystoresdialog">
+	<input type="checkbox" id="applyToAll"/><label for="applyToAll">Apply To All</label>
+	<form id="formInventoryApplystores">
+	  <table class="reportstable">
+	    <thead>
+	      <tr>
+		<td>Apply</td>
+		<td>Store</td>
+		<td>Store #</td>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      {{#items}}
+	      <tr>
+		<td><input type="checkbox" id="{{id}}" value="{{name}}"/></td>
+		<td><label>{{name}}</label></td>
+		<td><label>{{number}}</label></td>
+	      </tr>
+	      {{/items}}   
+	    </tbody>
+	  </table>
+	</form>
+      </div>
+    </script>
+    
+    <script id="menuInventoryScanItemPriceChanges_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>SCAN Item Price Changes</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<div id='priceChangeTable'></div>	
+	{{>backButton_P}}
+	{{>quickReportViewHook_P}}
+      </div>
+    </script>
+    
+    <script id="menuInventoryScanPricetable_TMP" type="text/html">
+      <div style="margin-bottom:40px">
+	<div>
+	  blank fields in the new price column will not be submitted
+	  <span  style="float:right;">
+	    {{#filter}}Current Filter = {{filter}}{{/filter}}
+	    {{^filter}}
+	    Showing all Inventory Items
+	    {{/filter}}
+	    <label for"filterInv">Search</label>
+	    <input id="filterInv" type=text/>
+	  </span>
+	</div>
+	<table style="margin-bottom:20px;" class="reportstable">
+	  <thead>
+	    <tr>
+	      <th>SKU</th>
+	      <th>Description</th>
+	      <th>Current Price</th>
+	      <th>New Price</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#list}}
+	    <tr>
+	      <td align="center">{{upccode}}</td>
+	      <td align="center">{{description}}</td>
+	      <td align="right">{{price.selling_price}}</td>
+	      <td align="center"><input var="upc-{{upccode}}" type="text"/></td>
+	    </tr>
+	    {{/list}}
+	    {{^list}}
+	    <tr>
+	      <td colspan=4 align='center'>There are no scanable items</td>
+	    </tr>
+	    {{/list}}
+	  </tbody>
+	</table>
+	<button style="float:right;" id="submitPriceChanges">Submit Price Changes</button>
+      </div>
+    </script>
+    
+    
+    <script id="menuInventoryScanPriceLog_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Price Change Log</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<div id='changeLogTable'></div>	
+	{{>backButton_P}}
+      </div>
+    </script>
+    
+    <script id="ScanLogtable_general_head_P" class="partial" type="text/html">
+      <th>Date</th>
+      <th>SKU</th>
+      <th>Description</th>
+    </script>
+    
+    <script id="ScanLogtable_general_body_P" class="partial" type="text/html">
+      <td align="center">{{date}}</td>
+      <td align="center">{{upccode}}</td>
+      <td align="center">{{description}}</td>
+    </script>
+    
+    <script id="ScanPriceLogtable_general_head_P" class="partial" type="text/html">
+      {{>ScanLogtable_general_head_P}}
+      <th>Price</th>
+    </script>
+    
+    <script id="ScanPriceLogtable_general_body_P" class="partial" type="text/html">
+      {{>ScanLogtable_general_body_P}}
+      <td align="right">{{price.selling_price}}</td>
+    </script>
+    
+    
+    <script id="menuInventoryScanPriceLogtable_TMP" type="text/html">
+      <div style="margin-bottom:30px">
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      {{>ScanPriceLogtable_general_head_P}}
+	      <th>Details</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#list}}
+	    <tr>
+	      {{>ScanPriceLogtable_general_body_P}}
+	      <td align="center">
+		<button id="{{_id}}">Details</button>
+	      </td>
+	    </tr>
+	    {{/list}}
+	    {{^list}}
+	    <tr>
+	      <td colspan="5" align='center'>There are no logs</td>
+	    </tr>
+	    {{/list}}
+	  </tbody>
+	</table>
+      </div>
+      <div id="detailsDialog"></div>
+    </script>
+    
+    <script id="menuInventoryScanPriceLogtable_store_TMP" type="text/html">
+      <div style="margin-bottom:30px">
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      {{>ScanPriceLogtable_general_head_P}}
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#list}}
+	    <tr>
+	      {{>ScanPriceLogtable_general_body_P}}
+	    </tr>
+	    {{/list}}
+	    {{^list}}
+	    <tr>
+	      <td colspan="4" align='center'>There are no logs</td>
+	    </tr>
+	    {{/list}}
+	  </tbody>
+	</table>
+      </div>
+      <div id="detailsDialog"></div>
+    </script>
+    
+    <script id="menuInventoryScanItemTaxChanges_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>SCAN Item Tax Changes</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<div id='taxChangeTable'></div>	
+	{{>backButton_P}}
+	{{>quickReportViewHook_P}}
+      </div>
+    </script>
+    
+    <script id="menuInventoryScanTaxtable_TMP" type="text/html">
+      <div style="margin-bottom:40px">
+	<div>
+	  disabled row will not be submitted
+	  <span  style="float:right;">
+	    {{#filter}}Current Filter = {{filter}}{{/filter}}
+	    {{^filter}}
+	    Showing all Inventory Items
+	    {{/filter}}
+	    <label for"filterInv">Search</label>
+	    <input id="filterInv" type=text/>
+	  </span>
+	</div>
+	<table style="margin-bottom:20px;" class="reportstable">
+	  <thead>
+	    <tr>
+	      <th>SKU</th>
+	      <th>Description</th>
+	      <th>Tax1</th>
+	      <th>Tax2</th>
+	      <th>Tax3</th>
+	      <th>Exemption</th>
+	      <th>Enable Row</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#list}}
+	    <tr>
+	      <td align="center">{{upccode}}</td>
+	      <td align="center">{{description}}</td>
+	      <td align="center">												
+		<input type="checkbox" style="border: 0" disabled="true" var="upc-{{upccode}}.apply_taxes.tax1" id="{{upccode}}-tax1" {{#apply_taxes.tax1}}checked=true{{/apply_taxes.tax1}} />
+	      </td>
+	      <td align="center">
+		<input type="checkbox" style="border: 0" disabled="true" var="upc-{{upccode}}.apply_taxes.tax2" id="{{upccode}}-tax2" {{#apply_taxes.tax2}}checked=true{{/apply_taxes.tax2}} />
+	      </td>
+	      <td align="center">
+		<input type="checkbox" style="border: 0" disabled="true" var="upc-{{upccode}}.apply_taxes.tax3" id="{{upccode}}-tax3" {{#apply_taxes.tax3}}checked=true{{/apply_taxes.tax3}} />
+	      </td>
+	      <td align="center">
+		<input type="checkbox" style="border: 0" disabled="true" var="upc-{{upccode}}.apply_taxes.exemption" id="{{upccode}}-exemption" {{#apply_taxes.exemption}}checked=true{{/apply_taxes.exemption}} />
+	      </td>
+	      <td align="center">
+		<button id="{{upccode}}">Enable</button>
+	      </td>
+	    </tr>
+	    {{/list}}
+	    {{^list}}
+	    <tr>
+	      <td colspan="7" align='center'>There are no scanable items</td>
+	    </tr>
+	    {{/list}}
+	  </tbody>
+	</table>
+	<button style="float:right;" id="submitTaxChanges">Submit Tax Changes</button>
+      </div>
+    </script>
+    
+    <script id="menuInventoryScanTaxLog_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Tax Change Log</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<div id='changeLogTable'></div>	
+	{{>backButton_P}}
+      </div>
+    </script>
+    
+    <script id="ScanTaxLogtable_general_head_P" class="partial" type="text/html">
+      {{>ScanLogtable_general_head_P}}
+      <th>Apply Tax1</th>
+      <th>Apply Tax2</th>
+      <th>Apply Tax3</th>
+      <th>Apply Exemption</th>
+    </script>
+    
+    <script id="ScanTaxLogtable_general_body_P" class="partial" type="text/html">
+      {{>ScanLogtable_general_body_P}}
+      {{#apply_taxes}}
+      <td align="center">
+	<input type="checkbox" style="border: 0" disabled="true" var="apply_taxes.tax1" id="tax1" {{#tax1}}checked=true{{/tax1}} />
+      </td>
+      <td align="center">
+	<input type="checkbox" style="border: 0" disabled="true" var="apply_taxes.tax2" id="tax2" {{#tax2}}checked=true{{/tax2}} />
+      </td>
+      <td align="center">
+	<input type="checkbox" style="border: 0" disabled="true" var="apply_taxes.tax3" id="tax3" {{#tax3}}checked=true{{/tax3}} />
+      </td>
+      <td align="center">
+	<input type="checkbox" style="border: 0" disabled="true" var="apply_taxes.exemption" id="exemption" {{#exemption}}checked=true{{/exemption}} />
+      </td>
+      {{/apply_taxes}}
+    </script>
+    
+    <script id="menuInventoryScanTaxLogtable_TMP" type="text/html">
+      <div style="margin-bottom:30px">
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      {{>ScanTaxLogtable_general_head_P}}
+	      <th>Locations Changed</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#list}}
+	    <tr>
+	      {{>ScanTaxLogtable_general_body_P}}
+	      <td align="center">
+		<button id="{{_id}}">Details</button>
+	      </td>
+	    </tr>
+	    {{/list}}
+	    {{^list}}
+	    <td colspan="8" align='center'>There are no logs</td>
+	    {{/list}}
+	  </tbody>
+	</table>
+      </div>
+      <div id="detailsDialog"></div>
+    </script>
+
+    <script id="menuInventoryScanTaxLogtable_store_TMP" type="text/html">
+      <div style="margin-bottom:30px">
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      {{>ScanTaxLogtable_general_head_P}}
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#list}}
+	    <tr>
+	      {{>ScanTaxLogtable_general_body_P}}
+	    </tr>
+	    {{/list}}
+	    {{^list}}
+	    <td colspan="7" align='center'>There are no logs</td>
+	    {{/list}}
+	  </tbody>
+	</table>
+      </div>
+      <div id="detailsDialog"></div>
+    </script>
+    
+    <script id="simpleList_TMP" type="text/html">
+      <!--<ul>
+	  {{#items}}
+	  <li>
+	    {{label}}
+	  </li>
+	  {{/items}}
+      </ul>-->
+      <table class="reportstable">
+	<tr>
+      	  <th align="center">Store Name</th>
+      	  <th align="center">Store Number</th>
+	</tr>
+	{{#items}}
+	<tr>
+      	  <td align="center">{{storeName}}</td>
+      	  <td align="center">{{storeNumber}}</td>
+	</tr>
+	{{/items}}
+      </table>
+    </script>
+    
+    
+    
+    <!-------------------------------------------------- Menu SET MENUS --------------------------------------->
+    
+    <script id="menuSetMenus_Left_TMP" type="text/html">
+      <h2>Modifiers</h2>
+      <button id="menumodifiersbutton" class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false">
+	<span class="ui-button-text">Edit Modifiers</span>
+      </button>
+      <button id="menumodifiersbutton2" class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false">
+    <span class="ui-button-text">Edit Modifiers2</span>
+      </button>	
+    </script>
+    
+    <script id="menuSetMenus_Center_TMP" type="text/html">
+      <table class="menutable" style="background-color:#f4f4f4;">
+	<tr>
+	  <td align="center">
+	    <!--<span style="font-size:24px;color:fff;">{{menuscreentitle}}</span>-->
+	    <p style="font-size:24px;color:fff;">{{menuscreentitle}}</p>
+	  </td>
+	</tr>
+      </table>
+      <table class="menutable">
+	{{#menu_screen}}
+	<tr>
+	  {{#row}}
+	  {{#display}}
+	  <td align="center" style="background-color: rgb( {{color}} );" id={{screen}}:{{position}} >
+	    <ul style="list-style-type: none; padding-left: 0px; margin: 0px">
+	      {{#description}}<li style="margin-left: 0px; margin-right: 0px">{{.}}</li>{{/description}}		
+	    </ul>
+	  </td>
+	  {{/display}}
+	  {{/row}}
+	</tr>
+	{{/menu_screen}}
+      </table>
+    </script>
+    
+    <script id="menuSetMenus_Bottom_TMP" type="text/html">
+      <table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+	  {{#menuButtonHeaders}}
+	  <td width="25%">
+	    <div class="menuLableBottomClass" id="menubuttonheader{{menu_id}}">
+	      {{#description1}}{{description1}}{{/description1}} <br />
+	      {{#description2}}{{description2}}{{/description2}} <br />
+	      {{#description3}}{{description3}}{{/description3}}
+	    </div>
+	  </td>
+	  {{/menuButtonHeaders}}
+	</tr>
+      </table>
+    </script>
+
+    <script id="menuSetMenusEditHeader_P" class="partial" type="text/html">
+        <table width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td valign="middle" width="25%">
+            <div class="menuEditBottomClass" id="menueditheader1">
+                Edit Menu 1<br /> 
+                Header
+            </div>
+          </td>
+          <td valign="middle" width="25%">
+              <div class="menuEditBottomClass" id="menueditheader2">
+                Edit Menu 2<br /> 
+                Header
+              </div>
+          </td>
+          <td valign="middle" width="25%">
+              <div class="menuEditBottomClass" id="menueditheader3">
+                Edit Menu 3<br /> 
+                Header
+              </div>
+          </td>
+          <td valign="middle" width="25%">
+              <div class="menuEditBottomClass" id="menueditheader4">
+                Edit Menu 4 <br />
+                Header
+              </div>
+          </td>
+        </tr>
+      </table>
+    </script>
+
+    <script id="menuSetMenuHeader_TMP" type="text/html">
+      <form id="editMenuHeaderButton">
+	<p>Menu Header Label:</p>
+	<table>	
+	  <tr>
+	    <td><label for="description1">Line 1:</label></td>
+	    <td><input class="menuEditInput" type="text" maxlength="10" size="10" var="description1" id="description1" value="{{description1}}"/></td>
+	  </tr>
+	  <tr>
+	    <td><label for="description2">Line 2:</label></td>
+	    <td><input class="menuEditInput" type="text" maxlength="10" size="10" var="description2" id="description2" value="{{description2}}"/></td>
+	  </tr>
+	  <tr>
+	    <td><label for="description3">Line 3:</label></td>
+	    <td><input class="menuEditInput" type="text" maxlength="10" size="10" var="description3" id="description3" value="{{description3}}"/></td>
+	  </tr>	
+	</table>
+	<input type="hidden" var="menu_id" var_type="number" value="{{menu_id}}" />
+	<input type="hidden" var="defaultImage" value="{{defaultImage}}" />
+	<input type="hidden" var="image" value="{{image}}" />
+      </form>
+      <ul style="list-style-type:none; float: left;">
+	<li>
+	  <button class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" onClick="saveEditHeader();">
+	    <span class="ui-button-text">Save</span>
+	  </button>
+	  <button class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" onClick="closeEditHeader();">
+	    <span class="ui-button-text">Close</span>
+	  </button>
+	</li>
+      </ul>
+    </script>
+    
+    <script id="menuSetMenus_Right_TMP" type="text/html">
+      <form id="editMenuButton">
+	<h2>Menu Label:</h2>
+	<table>	
+	  {{#display}}
+	  <tr>
+	    <td><label for="editmenudescription0">Line 1:</label></td>
+	    <td><input class="menuEditInput" type="text" maxlength="10" size="10" var="display.description.0" id="editmenudescription0" value="{{description.0}}"/></td>
+	  </tr>
+	  <tr>
+	    <td><label for="editmenudescription1">Line 2:</label></td>
+	    <td><input class="menuEditInput" type="text" maxlength="10" size="10" var="display.description.1" id="editmenudescription1" value="{{description.1}}"/></td>
+	  </tr>
+	  <tr>
+	    <td><label for="editmenudescription2">Line 3:</label></td>
+	    <td><input class="menuEditInput" type="text" maxlength="10" size="10" var="display.description.2" id="editmenudescription2" value="{{description.2}}"/></td>
+	  </tr>
+	  <tr>
+	    <td><label for="displayColor"> Menu Color :</label></td>
+	    <td><input class="menuEditInput" type="text" maxlength="10" size="10" id="displayColor" var="display.color"  value="{{color}}" /></td>
+	  </tr>	
+	  {{/display}}
+	  {{#foodItem}}
+	  <tr>
+	    <td><label>Price : </label></td>
+	    <td><input class="menuEditInput" type="text" var="foodItem.price"  value="{{price}}" var_type="number" id="editmenuprice" var_default="0"/></td>
+	  </tr>
+	  {{/foodItem}}
+	  <tr>
+	    <td colspan="2">
+	      <ul style="list-style-type:none; float: left;">
+		{{#display}}
+		<li>
+	  	  <input type="checkbox" style="border: 0" var="display.is_enabled" class="menuButtonToggle" id="is_enabled" {{#is_enabled}}checked=true{{/is_enabled}} /> 
+		  <label for="is_enabled">Active</label>
+		  {{/display}}
+		  {{#foodItem}}
+		  <input type="checkbox" style="border: 0" var="foodItem.has_modifier" class="menuButtonToggle" id="has_modifier" {{#has_modifier}}checked=true{{/has_modifier}} />
+		  <label for="has_modifier">Modifier</label>
+		</li>
+		{{#apply_taxes}}
+		<li>
+		  <input class="menuButtonToggle" style="border: 0" type="checkbox" var="foodItem.apply_taxes.exemption" id="exemption" {{#exemption}}checked=true{{/exemption}} />
+		  <label for="exemption">Apply Exemption</label>
+		  <input type="checkbox" style="border: 0" class="menuButtonToggle" var="foodItem.apply_taxes.tax1" id="tax1" {{#tax1}}checked=true{{/tax1}} />
+		  <label for="tax1">Apply Tax1</label>
+		</li>
+		<li>
+		  <input type="checkbox" style="border: 0" class="menuButtonToggle" var="foodItem.apply_taxes.tax2" id="tax2" {{#tax2}}checked=true{{/tax2}} />
+		  <label for="tax2">Apply Tax2</label>
+		  <input type="checkbox" style="border: 0" class="menuButtonToggle" var="foodItem.apply_taxes.tax3" id="tax3" {{#tax3}}checked=true{{/tax3}} />
+		  <label for="tax3">Apply Tax3</label>
+		</li>
+		{{/apply_taxes}}
+		<li>
+		  <input type="checkbox" style="border: 0" class="menuButtonToggle" id="use_scale" var="foodItem.use_scale" {{#use_scale}}checked=true{{/use_scale}} />
+		  <label for="use_scale">Read Scale</label>
+		  <input type="checkbox" style="border: 0" class="menuButtonToggle" var="foodItem.print_to_kitchen" {{#print_to_kitchen}}checked=true{{/print_to_kitchen}} />
+		  <label for="print_to_kitchen">Print in Kitchen</label>
+		</li>
+		<li>
+		  <input type="checkbox" style="border: 0" class="menuButtonToggle" id="duplicate" var="foodItem.duplicate" {{#duplicate}}checked=true{{/duplicate}} />
+		  <label for="duplicate">Duplicate</label>
+		</li>
+		{{/foodItem}}
+	      </ul>
+	    </td>
+	  </tr>
+	</table>
+	{{#display}}
+	<input type="hidden" var="display.screen" var_type="number" var_default="0"  value="{{screen}}" />
+	<input type="hidden" var="display.position" var_type="number" var_default="0" value="{{position}}" />
+	{{/display}}
+      </form>
+      <ul style="list-style-type:none; float: left;">
+	<li>
+	  <button id="btnMenuSave" class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false">
+	    <span class="ui-button-text">Save</span>
+	  </button>
+	  <button class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" onClick="closeEditMenu();">
+	    <span class="ui-button-text">Close</span>
+	  </button>
+	</li>
+      </ul>
+      <div style="width:300px;height:60px;"></div>
+    </script>
+    
+    <script id="menuSetMenus_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Default Menus</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<div style='float:left;width:680px;'>
+	  <div id='menusetmenuscenter'></div>
+	  <div id='menusetmenusbottom'></div>
+	  {{>menuSetMenusEditHeader_P}}
+	</div>
+	<div style='float:right;width:300px;'>
+	  <div id='menusetmenusleft'></div>
+	  <div id='menusetmenusright'></div>
+	</div>
+	<div style='clear:both'></div>
+      </div>
+    </script>
+    
+    
+    <!------------------------------------------------------- CUSTOMER LOGIN------------------------------------------>
+    <script id="layerLogin_TMP" type="text/html">
+      <div class="loginwrapper2">
+
+	<div style="z-index:101;position: absolute;left: 536px;top: 60px; width:181px; height:88px; font-size:12px; font-weight:bold;">
+	  <img src="../images/pos.png"/>
+	</div>
+	
+	<div style="z-index:101;position: absolute;left: 326px;top: 460px; width:167px; height:39px; font-size:12px; font-weight:bold;">
+	  <img src="../images/more-info.png"/>
+	</div>
+
+
+	<div class="loginbox2">
+	       <div class="iefix">
+	  <form id="ids_form" style="margin-top: 90px;">
+	    <center>
+	      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		  <td>&nbsp;</td>
+		  <td>&nbsp;</td>
+		</tr>
+		<tr>
+		  <td align="right">Company ID:</td>
+		  <td><input class="login" type="text" var="company" autofocus="autofocus" placeholder="Company ID"//></td>
+		</tr>
+		<tr>
+		  <td align="right">Group ID:</td>
+		  <td><input class="login" type="text" var="group" placeholder="Group ID"/></td>
+		</tr>
+		<tr>
+		  <td align="right">Store ID:</td>
+		  <td><input class="login" type="text" var="store" placeholder="Store ID"/></td>
+		</tr>
+		<tr>
+		  <td align="right">User ID:</td>
+		  <td><input class="login" type="text" var="user" placeholder="User ID"/></td>
+		</tr>
+		<tr>
+		  <td align="right">Password:</td>
+		  <td><input class="login" type="password" var="password" id="layeredloginpassword" placeholder="Password"/></td>
+		</tr>
+	      </table>
+	    </center>
+	  </form>
+	  </div>
+	  {{>loginButton_P}}
+	</div>
+      </div>
+      <center>
+	<span style="color:#4ac3c8; font-weight:bold;">Contact | About | Partners</span>
+	<br/>
+	<img src="../images/v1login.png" alt="" border="0" usemap="#Map" style="padding-top:20px;padding-bottom:20px;"/>
+	<map name="Map" id="Map">
+	  <area shape="rect" coords="12,52,130,99" href="http://www.ivaleo.net/to.asp" target="_blank" alt="Toronto" />
+	  <area shape="rect" coords="138,51,257,104" href="http://www.ivaleo.net/ny.asp" target="_blank" alt="NYC" />
+	</map>    
+      </center>
+    </script>
+
+    <!------------------------------------  company management page TMP ------------------------------->
+    <script id="companyManagementPage_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<!--{{>logoutButton_P}}-->
+	<h1>Company Management</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>salesFields_P}}
+	{{>numberOfGroupsFields_P}}
+	{{>numberOfStoresFields_P}}
+	{{>numberOfTerminalsFields_P}}
+	<div style="clear:both;"></div>
+	{{>quickReportViewHook_P}}
+      </div>
+    </script>
+
+
+    <!------------------------------------  group management page TMP ------------------------------->
+    <script id="groupManagementPage_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Group Management</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>salesFields_P}}
+	{{>numberOfStoresFields_P}}
+	{{>numberOfTerminalsFields_P}}
+	<div style="clear:both;"></div>
+	{{>quickReportViewHook_P}}
+      </div>
+    </script>
+
+    <!------------------------------------  store management page TMP ------------------------------->
+    <script id="storeManagementPage_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Store Management</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>salesFields_P}}
+	{{>numberOfTerminalsFields_P}}
+	<div style="clear:both;"></div>
+	{{>quickReportViewHook_P}}
+      </div>
+    </script>
+
+    <!------------------------------------- groups table TMP -------------------------------------------->
+    <script id="groupstable_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Groups Table</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      <th>Company Name</th>
+	      <th>Group Name</th>
+	      <th># of Stores</th>
+	      <th># of Terminals</th>
+	      <th>Yesterday Sales</th>
+	      <th>MTD Sales</th>
+	      <th>YTD Sales</th>
+	      <th>Details</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#list}}
+	    <tr>
+	      <td>{{companyName}}</td>
+	      <td>
+	          <a href="#{{startPage}}/group/{{group_id}}/stores">{{groupName}}</a>
+	      </td>
+	      <td>{{numberOfStores}}</td>
+	      <td>{{numberOfTerminals}}</td>
+	      <td align="right">{{yesterdaysales}}</td>
+	      <td align="right">{{mtdsales}}</td>
+	      <td align="right">{{ytdsales}}</td>
+	      <td>{{>quickReportViewButton_P}}</td>
+	    </tr>
+	    {{/list}}
+	  </tbody>
+	</table>
+	{{>quickReportViewHook_P}}
+	{{>backButton_P}}
+      </div>
+    </script>
+
+    <!------------------------------------- stores table TMP -------------------------------------------->
+    <script id="storestable_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Stores Table</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      <th>Company Name</th>
+	      <th>Group Name</th>
+	      <th>Store Name</th>
+	      <th>Store Number</th>
+	      <th># of Terminals</th>
+	      <th>Yesterday Sales</th>
+	      <th>MTD Sales</th>
+	      <th>YTD Sales</th>
+	      <th>Details</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#list}}
+	    <tr>
+	      <td>{{companyName}}</td>
+	      <td>{{groupName}}</td>
+	      <td>
+	          <a href="#{{startPage}}/store/{{store_id}}/terminals">{{storeName}}</a>
+          </td>
+	      <td>{{storeNumber}}</td>
+	      <td>{{numberOfTerminals}}</td>
+	      <td align="right">{{yesterdaysales}}</td>
+	      <td align="right">{{mtdsales}}</td>
+	      <td align="right">{{ytdsales}}</td>
+	      <td>{{>quickReportViewButton_P}}</td>
+	    </tr>
+	    {{/list}}
+	  </tbody>
+	</table>
+	{{>quickReportViewHook_P}}
+	{{>backButton_P}}
+      </div>
+    </script> 
+
+    <!------------------------------------- terminals table TMP -------------------------------------------->
+    <script id="terminalstable_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Terminals Table</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	<table class="reportstable">
+	  <thead>
+	    <tr>
+	      <th>Company Name</th>
+	      <th>Group Name</th>
+	      <th>Store Name</th>
+	      <th>Store Number</th>
+	      <th>Terminal Number</th>
+	      <th>Yesterday Sales</th>
+	      <th>MTD Sales</th>
+	      <th>YTD Sales</th>
+	      <th>Details</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#list}}
+	    <tr>
+	      <td>{{companyName}}</td>
+	      <td>{{groupName}}</td>
+	      <td>{{storeName}}</td>
+	      <td>{{storeNumber}}</td>
+	      <td>{{terminalName}}</td>
+	      <td align="right">{{yesterdaysales}}</td>
+	      <td align="right">{{mtdsales}}</td>
+	      <td align="right">{{ytdsales}}</td>
+	      <td>{{>quickReportViewButton_P}}</td>
+	    </tr>
+	    {{/list}}
+	  </tbody>
+	</table>
+	{{>quickReportViewHook_P}}
+	{{>backButton_P}}
+      </div>
+    </script>
+
+    <!-------------------------------------------------ADD INVENTORY --------------------------------------------------------->
+    <script id="inventoryForm_P" class="partial" type="text/html">
+      <form id="inv_form">
+	<label>Description</label>
+	  <input type="text" var="description" value="{{description}}" class="{{>commonClasses_P}}" />
+	<dl>
+	  <dt>Apply Taxes</dt>
+	  <dd>
+	    <label>Tax 1</label>
+	    <input type="checkbox" var="apply_taxes.tax1" {{#apply_taxes.tax1}}checked=true{{/apply_taxes.tax1}} class="{{>commonClasses_P}}" />
+	    <label>Tax 2</label>
+	    <input type="checkbox" var="apply_taxes.tax2" {{#apply_taxes.tax2}}checked=true{{/apply_taxes.tax2}} class="{{>commonClasses_P}}" />
+	    <label>Tax 3</label>
+	    <input type="checkbox" var="apply_taxes.tax3" {{#apply_taxes.tax3}}checked=true{{/apply_taxes.tax3}} class="{{>commonClasses_P}}" />
+	    <label>Exemption</label>
+	    <input type="checkbox" var="apply_taxes.exemption" {{#apply_taxes.exemption}}checked=true{{/apply_taxes.exemption}} class="{{>commonClasses_P}}" />
+	  </dd>
+	</dl>
+	<dl>
+	  <dt>Price</dt>
+	  <dd>
+	    <label>Selling Price</label>
+	    <input type="text" var="price.selling_price" value="{{price.selling_price}}" class="{{>commonClasses_P}}" />
+	    <label>Standard price</label>
+	    <input type="text" var="price.standard_price" value="{{price.standard_price}}" class="{{>commonClasses_P}}" />
+	  </dd>
+	</dl>
+      </form>
+      <button id="addItemToCompany">Add Inventory</button>
+    </script>
+
+    <script id="inventoryForm_TMP" type="text/html">
+      <p>{{userMessage}}</p>
+      {{>inventoryForm_P}}
+    </script>
+
+    <script id="upcInput_P" class="partial" type="text/html">
+      <label>UPC-code: (enter a upc code to inspect or add an inventory item)</label>
+      <span id="upc_search">
+	<input type="text" value="{{_id}}" />
+	<button>search</button>
+      </span>
+    </script>
+
+    <script id="inventoryManagementHome_TMP" type="text/html">
+      {{>mainheader}}<div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	{{>main_navigation_buttons_P}}
+	<h1>Add a Scan Inventory Item</h1>
+	<h2>{{>breadcrumb_P}}</h2>
+	{{>upcInput_P}}
+	<div id="item_display"></div>
+	{{>backButton_P}}
+      </div>
+    </script>
+
+  </head>
+
+  <body>
+    
+    <div id="main"></div>
+    <div id="timespace" style="width:1000px;margin:0 auto; color:#666;text-align:center;">
+      <script>document.write((new Date()).toDateString() + " / " + (new Date()).toLocaleTimeString())</script>
+    </div>
+    <div class="footer">
+      <div class="footerin">
+	&copy; 2012 RT7 Incorporated.
+	<img src="../images/rt7.png" style="float:right;"/>
+      </div>
+    </div>
+  </body>
+</html>

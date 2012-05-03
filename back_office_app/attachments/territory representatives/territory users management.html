@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <title>Territory Users Management</title>
+      <link href="../layout.css" rel="stylesheet" type="text/css" />
+      <link href="../css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+      
+      <script language="javascript" type="text/javascript" src="../lib/jquery-1.7.1.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/jquery.timers-1.0.0.js.txt"></script>
+      <script language="javascript" type="text/javascript" src="../lib/sha1.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/json2.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/date.js"></script>
+      
+      <script language="javascript" type="text/javascript" src="../lib/jquery-ui-1.8.16.custom.min.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/jquery.couch.0.11.0.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/couchDBhelpers.js"></script>
+      
+      <script language="javascript" type="text/javascript" src="../lib/underscore.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/underscore.string.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/underscore_extended.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/backbone.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/mustache.js"></script>
+      <script language="javascript" type="text/javascript" src="../lib/ICanHaz-no-mustache.js"></script>
+      <script language="javascript" type="text/javascript" src="../site.js"></script>
+      
+      <script language="javascript" type="text/javascript" src="../lib/couch-backbone.js"></script>
+      
+      <script language="javascript" type="text/javascript" src="../lib/TerritoryUser.js"></script>
+      <script language="javascript" type="text/javascript" src="territory_users_management.js"></script>
+      <script language="javascript" type="text/javascript" src="docRdy.js"></script>
+      
+      
+      <style>
+	label, input { display:block; }
+	input.text { margin-bottom:12px; width:95%; padding: .4em; }
+	fieldset { padding:0; border:0; margin-top:25px; }
+	i {color: gray;}
+	div#users-contain { width: 350px; margin: 20px 0; }
+	div#users-contain table { margin: 1em 0; border-collapse: collapse; width: 100%; }
+	div#users-contain table td, div#users-contain table th { border: 1px solid #eee; padding: .6em 10px; text-align: left; }
+	.ui-dialog .ui-state-error { padding: .3em; }
+	.validateTips { border: 1px solid transparent; padding: 0.3em; }
+      </style>
+
+      <!--------------------------------------------------------GENERAL--------------------------------------------------->
+      <script id="commonClasses_P" class="partial" type="text/html">
+	text ui-widget-content ui-corner-all
+      </script>
+      
+      <script id="commonButtonClasses_P" class="partial"  type="text/html">
+	ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only
+      </script>
+      
+      <script id="backButton_P" class="partial" type="text/html">
+	<button class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" onClick="javascript:history.go(-1);">
+	  <span class="ui-button-text">Back</span>
+	</button>
+      </script>
+      
+      <script id="menuButton_P" class="partial" type="text/html">
+	<button  class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false" 
+		 onClick="javascript:window.location.href ='../mainMenus.html';">
+	  <span class="ui-button-text">Main Menu</span>
+	</button>
+      </script>
+      
+      <script id="createButton_P" class="partial" type="text/html">
+	<button id="create-thing">{{createButtonLabel}}</button>
+      </script>
+      
+      <script id="editButton_P" class="partial" type="text/html">
+	<button id="edit-thing">
+	  Edit
+	</button>
+      </script>
+      
+      <script id="quickViewButton_P" class="partial" type="text/html">
+	<button id='{{_id}}' class="ui-state-default ui-corner-all">
+	  <span class="ui-button-text">
+            View
+	  </span>
+	</button>
+      </script>
+      
+      <script id="deleteButton_P" class="partial" type="text/html">
+	<button onclick=deleteThing("{{company_id}}","{{group_id}}","{{store_id}}") class="ui-state-default ui-corner-all">
+	  <span class="ui-button-text">
+            Delete
+	  </span>
+	</button>
+      </script>
+      
+      <script id="quickViewHook_P" class="partial" type="text/html">
+	<div id="dialog-quickView" title="QuickView"></div>
+      </script>
+      
+      <script id="createDialogHook_P" class="partial" type="text/html">
+	<div id="create-dialog"></div>
+      </script>
+      
+      <script id="managementTableHook_P" class="partial" type="text/html">
+	<div id="list-things"></div>
+      </script>
+      
+      
+      <script id="addressFields_P" class="partial" type="text/html">
+	<h2>Address</h2>
+	<ul>
+	  <li>
+	    Address 1
+	    <input type="text" id="address.street0" var="street0" value="{{street0}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>
+	    Address 2
+	    <input type="text" id="address.street1" var="street1" value="{{street1}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>
+	    City
+	    <input type="text" id="address.city" var="city" value="{{city}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>
+	    State/Province
+	    <input type="text" id="address.province" var="province" value="{{province}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>
+	    Postal Code
+	    <input type="text" id="address.postalcode" var="postalcode" value="{{postalcode}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>
+	    Country
+	    <input type="text" id="address.country" var="country" value="{{country}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	</ul>
+      </script>
+
+      <script id="contactFields_P" class="partial" type="text/html">
+	<h2>Contact</h2>
+	<ul>
+	  <li>
+	    First Name
+	    <input type="text" id="contact.firstname" var="firstname" value="{{firstname}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>
+	    Last Name
+	    <input type="text" id="contact.lastname" var="lastname" value="{{lastname}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>
+	    Website
+	    <input type="text" id="contact.website" var="website" value="{{website}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>
+	    E-mail
+	    <input type="text" id="contact.email" var="email" value="{{email}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>
+	    Phone
+	    <input type="text" id="contact.phone" var="phone" value="{{phone}}" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	</ul>
+      </script>
+
+      <!--------------------------------------------------------DIALOG--------------------------------------------------->
+      
+      <script id="tips_TMP" type="text/html">
+	<ol>
+	  {{#tips}}
+	  <li>{{.}}</li>
+	  {{/tips}}
+	</ol>
+      </script>
+      
+      <script id="inputUserInfo_TMP" class="partial" type="text/html">
+	<form id="form">
+	  <h2>Territory User Info</h2>
+	  <ul>
+	    <li><label for="user-name">User ID</label></li>
+	    <li><input type="text" var="userName"  value="{{userName}}" id="txtinputuser" /></li>
+	    <li><label for="user-pass">Password</label></li>
+	    <li><input type="text" var="password" id="txtinputpassword" /></li>
+	    
+	    <li>
+	      Enabled? : <input type="checkbox" name="enabled" value="{{enabled}}" checked/>
+	    </li>
+	  </ul>
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+	    <tbody>
+              <tr>
+		<td valign="top">{{>addressFields_P}}</td>
+		<td valign="top">{{>contactFields_P}}</td>
+              </tr>
+	    </tbody>
+	  </table>
+	</form>
+      </script>
+      
+      
+      <!-------------------------------------------------- TERRITORY ---------------------------------------->
+      <script id="territoryUsersTabel_TMP" type="text/html">
+	<table class="reportstable">
+	  <thead>
+            <tr>
+              <th>User ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>View</th>
+              <th>etc</th>
+            </tr>
+	  </thead>
+	  <tbody>
+            {{#list}}
+            <tr>
+              <td align="center">{{userName}}</td>
+              <td align="center">{{firstname}}</td>
+              <td align="center">{{lastname}}</td>
+              <td align="center">{{>quickViewButton_P}}</td>
+              <td>etc</td>
+            </tr>
+            {{/list}}
+	  </tbody>
+	</table>
+	{{>quickViewHook_P}}
+      </script>
+      
+      <script id="territoryuser_management_page_TMP" type="text/html">
+	<h1>Territory Users Management</h1>
+	{{>menuButton_P}}
+	<hr/>
+	{{>managementTableHook_P}}
+	{{>createDialogHook_P}}
+      </script>  
+      
+    </head>
+    <body>
+      <div style="width:1000px;margin:20px auto;padding:0px;background-color:transparent;font-size:13px;font-weight:bold;text-align:center;">
+	<img src="../images/logo.png"/>
+      </div>
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+	<div id="main"></div>
+      </div>
+      <div id="timespace" style="width:1000px;margin:0 auto; color:#666;text-align:center;">
+        <script>document.write((new Date()).toDateString() + " / " + (new Date()).toLocaleTimeString())</script>
+      </div>
+      <div class="footer">
+	<div class="footerin">
+	  &copy; 2012 RT7 Incorporated.
+	  <img src="../images/rt7.png" style="float:right;"/>
+	</div>
+      </div>
+    </body>
+  </html>

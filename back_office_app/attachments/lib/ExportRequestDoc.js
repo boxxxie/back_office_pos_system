@@ -1,0 +1,1 @@
+var ExportRequestDoc = couchDoc.extend();
