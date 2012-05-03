@@ -47,7 +47,7 @@ function getReportParam() {
 
 	var numGroups = _.size(groups);
 	var numStores = _.reduce(groups, function(sum, group){ return sum + _.size(group.stores); }, 0);
-	var numTerminals = _.reduce(stores, function(sum, store){ return sum + _.size(store.terminals); }, 0); //FIXME:this is an error when stores have no terminals
+	var numTerminals = _.reduce(stores, function(sum, store){ return sum + _.isUndefined(store.terminals)?0:_.size(store.terminals); }, 0); //FIXME:this is an error when stores have no terminals
 	var for_TMP = {
 	    numberOfGroups:numGroups,
 	    numberOfStores:numStores,
@@ -66,7 +66,7 @@ function getReportParam() {
 	var stores = group.stores;
 
 	var numStores = _.size(stores);
-	var numTerminals = _.reduce(stores, function(sum, store){ return sum + _.size(store.terminals); }, 0); //FIXME: this may be a bug if there is a store with no terminals
+	var numTerminals = _.reduce(stores, function(sum, store){ return sum + _.isUndefined(store.terminals)?0:_.size(store.terminals); }, 0); //FIXME: this may be a bug if there is a store with no terminals
 	return  {
 	    numberOfStores:numStores,
 	    numberOfTerminals:numTerminals,
@@ -101,7 +101,7 @@ function getGroupsTableParam() {
     			  var numberOfStores = _.size(group.stores);
 			  var numberOfTerminals = _.reduce(group.stores,
 							 function(sum, store){
-							     return sum + _.size(store.terminals); },
+							     return sum + _.isUndefined(store.terminals)?0:_.size(store.terminals); },
 							 0);
 			  return {
 			      companyName:company.companyName,
@@ -218,7 +218,7 @@ function getStoresTableParam(group_id) {
 	    .value();
 
 	return _.extend({list: _.map(stores, function(store) {
-				    var numberOfTerminals = _.size(store.terminals);
+				    var numberOfTerminals = _.isUndefined(store.terminals)?0:_.size(store.terminals);
 				    return {companyName:company.companyName,
 				       groupName:store.groupName,
 				       store_id:store.store_id,
@@ -237,7 +237,7 @@ function getStoresTableParam(group_id) {
 	var group = ReportData.group;
 	var stores = group.stores;
 	return _.extend({list: _.map(stores, function(store) {
-					 var numberOfTerminals = _.size(store.terminals);
+					 var numberOfTerminals = _.isUndefined(store.terminals)?0:_.size(store.terminals);
 					 return {companyName:ReportData.companyName,
 						 groupName:group.groupName,
 						 store_id:store.store_id,
