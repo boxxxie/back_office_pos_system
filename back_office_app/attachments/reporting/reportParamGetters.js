@@ -36,21 +36,47 @@ function dialogTitleMaker(options){
 function entity_blob_for_report_params(id){
     var entity_id = id || topLevelEntity(ReportData).id;
     var entity = entity_from_id(ReportData,entity_id);
-    var entity_stats = {
-	numberOfGroups:_.chain(reportDataToArray(ReportData)).groupBy('group_id').size().value(),
-	numberOfStores:_.chain(reportDataToArray(ReportData)).groupBy('store_id').size().value(),
-	numberOfTerminals:_.chain(reportDataToArray(ReportData)).groupBy('terminal_id').size().value()
+    var numberOfGroups=_.chain(reportDataToArray(ReportData)).groupBy('group_id').size().value();
+    var numberOfStores=_.chain(reportDataToArray(ReportData)).groupBy('store_id').size().value();
+    var numberOfTerminals=_.chain(reportDataToArray(ReportData)).groupBy('terminal_id').size().value();
+
+    if(id){
+	var entity_stats = {
+	    numberOfGroups:numberOfGroups,
+	    numberOfStores:numberOfStores,
+	    numberOfTerminals:numberOfTerminals
+	}
     }
-    var entity_blob = _.combine(entity,entity_stats,{id:entity_id});
+    else if(topLevelEntity(ReportData).type === 'company'){
+	var entity_stats = {
+	    numberOfGroups:numberOfGroups,
+	    numberOfStores:numberOfStores,
+	    numberOfTerminals:numberOfTerminals
+	}
+    }
+    else if(topLevelEntity(ReportData).type === 'group'){
+	var entity_stats = {
+	    numberOfStores:numberOfStores,
+	    numberOfTerminals:numberOfTerminals
+	}
+    }
+    else if(topLevelEntity(ReportData).type === 'store'){
+	var entity_stats = {
+	    numberOfTerminals:numberOfTerminals
+	}
+    }
+    var entity_blob = _.combine(entity,
+			      entity_stats,
+			      {id:entity_id});
     return _.combine(entity_blob,{
 		    quickViewArgs:{
 			id:entity_blob.id,
 			title:dialogTitleMaker(entity_blob)
 		    }});
 }
-function getReportParam(id){
-    var entity_id = id || topLevelEntity(ReportData).id;
-    var entity_blob = entity_blob_for_report_params(entity_id);
+function getReportParam(){
+    var entity_id = topLevelEntity(ReportData).id;
+    var entity_blob = entity_blob_for_report_params();
     return _.combine(entity_blob,
 		{list:[entity_from_id(ReportData,entity_id)]},
 		autoBreadCrumb(),

@@ -1,7 +1,7 @@
 var menuReportsElectronicPaymentsRouter =
     new (Backbone.Router.extend(
 	     {routes: {
-	     	  "menuReports/companyReportElectronicPayments":"menuReportsCompanyPayments",
+	     	  "menuReports/ElectronicPayments":"menuReportsCompanyPayments",
 	     	  "menuReports/groupReportElectronicPayments":"menuReportsGroupPayments",
 		  "menuReports/storeReportElectronicPayments":"menuReportsStorePayments"
 	      },

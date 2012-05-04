@@ -3,7 +3,7 @@ var menuModel;
 var menuSetMenusRouter =
     new (Backbone.Router.extend(
 	     {routes: {
-	     	  "menuSetMenus/companyReport":"menuSetMenusCompany",
+	     	  "menuSetMenus/":"menuSetMenusCompany",
 	     	  "menuSetMenus/groupReport":"menuSetMenusGroup",
 	     	  "menuSetMenus/storeReport":"menuSetMenusStore"
 	      },

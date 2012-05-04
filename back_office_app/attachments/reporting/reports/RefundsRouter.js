@@ -1,7 +1,7 @@
 var menuReportsRefundsRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuReports/companyReportRefunds":"menuReportsCompanyRefunds",
+		  "menuReports/Refunds":"menuReportsCompanyRefunds",
 		  "menuReports/groupReportRefunds":"menuReportsGroupRefunds",
 		  "menuReports/storeReportRefunds":"menuReportsStoreRefunds"
 	      },

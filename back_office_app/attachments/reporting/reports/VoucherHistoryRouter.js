@@ -110,7 +110,7 @@ var voucherHistoryView =
 var voucherHistoryRouter = 
     new (Backbone.Router.extend({
                     routes: {
-                    "menuReports/companyReportVouchersHistory":"voucherReport",
+                    "menuReports/VouchersHistory":"voucherReport",
                     "menuReports/groupReportVouchersHistory":"InvalidPage",
                     "menuReports/storeReportVouchersHistory":"InvalidPage"
                     },

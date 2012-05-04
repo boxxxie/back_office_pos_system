@@ -3,11 +3,11 @@
 var menuReportsHowAreWeDoingTodayCompanyRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuReports/companyReportHowAreWe" :"HowAreWeCompany_groupsTable",
-		  "menuReports/companyReportHowAreWe/group/:group_id/stores" :"HowAreWeCompany_storesTable",
-		  "menuReports/companyReportHowAreWe/store/:store_id/terminals" :"HowAreWeCompany_terminalsTable",
-		  "menuReports/companyReportHowAreWe/stores" :"HowAreWeCompany_storesTable",
-		  "menuReports/companyReportHowAreWe/terminals" :"HowAreWeCompany_terminalsTable"
+		  "menuReports/HowAreWe" :"HowAreWeCompany_groupsTable",
+		  "menuReports/HowAreWe/group/:group_id/stores" :"HowAreWeCompany_storesTable",
+		  "menuReports/HowAreWe/store/:store_id/terminals" :"HowAreWeCompany_terminalsTable",
+		  "menuReports/HowAreWe/stores" :"HowAreWeCompany_storesTable",
+		  "menuReports/HowAreWe/terminals" :"HowAreWeCompany_terminalsTable"
 	      },
 
 	      HowAreWeCompany_groupsTable:function() {
@@ -21,7 +21,7 @@ var menuReportsHowAreWeDoingTodayCompanyRouter =
 	      }}));
 
 
-var companyReportHowAreWeTodayView = 
+var HowAreWeTodayView = 
     Backbone.View.extend(
 	{initialize:function(){
 	     var view = this;

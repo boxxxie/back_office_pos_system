@@ -1,7 +1,7 @@
 var menuInventorypriceChangeLogRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuInventory/companyReportpriceChangeLog":"menuInventoryPriceChangeLog",
+		  "menuInventory/priceChangeLog":"menuInventoryPriceChangeLog",
 		  "menuInventory/groupReportpriceChangeLog":"menuInventoryPriceChangeLog",
 		  "menuInventory/storeReportpriceChangeLog":"menuInventoryPriceChangeLog"
 	      },

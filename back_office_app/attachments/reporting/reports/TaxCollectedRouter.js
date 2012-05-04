@@ -1,7 +1,7 @@
 var menuReportsTaxCollectedRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-	     	  "menuReports/companyReportTaxCollected":"menuReportsCompanyTaxes",
+	     	  "menuReports/TaxCollected":"menuReportsCompanyTaxes",
 	     	  "menuReports/groupReportTaxCollected":"menuReportsGroupTaxes",
 		  "menuReports/storeReportTaxCollected":"menuReportsStoreTaxes"
 	      },

@@ -1,7 +1,7 @@
 var menuReportsTransactionsDetailRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-	     	  "menuReports/companyReportTransactionsDetail":"menuReportsCompanyTransactionsDetail",
+	     	  "menuReports/TransactionsDetail":"menuReportsCompanyTransactionsDetail",
 	     	  "menuReports/groupReportTransactionsDetail":"menuReportsGroupTransactionsDetail",
 	  	  "menuReports/storeReportTransactionsDetail":"menuReportsStoreTransactionsDetail"
 	      },

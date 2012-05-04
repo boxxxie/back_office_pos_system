@@ -1,7 +1,7 @@
 var menuInventoryscanTaxChangeRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuInventory/companyReportscanTaxChange":"menuInventoryScanTaxChange",
+		  "menuInventory/scanTaxChange":"menuInventoryScanTaxChange",
 		  "menuInventory/groupReportscanTaxChange":"menuInventoryScanTaxChange",
 		  "menuInventory/storeReportscanTaxChange":"menuInventoryScanTaxChange"
 	      },

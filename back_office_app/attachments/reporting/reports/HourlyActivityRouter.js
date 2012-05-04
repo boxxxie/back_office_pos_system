@@ -1,7 +1,7 @@
 var menuReportsHourlyActivityRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuReports/companyReportHourlyActivity":"menuReportsCompanyHourly",
+		  "menuReports/HourlyActivity":"menuReportsCompanyHourly",
 		  "menuReports/groupReportHourlyActivity":"menuReportsGroupHourly",
 		  "menuReports/storeReportHourlyActivity":"menuReportsStoreHourly"
 	      },

@@ -3,8 +3,8 @@ var menuModelforInventory;
 var menuInventoryRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuInventory/companyReportInventory":"menuInventoryCompanyInventory",
-		  "menuInventory/companyReportmenuPriceChange":"menuInventoryCompanymenuPriceChange",
+		  "menuInventory/Inventory":"menuInventoryCompanyInventory",
+		  "menuInventory/menuPriceChange":"menuInventoryCompanymenuPriceChange",
 		  "menuInventory/groupReportInventory":"menuInventoryGroupInventory",
 		  "menuInventory/storeReportInventory":"menuInventoryStoreInventory"
 	      },
