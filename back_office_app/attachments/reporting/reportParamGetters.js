@@ -54,7 +54,8 @@ function getReportParam(id){
     return _.combine(entity_blob,
 		{startPage:ReportData.startPage},
 		{list:[entity_from_id(ReportData,entity_id)]},
-		autoBreadCrumb());
+		autoBreadCrumb(),
+		{title:_.str.capitalize(topLevelEntity(ReportData).type)+" Management"});
 }
 function getGroupsTableParam(id) {return getGeneralTableParam(id,'group_id')};
 function getStoresTableParam(id) {return getGeneralTableParam(id,'store_id')};
