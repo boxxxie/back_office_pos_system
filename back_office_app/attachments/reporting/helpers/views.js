@@ -270,7 +270,7 @@ var general_report_router =
 	    router.startDate = (new Date());
 	    router.endDate = (new Date()).addDays(1);
 	    router.selected_entity = topLevelEntity(ReportData).id;
-	    var user_navigation_meta = _.extend({title:router.title,startPage:ReportData.startPage},
+	    var user_navigation_meta = _.extend({title:router.title},
 				       autoBreadCrumb());
 	    router.vent.trigger('render:general-report',
 				{

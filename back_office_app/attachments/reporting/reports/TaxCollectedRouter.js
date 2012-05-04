@@ -49,8 +49,7 @@ var menuReportsTaxCollectedView =
 	 },
 	 renderMenuReportsCompanyTaxes: function() {
 	     
-	     var html = ich.taxCollectedReports_TMP({startPage:"companyReport", 
-	     					     breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.taxCollectedReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
 	     $(this.el).html(html);
 	     
 	     resetDatePicker();
@@ -68,8 +67,7 @@ var menuReportsTaxCollectedView =
 	 },
 	 renderMenuReportsGroupTaxes: function() {
 	     
-	     var html = ich.taxCollectedReports_TMP({startPage:"groupReport", 
-	     					     breadCrumb:breadCrumb(ReportData.companyName, 
+	     var html = ich.taxCollectedReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, 
 									   ReportData.group.groupName)});
 	     $(this.el).html(html);
 	     
@@ -88,8 +86,7 @@ var menuReportsTaxCollectedView =
 	 },
 	 renderMenuReportsStoreTaxes: function() {
 	     
-	     var html = ich.taxCollectedReports_TMP({startPage:"storeReport", 
-	     					     breadCrumb:breadCrumb(ReportData.companyName, 
+	     var html = ich.taxCollectedReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, 
 									   ReportData.groupName, 
 									   ReportData.store.storeName,
 									   ReportData.store.number)});

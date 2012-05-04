@@ -1,6 +1,6 @@
 var inv_helpers =
     {renderChangesLog : function(view,mainTMP,tableTMP,fetcher){
-	 var html = ich[mainTMP](_.extend({startPage:ReportData.startPage},autoBreadCrumb()));
+	 var html = ich[mainTMP](autoBreadCrumb());
 	 $(view.el).html(html);
 	 var id = topLevelEntity(ReportData).id;
 	 fetcher(id)

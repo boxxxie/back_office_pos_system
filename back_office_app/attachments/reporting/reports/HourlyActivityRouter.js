@@ -48,8 +48,7 @@ var menuReportsHourlyActivityView =
 	 },
 	 renderMenuReportsCompanyHourly: function() {
 	     
-	     var html = ich.hourlyActivityReports_TMP({startPage:"companyReport", 
-	     					       breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.hourlyActivityReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
 	     $(this.el).html(html);
 	     
 	     
@@ -65,8 +64,7 @@ var menuReportsHourlyActivityView =
 	 },
 	 renderMenuReportsGroupHourly: function() {
 	     
-	     var html = ich.hourlyActivityReports_TMP({startPage:"groupReport", 
-	 					       breadCrumb:breadCrumb(ReportData.companyName,ReportData.group.groupName)});
+	     var html = ich.hourlyActivityReports_TMP({breadCrumb:breadCrumb(ReportData.companyName,ReportData.group.groupName)});
 	     $(this.el).html(html);
 	     
              resetDropdownBox(ReportData, true, true);
@@ -81,8 +79,7 @@ var menuReportsHourlyActivityView =
 	 },
 	 renderMenuReportsStoreHourly: function() {
 	     
-	     var html = ich.hourlyActivityReports_TMP({startPage:"storeReport", 
-	 					       breadCrumb:breadCrumb(ReportData.companyName,
+	     var html = ich.hourlyActivityReports_TMP({breadCrumb:breadCrumb(ReportData.companyName,
 	 					     			     ReportData.groupName,
 	 					     			     ReportData.store.storeName,
 	 					     			     ReportData.store.number)});

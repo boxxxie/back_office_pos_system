@@ -48,8 +48,7 @@ var menuSetMenusView =
     	  console.log(menu);
     	  menuModel = menu;
 
-    	  var html = ich.menuSetMenus_TMP({startPage:"companyReport",
-     					   breadCrumb:breadCrumb(ReportData.company.companyName)});
+    	  var html = ich.menuSetMenus_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
 		  $(view.el).html(html);
 
 

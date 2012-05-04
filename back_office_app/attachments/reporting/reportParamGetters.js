@@ -52,7 +52,6 @@ function getReportParam(id){
     var entity_id = id || topLevelEntity(ReportData).id;
     var entity_blob = entity_blob_for_report_params(entity_id);
     return _.combine(entity_blob,
-		{startPage:ReportData.startPage},
 		{list:[entity_from_id(ReportData,entity_id)]},
 		autoBreadCrumb(),
 		{title:_.str.capitalize(topLevelEntity(ReportData).type)+" Management"});
@@ -70,7 +69,6 @@ function getGeneralTableParam(id,key){
 	.value();
     return _.combine({
 		    list:entities,
-		    startPage:ReportData.startPage
 		},
 		{breadCrumb:_.first(entities)})
 }

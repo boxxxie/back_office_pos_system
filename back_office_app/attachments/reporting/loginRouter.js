@@ -165,7 +165,7 @@ function login() {
 			}
 			else{
 			    ReportData = reportData;
-			    window.location.href = "#"+ReportData.startPage+"/";
+			    window.location.href = "#main/";
 			}
 		    });
 }

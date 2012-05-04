@@ -30,9 +30,7 @@ var menuInventoryscanPriceChangeView =
 		}
 		
 		var html = 
-		    ich.menuInventoryScanItemPriceChanges_TMP(
-			_.extend({startPage:ReportData.startPage}, 
-	     			 autoBreadCrumb()));
+		    ich.menuInventoryScanItemPriceChanges_TMP(autoBreadCrumb());
 		
 		$(view.el).html(html);
 

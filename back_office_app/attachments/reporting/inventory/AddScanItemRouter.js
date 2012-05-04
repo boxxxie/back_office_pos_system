@@ -5,7 +5,7 @@ var menuInventoryaddScanItemRouter =
 	      },
 	      main:function(){
 		  console.log("add scan item page");
-		  $("#main").html(ich.inventoryManagementHome_TMP(_.extend({startPage:ReportData.startPage},autoBreadCrumb())));
+		  $("#main").html(ich.inventoryManagementHome_TMP(autoBreadCrumb()));
 		  var router = this;
 		  router._setup(router);
 		  router.views.input.setElement("#upc_search",true);

@@ -61,21 +61,21 @@ var menuInventoryView =
 	 },
 	 renderMenuInventoryCompanyInventory: function() {
 	     
-	     var html = ich.menuInventory_TMP({startPage:"companyReport", 
+	     var html = ich.menuInventory_TMP({ 
 	     				       breadCrumb:breadCrumb(ReportData.company.companyName),
 	     				       showMenuPriceChange:true});
 	     $(this.el).html(html);
 	 },
 	 renderMenuInventoryGroupInventory: function() {
 	     
-	     var html = ich.menuInventory_TMP({startPage:"groupReport", 
+	     var html = ich.menuInventory_TMP({ 
 	 				       breadCrumb:breadCrumb(ReportData.companyName,
 	 					     		     ReportData.group.groupName)});
 	     $(this.el).html(html);
 	 },
 	 renderMenuInventoryStoreInventory: function() {
 	     
-	     var html = ich.menuInventory_TMP({startPage:"storeReport", 
+	     var html = ich.menuInventory_TMP({ 
 	 				       breadCrumb:breadCrumb(ReportData.companyName,
 	 					     		     ReportData.groupName,
 	 					     		     ReportData.store.storeName,
@@ -90,7 +90,7 @@ var menuInventoryView =
 	    	      console.log(menu);
 	    	      menuModelforInventory = menu;
 	    	      
-	    	      var html = ich.menuInventorymenuPriceChange_TMP({startPage:"companyReport", 
+	    	      var html = ich.menuInventorymenuPriceChange_TMP({ 
 	     							       breadCrumb:breadCrumb(ReportData.company.companyName)});
 		      $(view.el).html(html);
 		      

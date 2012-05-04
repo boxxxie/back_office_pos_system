@@ -54,13 +54,13 @@ var companyReportHowAreWeTodayView =
 		       });
 	 },
 	 renderGroupsTable_HowAreWeToday: function() {
-	     renderHowAreWeGroupsTable(this, "companyReport");
+	     renderHowAreWeGroupsTable(this);
 	 },
 	 renderStoresTable_HowAreWeToday: function(id) {
-	     renderHowAreWeStoresTable(this, "companyReport", id);	     
+	     renderHowAreWeStoresTable(this, id);	     
 	 },
 	 renderTerminalsTable_HowAreWeToday : function(id) {
-	     renderHowAreWeTerminalsTable(this,"companyReport",id);
+	     renderHowAreWeTerminalsTable(this,id);
 	 }
 	});
 
@@ -106,10 +106,10 @@ var groupReportHowAreWeTodayView =
 		       });
 	 },
 	 renderStoresTable_HowAreWeToday: function(id) {
-	     renderHowAreWeStoresTable(this, "groupReport", id);	     
+	     renderHowAreWeStoresTable(this, id);	     
 	 },
 	 renderTerminalsTable_HowAreWeToday : function(id) {
-	     renderHowAreWeTerminalsTable(this,"groupReport",id);
+	     renderHowAreWeTerminalsTable(this,id);
 	 }
 	});
 
@@ -143,7 +143,7 @@ var storeReportHowAreWeTodayView =
 		       });
 	 },
 	 renderTerminalsTable_HowAreWeToday : function(id) {
-	     renderHowAreWeTerminalsTable(this,"storeReport",id);
+	     renderHowAreWeTerminalsTable(this,id);
 	 }
 	});
 	
@@ -169,7 +169,7 @@ function appendTotalColum(for_TMP) {
 	return for_TMP;
 };
 	
-function renderHowAreWeGroupsTable(view, startPage) {
+function renderHowAreWeGroupsTable(view) {
 	var groups = ReportData.company.hierarchy.groups;
     var newGroups = _(_.clone(groups)).map(function(group){ return {id:group.group_id, name:group.groupName};});
     var parent_id = {id:ReportData.company._id, name:ReportData.company.companyName};
@@ -191,20 +191,13 @@ function renderHowAreWeGroupsTable(view, startPage) {
     				});
     				
 					for_TMP = _.applyToValues(for_TMP,currency_format,true);
-					//for_TMP.items = _.map(for_TMP.items, function(item){
-					//	item.refunds = Number(item.refunds)+"";
-					//	item.transactions = Number(item.transactions)+"";
-					//	return item;
-					//});
-					//for_TMP.total.refunds = Number(for_TMP.total.refunds)+"";
-					//for_TMP.total.transactions = Number(for_TMP.total.transactions)+"";
 					
 					var param = _.extend(for_TMP, {
-								 startPage:startPage,
+								 
 								 breadCrumb : breadCrumb(ReportData.company.companyName)
 							     });
 					_.map(param.items, function(item) {
-						  return _.extend(item,{linkaddress:"#menuReports/".concat(startPage)
+						  return _.extend(item,{linkaddress:"#menuReports/"
 									.concat("HowAreWe/group/")
 									.concat(item.id)
 									.concat("/stores")
@@ -215,7 +208,7 @@ function renderHowAreWeGroupsTable(view, startPage) {
 				    });
 };
 
-function renderHowAreWeStoresTable(view, startPage, group_id) {
+function renderHowAreWeStoresTable(view, group_id) {
     var stores;
     var parent_id;
     var breadcrumb;
@@ -263,12 +256,12 @@ function renderHowAreWeStoresTable(view, startPage, group_id) {
 					//for_TMP.total.transactions = Number(for_TMP.total.transactions)+"";
 					
 					var param = _.extend(for_TMP, {
-								 startPage:startPage,
+								 
 								 breadCrumb : breadcrumb
 							     });
 					
 					_.map(param.items, function(item) {
-						  return _.extend(item,{linkaddress:"#menuReports/".concat(startPage)
+						  return _.extend(item,{linkaddress:"#menuReports/"
 									.concat("HowAreWe/store/")
 									.concat(item.id)
 									.concat("/terminals")
@@ -280,7 +273,7 @@ function renderHowAreWeStoresTable(view, startPage, group_id) {
 				    });
 };
 
-function renderHowAreWeTerminalsTable(view, startPage, store_id) {
+function renderHowAreWeTerminalsTable(view, store_id) {
     var terminals;
     var parent_id;
     var breadcrumb;
@@ -341,7 +334,7 @@ function renderHowAreWeTerminalsTable(view, startPage, store_id) {
 						//for_TMP.total.transactions = Number(for_TMP.total.transactions)+"";
 						
 						var param = _.extend(for_TMP, {
-									 startPage:startPage,
+									
 									 breadCrumb : breadcrumb
 								     });
 						param.cancelledtransactions = Number(param.cancelledtransactions)+"";

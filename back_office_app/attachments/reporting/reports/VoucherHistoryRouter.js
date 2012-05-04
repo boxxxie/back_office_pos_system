@@ -133,7 +133,7 @@ var voucherHistoryRouter =
                     _setup:function() {
                         var router = this;
                         router.vouchers_data= undefined;
-                        var html = ich.voucherHistoryReports_TMP(_.extend({startPage:ReportData.startPage},autoBreadCrumb()));
+                        var html = ich.voucherHistoryReports_TMP(autoBreadCrumb());
                         $("#main").html(html);
                         
                         resetDatePicker();

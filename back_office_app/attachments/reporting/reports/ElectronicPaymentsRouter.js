@@ -49,8 +49,7 @@ var menuReportsElectronicPaymentsView =
 	 },
 	 renderMenuReportsCompanyPayments: function() {
 
-	     var html = ich.electronicPaymentsReports_TMP({startPage:"companyReport",
-	     						 breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.electronicPaymentsReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
 	     $(this.el).html(html);
 
 	     resetDatePicker();
@@ -67,8 +66,7 @@ var menuReportsElectronicPaymentsView =
 	 },
 	 renderMenuReportsGroupPayments: function() {
 
-	     var html = ich.electronicPaymentsReports_TMP({startPage:"groupReport",
-	     						 breadCrumb:breadCrumb(ReportData.companyName,
+	     var html = ich.electronicPaymentsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName,
 									       ReportData.group.groupName)});
 	     $(this.el).html(html);
 
@@ -86,8 +84,7 @@ var menuReportsElectronicPaymentsView =
 	 },
 	 renderMenuReportsStorePayments: function() {
 
-	     var html = ich.electronicPaymentsReports_TMP({startPage:"storeReport",
-	     						 breadCrumb:breadCrumb(ReportData.companyName,
+	     var html = ich.electronicPaymentsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName,
 									       ReportData.groupName,
 									       ReportData.store.storeName,
 									       ReportData.store.number)});

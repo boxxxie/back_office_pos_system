@@ -47,8 +47,7 @@ var menuReportsCancelledTransactionsView =
 	 },
 	 renderMenuReportsCompanyCancelled: function() {
 
-	     var html = ich.menuReportsCancelledReports_TMP({startPage:"companyReport",
-	     						   breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.menuReportsCancelledReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
 	     $(this.el).html(html);
 	     
 	     resetDatePicker();
@@ -65,8 +64,7 @@ var menuReportsCancelledTransactionsView =
 	 },
 	 renderMenuReportsGroupCancelled: function() {
 
-	     var html = ich.menuReportsCancelledReports_TMP({startPage:"groupReport",
-	     						   breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
+	     var html = ich.menuReportsCancelledReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
 	     $(this.el).html(html);
 
 	     
@@ -84,8 +82,7 @@ var menuReportsCancelledTransactionsView =
 	 },
 	 renderMenuReportsStoreCancelled: function() {
 
-	     var html = ich.menuReportsCancelledReports_TMP({startPage:"storeReport",
-	     						   breadCrumb:breadCrumb(ReportData.companyName, ReportData.groupName, ReportData.store.storeName, ReportData.store.number)});
+	     var html = ich.menuReportsCancelledReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.groupName, ReportData.store.storeName, ReportData.store.number)});
 	     $(this.el).html(html);
 
 	     resetDatePicker();

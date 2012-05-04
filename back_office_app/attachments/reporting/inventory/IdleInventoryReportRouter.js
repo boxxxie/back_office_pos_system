@@ -7,7 +7,7 @@ var idleInventoryRouter =
 					this._setup();
 				    },
 				    _setup:function() {
-					var html = ich.idleInventoryReports_TMP(_.extend({startPage:ReportData.startPage},autoBreadCrumb()));
+					var html = ich.idleInventoryReports_TMP(autoBreadCrumb());
 					$("#main").html(html);
 					
 					resetDropdownBox(ReportData, false, false);

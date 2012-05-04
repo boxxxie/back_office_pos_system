@@ -47,8 +47,7 @@ var menuReportsTransactionsDetailView =
 	 },
 	 renderMenuReportsCompanyTransactionsDetail: function() {
 	     
-	     var html = ich.transactionsDetailReports_TMP({startPage:"companyReport", 
-	     						   breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.transactionsDetailReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
 	     $(this.el).html(html);
 	     $("#btnBack2").hide();
 	     
@@ -66,8 +65,7 @@ var menuReportsTransactionsDetailView =
 	 },
 	 renderMenuReportsGroupTransactionsDetail: function() {
 	     
-	     var html = ich.transactionsDetailReports_TMP({startPage:"groupReport", 
-	     						   breadCrumb:breadCrumb(ReportData.companyName, 
+	     var html = ich.transactionsDetailReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, 
 										 ReportData.group.groupName)});
 	     $(this.el).html(html);
 	     $("#btnBack2").hide();
@@ -86,8 +84,7 @@ var menuReportsTransactionsDetailView =
 	 },
 	 renderMenuReportsStoreTransactionsDetail: function() {
 	     
-	     var html = ich.transactionsDetailReports_TMP({startPage:"storeReport", 
-	     						   breadCrumb:breadCrumb(ReportData.companyName, 
+	     var html = ich.transactionsDetailReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, 
 										 ReportData.groupName, 
 										 ReportData.store.storeName, 
 										 ReportData.store.number)});

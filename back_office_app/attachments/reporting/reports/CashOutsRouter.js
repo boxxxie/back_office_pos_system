@@ -47,8 +47,7 @@ var menuReportsCashOutsView =
 	 },
 	 renderMenuReportsCompanyCashouts: function() {
 	     
-	     var html = ich.menuReportsCashOutsReports_TMP({startPage:"companyReport", 
-	     						    breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.menuReportsCashOutsReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
 	     $(this.el).html(html);
 	     
              resetDatePicker();
@@ -65,8 +64,7 @@ var menuReportsCashOutsView =
 	 },
 	 renderMenuReportsGroupCashouts: function() {
 	     
-	     var html = ich.menuReportsCashOutsReports_TMP({startPage:"groupReport", 
-	     						    breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
+	     var html = ich.menuReportsCashOutsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
 	     $(this.el).html(html);
 	     
 	     resetDatePicker();
@@ -83,8 +81,7 @@ var menuReportsCashOutsView =
 	 },
 	 renderMenuReportsStoreCashouts: function() {
 	     
-	     var html = ich.menuReportsCashOutsReports_TMP({startPage:"storeReport", 
-	     						    breadCrumb:breadCrumb(ReportData.companyName, ReportData.groupName, ReportData.store.storeName, ReportData.store.number)});
+	     var html = ich.menuReportsCashOutsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.groupName, ReportData.store.storeName, ReportData.store.number)});
 	     $(this.el).html(html);
 	     
              resetDatePicker();

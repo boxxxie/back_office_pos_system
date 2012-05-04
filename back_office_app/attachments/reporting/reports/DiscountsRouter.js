@@ -49,8 +49,7 @@ var menuReportsDiscountsView =
 	 },
 	 renderMenuReportsCompanyDiscounts: function() {
 	     
-	     var html = ich.menuReportsDiscountsReports_TMP({startPage:"companyReport", 
-	     						     breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.menuReportsDiscountsReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
 	     $(this.el).html(html);
 	     
 	     resetDatePicker();
@@ -67,8 +66,7 @@ var menuReportsDiscountsView =
 	 },
 	 renderMenuReportsGroupDiscounts: function() {
 	     
-	     var html = ich.menuReportsDiscountsReports_TMP({startPage:"groupReport", 
-	     						     breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
+	     var html = ich.menuReportsDiscountsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
 	     $(this.el).html(html);
 	     
 	     resetDatePicker();
@@ -85,8 +83,7 @@ var menuReportsDiscountsView =
 	 },
 	 renderMenuReportsStoreDiscounts: function() {
 	     
-	     var html = ich.menuReportsDiscountsReports_TMP({startPage:"storeReport", 
-	     						     breadCrumb:breadCrumb(ReportData.companyName, ReportData.groupName, ReportData.store.storeName, ReportData.store.number)});
+	     var html = ich.menuReportsDiscountsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.groupName, ReportData.store.storeName, ReportData.store.number)});
 	     $(this.el).html(html);
 	     
 	     resetDatePicker();

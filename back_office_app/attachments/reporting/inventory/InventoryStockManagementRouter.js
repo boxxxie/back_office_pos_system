@@ -7,7 +7,7 @@ var inventoryStockManagementRouter =
 					this._setup();
 				    },
 				    _setup:function() {
-					var html = ich.inventoryStockMngReports_TMP(_.extend({startPage:ReportData.startPage},autoBreadCrumb()));
+					var html = ich.inventoryStockMngReports_TMP(autoBreadCrumb());
 					$("#main").html(html);
 					
 					resetDropdownBox(ReportData, false, false);
