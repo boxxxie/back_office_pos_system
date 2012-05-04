@@ -1,4 +1,4 @@
-var groupReportRouter = 
+var groupReportRouter =
     new (Backbone.Router.extend(
 	     {routes: {
 		  "groupReport/":"groupReport",
@@ -8,60 +8,19 @@ var groupReportRouter =
 	      },
 	      groupReport:function() {
 	     	  console.log("groupReport ");
+		  var id = topLevelEntity(ReportData).id;
+		  generalReportRenderer(getReportParam(id),'groupManagementPage_TMP','group_id')
+		  (function(){
+	     	       $("dialog-quickView").html();
+		       console.log("groupReportView renderGroupManagement");});
 	      },
-	      groupReport_storesTable:function(group_id) {
+	      groupReport_storesTable:function() {
 	     	  console.log("groupReport : storesTable ");
+		  var id = topLevelEntity(ReportData).id;
+		  generalReportRenderer(getStoresTableParam(id),'storestable_TMP','store_id')(log("groupReportView renderStoresTable"));
 	      },
-	      groupReport_terminalsTable:function(store_id) {
+	      groupReport_terminalsTable:function() {
 	     	  console.log("groupReport : terminalsTable ");
+		  var id = topLevelEntity(ReportData).id;
+		  generalReportRenderer(getTerminalsTableParam(id),'terminalstable_TMP','terminal_id')(log("groupReportView renderTerminalsTable"));
 	      }}));
-
-var groupReportView = 
-    Backbone.View.extend(
-    	{initialize:function(){
-	     var view = this;
-	     view.el= $("#main");
-	     
-	     _.bindAll(view, 
-		       'renderGroupReport', 
-		       'renderStoresTable', 
-		       'renderTerminalsTable');
-	     groupReportRouter
-		 .bind('route:groupReport', 
-		       function(){
-			   console.log("groupReportView, route:groupReport : company name : "+ 
-				       ReportData.companyName);
-			   view.model = ReportData.group; 
-			   view.renderGroupReport();
-		       });
-	     groupReportRouter
-		 .bind('route:groupReport_storesTable', 
-		       function(group_id){
-			   console.log("groupReportView, route:groupReport_storesTable : company name : "+
-				       ReportData.companyName);
-			   view.model = ReportData.group; 
-			   view.renderStoresTable(group_id);
-		       });
-	     groupReportRouter
-		 .bind('route:groupReport_terminalsTable', 
-		       function(store_id) {
-			   console.log("groupReportView, route:groupReport_storesTable: company name : "+
-				       ReportData.companyName);
-			   view.model = ReportData.group; 
-			   view.renderTerminalsTable(store_id);
-		       });
-	 },
-	 renderGroupReport: function() {
-	     generalReportRenderer(this,getReportParam(),'groupManagementPage_TMP','group_id')
-	     (function(){
-	     	  $("dialog-quickView").html();
-		  console.log("groupReportView renderGroupManagement");});
-	 },
-	 renderStoresTable : function(group_id) {
-	     generalReportRenderer(this,getStoresTableParam(group_id),'storestable_TMP','store_id')(log("groupReportView renderStoresTable"));
-	 },
-	 renderTerminalsTable:function(store_id) {
-	     generalReportRenderer(this,getTerminalsTableParam(store_id),'terminalstable_TMP','terminal_id')(log("groupReportView renderTerminalsTable"));
-	 }
-	 
-	});

@@ -16,9 +16,7 @@ function doc_setup() {
     var Company = couchDoc.extend({urlRoot:urlBase+db_install});
 
     var LoginDisplay = new reportLoginView();
-    var CompanyReportDisplay = new companyReportView();
-    var GroupReportDisplay = new groupReportView();
-    var StoreReportDisplay = new storeReportView();
+   
     var MenuReportsDisplay = new menuReportsView();
     var CompanyHowAreWeDisplay = new companyReportHowAreWeTodayView();
     var GroupHowAreWeDisplay = new groupReportHowAreWeTodayView();

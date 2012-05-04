@@ -1,5 +1,6 @@
+//fixme these three reports need MAJOR refactoring, including all code that they touch
 function log(text){return function(){console.log(text);};};
-function generalReportRenderer(view,param,template,idField){ 
+function generalReportRenderer(param,template,idField){
     function generateFormattedSales(sales){
 	function safeSum(total,cur){
 	    return total + Number(cur);
@@ -29,13 +30,13 @@ function generalReportRenderer(view,param,template,idField){
 				    			 return item;
 						     });
 				    var html = ich[template](param);
-				    $(view.el).html(html);
+				    $('#main').html(html); //fixme, this should be in a view
 				    if(_.isFunction(callback)){callback(param);}
 				});
     };
 };
 
-var companyReportRouter = 
+var companyReportRouter =
     new (Backbone.Router.extend(
 	     {routes: {
 		  "companyReport/":"companyReport",
@@ -47,72 +48,24 @@ var companyReportRouter =
 	      },
 	      companyReport:function(){
 		  console.log("companyReport  ");
+		  generalReportRenderer(getReportParam(),'companyManagementPage_TMP','company_id')
+		  (function(param){
+		       $("#dialog-quickView").html();
+		       console.log("companyReportView rendercompanymanagement");});
 	      },
-
 	      companyReport_groupsTable:function() {
 	     	  console.log("companyReport : groupsTable  ");
+		  var id = topLevelEntity(ReportData).id;
+		  generalReportRenderer(getGroupsTableParam(id),'groupstable_TMP','group_id')(log("companyReportView renderGroupsTable"));
+
 	      },
-	      companyReport_storesTable:function(group_id) {
+	      companyReport_storesTable:function() {
 	     	  console.log("companyReport : storesTable ");
+		  var id = topLevelEntity(ReportData).id;
+		  generalReportRenderer(getStoresTableParam(id),'storestable_TMP','store_id')(log("companyReportView renderStoresTable"));
 	      },
-	      companyReport_terminalsTable:function(store_id) {
+	      companyReport_terminalsTable:function() {
 	     	  console.log("companyReport : terminalsTable ");
+		  var id = topLevelEntity(ReportData).id;
+		  generalReportRenderer(getTerminalsTableParam(id),'terminalstable_TMP','terminal_id')(log("companyReportView renderTerminalsTable"));
 	      }}));
-
-var companyReportView = 
-    Backbone.View.extend(
-	{initialize:function(){
-	     var view = this;
-	     view.el = $("#main");
-	     
-	     _.bindAll(view, 
-		       'renderCompanyReport' , 
-		       'renderGroupsTable', 
-		       'renderStoresTable', 
-		       'renderTerminalsTable');
-
-	     companyReportRouter
-		 .bind('route:companyReport', 
-		       function(){
-			   console.log("companyReportView, route:companyReport");
-			   view.model = ReportData.company;
-			   view.renderCompanyReport();
-		       });
-
-	     companyReportRouter
-		 .bind('route:companyReport_groupsTable', 
-		       function(){
-			   console.log("companyReportView, route:companyReport_groupsTable");
-			   view.renderGroupsTable();						
-		       });
-
-	     companyReportRouter
-		 .bind('route:companyReport_storesTable', 
-		       function(group_id){
-			   console.log("companyReportView, route:companyReport_storesTable");
-			   view.renderStoresTable(group_id);						
-		       });
-
-	     companyReportRouter
-		 .bind('route:companyReport_terminalsTable', 
-		       function(store_id){
-			   console.log("companyReportView, route:companyReport_terminalsTable");
-			   view.renderTerminalsTable(store_id);						
-		       });
-	 },
-	 renderCompanyReport: function() {
-	     generalReportRenderer(this,getReportParam(),'companyManagementPage_TMP','company_id')
-	     (function(param){
-		  $("#dialog-quickView").html();
-		  console.log("companyReportView rendercompanymanagement");});
-	 },
-	 renderGroupsTable: function() {
-	     generalReportRenderer(this,getGroupsTableParam(),'groupstable_TMP','group_id')(log("companyReportView renderGroupsTable"));
-	 },
-	 renderStoresTable: function(id) {
-	     generalReportRenderer(this,getStoresTableParam(id),'storestable_TMP','store_id')(log("companyReportView renderStoresTable"));
-	 },
-	 renderTerminalsTable : function(id) {
-	     generalReportRenderer(this,getTerminalsTableParam(id),'terminalstable_TMP','terminal_id')(log("companyReportView renderTerminalsTable"));
-	 }
-	});

@@ -32,7 +32,6 @@ var extractGroups = _.memoize(
     },
     reportDataHash
 );
-
 function extractItems(obj,field){
     var items = [];
     _.prewalk(function(o){
@@ -47,14 +46,12 @@ function extractItems(obj,field){
     }
     return _.flatten(items);
 }
-
 function topLevelEntity(reportData){
     if(ReportData.company && ReportData.company._id){return {id:ReportData.company._id,type:"company"};}
     else if(ReportData.group && ReportData.group.group_id){return {id:ReportData.group.group_id,type:"group"};}
     else if(ReportData.store && ReportData.store.store_id){return {id:ReportData.store.store_id,type:"store"};}
     else {return {id:undefined,type:undefined};}
 };
-
 function topLevelEntityInfo(reportData){
     if(reportData.company) {
 	return {
@@ -82,7 +79,6 @@ function topLevelEntityInfo(reportData){
         return undefined;
     }
 };
-
 var getParentsInfo = _.memoize(
     function getParentsInfo(reportData){
 	//makes an object that looks like {company:,group:}
@@ -127,11 +123,9 @@ var getParentsInfo = _.memoize(
     },
     reportDataHash
 );
-
-
 //woo memoize, hash function is crap by whatever
 var reportDataToArray = _.memoize(
-    function reportDataToArray(reportData){
+    function(reportData){
 	//todo: this may be the expand function that i wrote tests for in underscore_extended
 	function combineWithSubpart(field){
 	    return function(o){
@@ -149,7 +143,7 @@ var reportDataToArray = _.memoize(
 		return o;
 	    };
 	}
-	return _.chain(reportData)
+	var compressed_entities = _.chain(reportData)
 	    .selectKeys('company','group','store')
             .prewalk_r(function(o){
 			  if (o.hierarchy){
@@ -165,11 +159,13 @@ var reportDataToArray = _.memoize(
             .prewalk_r(combineWithSubpart('groups'))
             .prewalk_r(combineWithSubpart('company'))
 	    .value()
+	if(_.isArray(compressed_entities)){return _.mapCombine(compressed_entities,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
+	else if(compressed_entities.group){return _.mapCombine(compressed_entities.group,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
+	else if(compressed_entities.store){return _.mapCombine(compressed_entities.store,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
 
     },
     reportDataHash
 );
-
 function entity_type_from_id(reportData,id){
     return _.chain(reportDataToArray(ReportData))
 	.find(function(entity){
@@ -181,44 +177,61 @@ function entity_type_from_id(reportData,id){
 	.renameKeys('_id','company',
 		    'company_id','company',
 		    'store_id','store',
-		    'group_id','group')
+		    'group_id','group',
+		    'terminal_id','terminal')
 	.keys()
 	.first()
 	.value()
 }
-
-function entity_from_id(reportData,id){
-    var bloated_entity = _.chain(reportDataToArray(reportData))
+function _find_entity_from_id(reportData,id){
+    return _.chain(reportDataToArray(reportData))
 	.find(function(entity){
 		  return _.find(entity,function(val){return val === id})
 	      })
+	.renameKeys('number','storeNumber')
 	.value()
-    var entity_type = entity_type_from_id(reportData,id)
-    if (entity_type === 'company'){
-	return _.selectKeys(bloated_entity, 'company_id',
-		       'companyName')
-    }
-    else if(entity_type === 'group'){
-	return _.selectKeys(bloated_entity, 'company_id',
-		       'companyName',
-		       'group_id',
-		       'groupName')
-    }
-    else if(entity_type === 'store'){
-	return _.selectKeys(bloated_entity, 'company_id',
-		       'companyName',
-		       'group_id',
-		       'groupName',
-		       'store_id',
-		       'storeName',
-		       'storeNumber')
-    }
 }
-
+var entity_from_id = multimethod()
+    .dispatch(function(reportData,id){
+		  return entity_type_from_id(reportData,id)
+	      })
+    .when('company',function(reportData,id){
+	      return _.selectKeys(_find_entity_from_id(reportData,id),
+			     'company_id',
+			     'companyName')
+	  })
+    .when('group',function(reportData,id){
+	      return _.selectKeys(_find_entity_from_id(reportData,id),
+			     'company_id',
+			     'companyName',
+			     'group_id',
+			     'groupName')
+	  })
+    .when('store',function(reportData,id){
+	      return _.selectKeys(_find_entity_from_id(reportData,id),
+			     'company_id',
+			     'companyName',
+			     'group_id',
+			     'groupName',
+			     'store_id',
+			     'storeName',
+			     'storeNumber')
+	  })
+    .when('terminal',function(reportData,id){
+	      return _.selectKeys(_find_entity_from_id(reportData,id),
+			     'company_id',
+			     'companyName',
+			     'group_id',
+			     'groupName',
+			     'store_id',
+			     'storeName',
+			     'storeNumber',
+			     'terminal_id',
+			     'terminal_label')
+	  })
 function reportDataHash(reportData){
     return topLevelEntity(reportData).id;
 }
-
 function groupFromStoreID(reportData,storeID){
     var foundGroup =  _(reportDataToArray(reportData)).chain()
 	.find(function(item){
@@ -231,7 +244,6 @@ function groupFromStoreID(reportData,storeID){
     }
     return undefined;
 }
-
 //this function will return a group obj if the stores list includes all of the stores that belong to the group
 function groupsFromStoreSets(stores,groups,reportData){
     function groupID_stores_count_string(stores,groupID){
@@ -263,8 +275,6 @@ function groupsFromStoreSets(stores,groups,reportData){
 
     return groupsToSave;
 }
-
-
 // report page store drop downbox helper funtion
 function updateStoreDropdown(isNotShowAll) {
     var groups = ReportData.company.hierarchy.groups;
@@ -292,7 +302,6 @@ function updateStoreDropdown(isNotShowAll) {
                });
     }
 };
-
 // report page terminal drop downbox helper funtion
 function updateTerminalDropdown(isNotShowAll) {
     var dropdownStore = $("#storesdown");
@@ -354,7 +363,6 @@ function updateTerminalDropdown(isNotShowAll) {
         dropdownTerminal.append('<option value="NOTHING">NO TERMINALS</option>');
     }
 };
-
 function simple_user_format(user){
     var user_roles_obj = _.chain(user.roles)
 	.filter(_.isObj)
@@ -366,7 +374,6 @@ function simple_user_format(user){
 	.combine(user_roles_obj)
 	.value()
 }
-
 // report page datepicker reset helper function
 function resetDatePicker() {
     var selectedDates = $( "#dateFrom, #dateTo" )
@@ -390,7 +397,6 @@ function resetDatePicker() {
     $("#dateFrom").datepicker("setDate", new Date().addDays(-1));
     $("#dateTo").datepicker("setDate", new Date());
 }
-
 //reset group / store / terminal dropdown box
 function resetDropdownBox(reportData, isDisplayTerminal, isDisplayAll) {
     var dropdownGroup = $("#groupsdown");
@@ -498,7 +504,6 @@ function resetDropdownBox(reportData, isDisplayTerminal, isDisplayAll) {
         alert("You are not authorized to access this page.");
     }
 }
-
 // process for transaction receipt TMP
 function processTransactionsTMP(listTrans) {
     var data_TMP = _.extend({},listTrans);
@@ -552,7 +557,6 @@ function processTransactionsTMP(listTrans) {
 
     return data_TMP;
 }
-
 function stores_from_id(id,reportData){
     //get a list of stores from the parent id
     return _.chain(reportDataToArray(reportData))
