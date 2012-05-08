@@ -59,7 +59,7 @@ var inv_helpers =
 
 		 var locationsToReportTo = _.chain([origins,locationsToSaveTo])
 		     .flatten()
-		     .pluck('id')
+		     .pluck('id').compact()
 		     .concat(group_ids_to_save_to)
 		     .unique()
 		     .matchTo(entitys,'id')

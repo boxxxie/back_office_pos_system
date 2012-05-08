@@ -109,7 +109,7 @@ var sales_details_report_router =
 
 new sales_details_report_router(
     {
-	route : new RegExp('menuReports/(company|group|store)ReportSalesDetail'),
+	route : new RegExp('reports/sales_details'),
 	report_table_template:'salesDetailtable_TMP',
 	template:"report_TMP",
 	title:'Sales Details Report'

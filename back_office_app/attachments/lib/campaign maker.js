@@ -198,7 +198,7 @@ function transform_campaign_for_form(camp){
     }
 
     function transform_countries(camp){
-	camp.countries = _(camp.locations).chain().pluck('country').unique().value();
+	camp.countries = _(camp.locations).chain().pluck('country').compact().unique().value();
 	return camp;
     }
     var transformations = _.compose(create_for_terminals_field, 

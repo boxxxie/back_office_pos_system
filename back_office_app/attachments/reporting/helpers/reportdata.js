@@ -563,7 +563,7 @@ function stores_from_id(id,reportData){
 	.filter(function(store){
 		    return _.find(store,function(val){return val === id})
 		})
-	.pluck('store_id')
+	.pluck('store_id').compact()
 	.unique()
 	.value()
 }

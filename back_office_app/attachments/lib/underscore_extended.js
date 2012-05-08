@@ -542,3 +542,9 @@ _.mixin({
 		}
 	    }
 	})
+
+_.mixin({
+	    filterContains:function(list,search_for){
+		return _.filter(list,function(entity){return _.find(entity,function(val){return val === search_for})})
+	    }
+	});

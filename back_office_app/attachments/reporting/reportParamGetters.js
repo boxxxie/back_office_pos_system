@@ -34,11 +34,14 @@ function dialogTitleMaker(options){
     return title;
 }
 function entity_blob_for_report_params(id){
+    function count_sub_entities(reportData,parent_id,group_by_field){
+	return _.chain(reportDataToArray(reportData)).filterContains(parent_id).pluck(group_by_field).compact().unique().size().value()
+    }
     var entity_id = id || topLevelEntity(ReportData).id;
     var entity = entity_from_id(ReportData,entity_id);
-    var numberOfGroups=_.chain(reportDataToArray(ReportData)).groupBy('group_id').size().value();
-    var numberOfStores=_.chain(reportDataToArray(ReportData)).groupBy('store_id').size().value();
-    var numberOfTerminals=_.chain(reportDataToArray(ReportData)).groupBy('terminal_id').size().value();
+    var numberOfGroups=count_sub_entities(ReportData,entity_id,'group_id');
+    var numberOfStores=count_sub_entities(ReportData,entity_id,'store_id');
+    var numberOfTerminals=count_sub_entities(ReportData,entity_id,'terminal_id');
 
     if(id){
 	var entity_stats = {
@@ -87,8 +90,9 @@ function getStoresTableParam(id) {return getGeneralTableParam(id,'store_id')};
 function getTerminalsTableParam(id) {return getGeneralTableParam(id,'terminal_id')};
 function getGeneralTableParam(id,key){
     var entities=_.chain(reportDataToArray(ReportData))
-	.filter(function(entity) {return _.find(entity,function(val){return val === id})})
+	.filterContains(id)
 	.pluck(key)
+	.compact()
 	.unique()
 	.map(entity_blob_for_report_params)
 	.mapRenameKeys('terminal_label','terminalName')

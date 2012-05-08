@@ -64,7 +64,7 @@ var sales_summary_report_router =
 
 new sales_summary_report_router(
     {
-	route : new RegExp('menuReports/(company|group|store)ReportSalesSummary'),
+	route : new RegExp('reports/sales_summary'),
 	report_table_template:'salesSummarytable_TMP',
 	template:"report_TMP",
 	title:'Sales Summary Report'
