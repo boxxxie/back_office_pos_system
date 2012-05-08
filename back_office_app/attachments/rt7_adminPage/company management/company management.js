@@ -1,4 +1,3 @@
-
 var Companies;
 var rewardsModel;
 var Locations;

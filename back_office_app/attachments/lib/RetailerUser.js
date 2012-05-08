@@ -50,16 +50,6 @@ var RetailerUserCollection = couchCollection(
      }
     });
 
-function fetch_users_by_location_id(id) {
-    return function(callback){
-        queryF(cdb.view("app","lowestlevel_id"), cdb.db("_users"))
-        ({key:id,include_docs:true})
-        (function(response){
-             callback(null,_.chain(response.rows).pluck('doc').map(simple_user_format).value());
-         });
-    };
-};
-
 function fetchRetailerUserCollection_All(id) {
     return function(callback){
         queryF(cdb.view("app","id_doc"), cdb.db("_users"))
@@ -73,7 +63,6 @@ function fetchRetailerUserCollection_All(id) {
          });
     };
 };
-
 
 function isBackOfficeAdminUser(user) {
     var list_name = _.compact([user.companyName, user.groupName, user.storeName]);
@@ -90,3 +79,26 @@ function isBackOfficeAdminUser(user) {
     }
     return false;
 }
+
+
+
+/**************************** NEW USERS STUFF *****************************/
+function fetch_users_by_location_id(id) {
+    return function(callback){
+        queryF(cdb.view("app","lowestlevel_id"), cdb.db("_users"))
+        ({key:id,include_docs:true})
+        (function(response){
+             callback(null,_.chain(response.rows).pluck('doc').map(simple_user_format).value());
+         });
+    };
+};
+
+function fetch_territory_users() {
+    return function(callback){
+        queryF(cdb.view("app","territory_users"), cdb.db("_users"))
+        ({include_docs:true})
+        (function(response){
+             callback(null,_.chain(response.rows).pluck('doc').map(simple_user_format).value());
+         });
+    };
+};

@@ -204,9 +204,19 @@ var UserDoc = couchDoc.extend(
              };
              }
              function fetch_user_doc(authDB,new_password,callback){
-                var newUser = _.combine(user,{password:new_password, exposed_password:new_password});
-                callback(undefined, newUser,authDB);
-                
+                 var SE_handler = {
+                     error: function (code,type,message) {
+                     callback({code:code,type:type,message:message});
+                     },
+                     success: function (user_doc){
+                     user_doc.password = new_password;
+                     user_doc.exposed_password = new_password;
+                     callback(undefined,user_doc,authDB);
+                     }
+                 };
+                 $.couch
+                     .db(authDB)
+                     .openDoc(user._id,SE_handler);
              }
              function save_user_with_new_password(user_doc_new_password,authDB,callback){
              var SE_handler = {

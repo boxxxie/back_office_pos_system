@@ -6,7 +6,7 @@
     <link href="../layout.css" rel="stylesheet" type="text/css" />
     <link href="../css/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
     
-    <!-- campain manager -->
+    <!-- campaign manager -->
     <link href="../css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css">
     <link href="../css/jquery.multiselect.css" rel="stylesheet" type="text/css">
     
@@ -72,6 +72,8 @@
     <script language="javascript" type="text/javascript" src="../rt7_adminPage/importVouchers/ImportVouchersCSVRouter.js"></script>
     <script language="javascript" type="text/javascript" src="../rt7_adminPage/campaign_manager/dialogs.js"></script>
     <script language="javascript" type="text/javascript" src="../rt7_adminPage/campaign_manager/createCampaignRouter.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/territory_users_management/territory_users_management.js"></script>
+    <script language="javascript" type="text/javascript" src="../rt7_adminPage/territory_users_management/dialog.js"></script>
     <script language="javascript" type="text/javascript" src="../rt7_adminPage/docRdy.js"></script>
     
     <style>
@@ -305,6 +307,7 @@
 	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/reports.png" class="report-menu-icon" border="0"/>Reports</a></div>-->
 	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/terminal.png" class="report-menu-icon" border="0"/>Install/Deactivate a Terminal</a></div>-->
 	<div class="report-menu"><a href="#createcampaigns"><img src="../images/admin/createcampaign.png" class="report-menu-icon" border="0"/>Create Campaign</a></div>
+	<div class="report-menu"><a href="#territoryusers"><img src="../images/admin/createcampaign.png" class="report-menu-icon" border="0"/>Territory Users</a></div>
 	<div class="report-menu"><a style="cursor: pointer;" onClick="logout()"><img src="../images/admin/logout.png" class="report-menu-icon" border="0"/>Logout</a></div>
 	<div style="clear:both"></div>
       </div>
@@ -450,7 +453,6 @@
     </script>
     
     <!--------------------------------------------------------GROUP--------------------------------------------------->
-    
     <script id="groupsTabel_TMP" type="text/html">
       <table class="reportstable">
 	<thead>
@@ -463,6 +465,7 @@
             <th>Delete</th>
           </tr>
 	</thead>
+
 	<tbody>
           {{#list}}
           <tr>
@@ -1330,6 +1333,122 @@
     </script>
     
     <!----------------------------------------------------------------------------------------------------->
+    
+    <!---------------------------------- TERRITORY USERS ------------------------------->
+    <!-- TODO : need to be changed, cuz this code is a copy or report.html -->
+        
+    <script id="territoryUsersManagement_TMP" type="text/html">
+      {{>mainheader}}
+      <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
+      <h1>Territory Users</h1>
+      {{>menuButton_P}}
+      <hr/>
+      
+      <div id="territory_users_table"></div>
+      <div id="addusers">
+          <input id="btnadduser" type="button" value="Add Users" />
+      </div>
+      {{>quickViewHook_P}}
+      <hr />
+      </div>
+    </script>
+    
+    <script id="territoryUsersInfotable_TMP" type="text/html">
+      <div style="margin-bottom:40px">
+      <table style="margin-bottom:20px;" class="reportstable">
+      <thead>
+            <tr>
+              <th>USER</th>
+              <th>NAME</th>
+          <th>PASSWORD</th>
+              <th>ENABLED</th>
+          <th>CHANGE PASSWORD</th>
+              <th>EDIT</th>
+            </tr>
+      </thead>
+      <tbody>
+            {{#list}}
+            <tr>
+              <td align="center">{{userName}}</td>
+              <td align="center">{{firstname}} {{lastname}}</td>
+          <td align="center">{{exposed_password}}</td>
+              <td align="center">{{#enabled}}enabled{{/enabled}}{{^enabled}}disabled{{/enabled}}</td>
+          <td align="center"><button id="{{_id}}" class="edit_user_password">change password</button></td>
+              <td align="center"><button id="{{_id}}" class="edit_user">edit</button></td>
+            </tr>
+            {{/list}}
+        {{^list}}
+        <tr><td align="center" colspan="6">There are no users for this location</td></tr>
+        {{/list}}
+      </tbody>
+    </table>
+      </div>
+    </script>
+    
+    <script id='generic_checkbox_P' class='partial' type='text/html'>
+      <input type="checkbox" var="{{var}}" {{^enabled}}disabled="disabled"{{/enabled}} {{#value}}checked{{/value}}/>
+    </script>
+    <script id='generic_textbox_P' class='partial' type='text/html'>
+      <input type="text" class="text ui-widget-content ui-corner-all" var="{{var}}"  value="{{value}}"{{^enabled}}disabled="disabled"{{/enabled}}/>
+    </script>
+    <script id='generic_passwordbox_P' class='partial' type='text/html'>
+      <input type={{^hidden}}"password"{{/hidden}}{{#hidden}}"hidden"{{/hidden}} class="text ui-widget-content ui-corner-all"  var="{{var}}"  value="{{value}}"{{^enabled}}disabled="disabled"{{/enabled}}/>
+    </script>
+        
+    <script id="inputTerritoryUserInfo_TMP" class="partial" type="text/html">
+      <form id="form">
+    <h2>User Info</h2>
+    <ul>
+      {{#user_name}}
+          <li>{{label}}</li>
+      <li>{{>generic_textbox_P}}</li>
+      {{/user_name}}
+      {{#password}}
+      <li>{{label}}</li>
+      <li>{{>generic_passwordbox_P}}</li>
+      {{/password}}
+      {{#is_enabled}}
+      <li>
+        {{label}}{{>generic_checkbox_P}}
+      </li>
+      {{/is_enabled}}
+      <!--<span>Roles</span>
+      <ul>
+        {{#roles}}
+        <li>
+           {{>generic_checkbox_P}}{{label}}
+        </li>
+            {{/roles}}
+      </ul>-->
+
+    </ul>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tbody>
+            <tr>
+              <td valign="top">
+        <h2>Address</h2>
+        <ul>
+          {{#address}}
+          <li>{{label}}</li>
+          <li>{{>generic_textbox_P}}</li>
+          {{/address}}
+        </ul>
+          </td>
+          <td valign="top">
+        <h2>Contact</h2>
+        <ul>
+          {{#contact}}
+          <li>{{label}}</li>
+          <li>{{>generic_textbox_P}}</li>
+          {{/contact}}
+        </ul>
+          </td>
+            </tr>
+          </tbody>
+    </table>
+      </form>
+    </script>
+    <!-- ---------------------------------------------------------------------------- -->
     
   </head>
   <body>

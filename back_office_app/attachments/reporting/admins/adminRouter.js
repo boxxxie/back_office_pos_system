@@ -74,7 +74,7 @@ var adminRouter =
 		 },
 		 initialize:function(){
 		     var router = this;
-		     router.vent = _.extend({},Backbone.Events)
+		     router.vent = _.extend({},Backbone.Events);
 		     router.template = 'adminManagement_TMP';
 		     var UserCollection = Backbone.Collection.extend({model:UserDoc});
 		     router.user_collection = new UserCollection();
@@ -154,83 +154,7 @@ var adminRouter =
 		     var router = this;
 		     console.log("change_user_password");
 		     console.log(arguments);
-		     function verify_user(user){
-			 if(user && user.id){
-			     return false;
-			 }
-			 return {
-			     code:5462,
-			     type:"invalid user",
-			     message:"There is a problem with your login sesssion, you may need to login again"
-			 };
-		     }
-		     function verify_session(session){
-			 if(session && session.info && session.info.authentication_db){
-			     return false;
-			 }
-			 return {
-			     code:4232,
-			     type:"invalid session",
-			     message:"There is a problem with your login session, you may need to login again"
-			 };
-
-		     }
-		     function verify_password(password){
-			 if(_.isEmpty(password)){
-			     return {
-				 code:2341,
-				 type:'invalid password',
-				 message:"The password was left blank"
-			     };
-			 }
-			 return false;
-		     }
-		     function verify_user_session_password(user,session,new_password){
-			 return function(callback){
-			     var first_error =
-				 _.either(verify_user(user),
-					  verify_session(session),
-					  verify_password(new_password));
-			     if(first_error){
-				 callback(first_error);
-			     }
-			     else{
-				 callback(null,
-					  user.id,
-					  session.info.authentication_db,
-					  new_password);
-			     }
-			 };
-		     }
-		     function fetch_user_doc(user_id,authDB,new_password,callback){
-			 var SE_handler = {
-			     error: function (code,type,message) {
-				 callback({code:code,type:type,message:message});
-			     },
-			     success: function (user_doc){
-				 user_doc.password = new_password;
-				 user_doc.exposed_password = new_password;
-				 callback(undefined,user_doc,authDB);
-			     }
-			 };
-			 $.couch
-			     .db(authDB)
-			     .openDoc(user_id,SE_handler);
-		     }
-		     function save_user_with_new_password(user_doc_new_password,authDB,callback){
-			 var SE_handler = {
-			     success: function(){
-				 callback(undefined,user_doc_new_password);
-			     },
-			     error: function (code,type,message) {
-				 callback({code:code,type:type,message:message});
-			     }
-			 };
-			 $.couch
-			     .db(authDB)
-			     .saveDoc(user_doc_new_password,SE_handler);
-
-		     }
+		     
 		     function login_with_new_password(user_doc,callback){
 			 var SE_handler = {
 			     success : function(){
@@ -250,19 +174,23 @@ var adminRouter =
 
 			 $.couch.login(login_options);
 		     }
+		     
 		     function edit_router_user_collection(user_doc,callback){
 			 var simple_user = simple_user_format(user_doc);
 			 router.user_collection.get(simple_user._id).set(simple_user);
 			 callback(undefined);
 		     }
+		     
 		     function setup_router_current_user(simple_user,callback){
 			 router.current_user.set(simple_user);
 			 callback(undefined,simple_user);
 		     }
+		     
 		     function setup_report_data(simple_user,callback){
 			 ReportData.currentUser = simple_user;
 			 callback(undefined);
 		     }
+		     
 		     function setup_session(callback){
 			 $.couch.session(
 			     {
@@ -295,9 +223,7 @@ var adminRouter =
                  var user = router.current_user;
                  async.waterfall(
                      [
-                     verify_user_session_password(user,session,new_password),
-                     fetch_user_doc,
-                     save_user_with_new_password,
+                     user.change_password(session,new_password),
                      login_with_new_password,
                      setup_router_current_user,
                      setup_report_data,
@@ -309,9 +235,7 @@ var adminRouter =
                  var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
                  async.waterfall(
                      [
-                     verify_user_session_password(user,session,new_password),
-                     fetch_user_doc,
-                     save_user_with_new_password,
+                     user.change_password(session,new_password),
                      edit_router_user_collection
                      ],
                      report);
