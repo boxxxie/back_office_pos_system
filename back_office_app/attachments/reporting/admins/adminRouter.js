@@ -394,8 +394,9 @@ var adminRouter =
 				     var roles = roles_strings.concat(roles_complex);
 				     return _.chain(user_data).removeKeys(extract_obj).combine({roles:roles}).value();
 				 }
-				 var user_data = _.compose(complex_user_format,
-							 user_name)(_.combine(user_creation_rules.consts,
+
+				 var user_data = _.compose(complex_user_format, user_name)
+				                    (_.combine(user_creation_rules.consts,
 									      simple_user_data,
 									      {exposed_password:simple_user_data.password}));
 

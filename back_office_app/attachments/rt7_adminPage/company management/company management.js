@@ -476,17 +476,6 @@ function autoBreadCrumb() {
     return smartBreadCrumb(ReportData);
 }
 
-Companies = new (couchCollection(
-		     {db:'companies'},
-		     {model:Company,
-		      getModelById : function(modelId){
-			  return this.find(function(model){return model.get('_id') == modelId;});
-		      },
-		      getSelectedModel : function(){
-			  return this.find(function(model){return model.selected == true;});
-		      }
-		     }));
-Companies.fetch({error:function(response){alert(response.responseText);}});
 
 var CompanyManagementRouter = new (Backbone.Router.extend(
 				       {

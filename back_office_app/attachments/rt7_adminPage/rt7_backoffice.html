@@ -298,16 +298,16 @@
     <script id="mainMenu_TMP" type="text/html">
       {{>mainheader}}
       <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
-        <h1>RT7 Backoffice Main Menu</h1>
+        <h1>{{label}} Main Menu</h1>
 	<div class="report-menu"><a href="#companymanagement"><img src="../images/admin/company.png" class="report-menu-icon" border="0"/>Company Management</a></div>
 	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/company.png" class="report-menu-icon" border="0"/>T.R. Users Management</a></div>-->
-	<div class="report-menu"><a href="#inventorymanagement"><img src="../images/admin/inventory.png" class="report-menu-icon" border="0"/>Inventory Management</a></div>
-	<div class="report-menu"><a href="#importvouchers"><img src="../images/admin/importvoucher.png" class="report-menu-icon" border="0"/>Import Vouchers CSV</a></div>
+	<div class="report-menu rt7_menu"><a href="#inventorymanagement"><img src="../images/admin/inventory.png" class="report-menu-icon" border="0"/>Inventory Management</a></div>
+	<div class="report-menu rt7_menu"><a href="#importvouchers"><img src="../images/admin/importvoucher.png" class="report-menu-icon" border="0"/>Import Vouchers CSV</a></div>
 	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/user.png" class="report-menu-icon" border="0"/>Backoffice Admin User Info</a></div>-->
 	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/reports.png" class="report-menu-icon" border="0"/>Reports</a></div>-->
 	<!--<div class="report-menu"><a style="cursor: pointer;" onclick="showMsg();"><img src="../images/admin/terminal.png" class="report-menu-icon" border="0"/>Install/Deactivate a Terminal</a></div>-->
-	<div class="report-menu"><a href="#createcampaigns"><img src="../images/admin/createcampaign.png" class="report-menu-icon" border="0"/>Create Campaign</a></div>
-	<div class="report-menu"><a href="#territoryusers"><img src="../images/admin/createcampaign.png" class="report-menu-icon" border="0"/>Territory Users</a></div>
+	<div class="report-menu rt7_menu"><a href="#createcampaigns"><img src="../images/admin/createcampaign.png" class="report-menu-icon" border="0"/>Create Campaign</a></div>
+	<div class="report-menu rt7_menu"><a href="#territoryusers"><img src="../images/admin/createcampaign.png" class="report-menu-icon" border="0"/>Territory Users</a></div>
 	<div class="report-menu"><a style="cursor: pointer;" onClick="logout()"><img src="../images/admin/logout.png" class="report-menu-icon" border="0"/>Logout</a></div>
 	<div style="clear:both"></div>
       </div>
@@ -1335,8 +1335,6 @@
     <!----------------------------------------------------------------------------------------------------->
     
     <!---------------------------------- TERRITORY USERS ------------------------------->
-    <!-- TODO : need to be changed, cuz this code is a copy or report.html -->
-        
     <script id="territoryUsersManagement_TMP" type="text/html">
       {{>mainheader}}
       <div style="width:1000px;margin:20px auto;padding:20px;background-color:#fff;font-size:13px;font-weight:bold;border-radius:20px;">
@@ -1386,13 +1384,13 @@
     </script>
     
     <script id='generic_checkbox_P' class='partial' type='text/html'>
-      <input type="checkbox" var="{{var}}" {{^enabled}}disabled="disabled"{{/enabled}} {{#value}}checked{{/value}}/>
+      <input type="checkbox" class="{{var}}" var="{{var}}" {{^enabled}}disabled="disabled"{{/enabled}} {{#value}}checked{{/value}} />
     </script>
     <script id='generic_textbox_P' class='partial' type='text/html'>
-      <input type="text" class="text ui-widget-content ui-corner-all" var="{{var}}"  value="{{value}}"{{^enabled}}disabled="disabled"{{/enabled}}/>
+      <input type="text" class="text ui-widget-content ui-corner-all {{var}}" var="{{var}}"  value="{{value}}"{{^enabled}}disabled="disabled"{{/enabled}}/>
     </script>
     <script id='generic_passwordbox_P' class='partial' type='text/html'>
-      <input type={{^hidden}}"password"{{/hidden}}{{#hidden}}"hidden"{{/hidden}} class="text ui-widget-content ui-corner-all"  var="{{var}}"  value="{{value}}"{{^enabled}}disabled="disabled"{{/enabled}}/>
+      <input type={{^hidden}}"password"{{/hidden}}{{#hidden}}"hidden"{{/hidden}} class="text ui-widget-content ui-corner-all {{var}}"  var="{{var}}"  value="{{value}}"{{^enabled}}disabled="disabled"{{/enabled}}/>
     </script>
         
     <script id="inputTerritoryUserInfo_TMP" class="partial" type="text/html">
@@ -1458,7 +1456,7 @@
     </div>
     <div class="footer">
       <div class="footerin">
-	&copy; 2012 RT7 Incorporated.
+	&copy; 2012 RT7 Incorporated. RT7 Incorporated is a registered ISO/MSP of Chase Paymentech Solutions.
 	<img src="../images/rt7.png" style="float:right;"/>
       </div>
     </div>

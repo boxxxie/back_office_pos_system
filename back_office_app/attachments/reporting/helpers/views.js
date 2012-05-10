@@ -27,7 +27,7 @@ var templated_view =
 		var view = this.setup();
 		return view._render(data);
 	    }
-	})
+	});
 
 var company_tree_navigation_view =
     templated_view.extend(
@@ -142,7 +142,7 @@ var general_layout_view =
 						     {auto_el:'#report'},
 						     _.removeKeys(options,'template')));
 		view.vent.on('render:layout',view.render,view);
-		return view
+		return view;
 	    }
 	});
 
@@ -184,7 +184,7 @@ var general_report_view =
 				 report_table : new report_table_view(
 				     {
 					 vent:vent,
-					 auto_el:'#report_table',
+					 auto_el:'#report_table'
 				     }
 				 )
 			     });
@@ -201,7 +201,7 @@ var general_report_view =
 		view.vent.on('fetched:report',
 			     function(report){
 				 this.$('#export').show();
-				 this.vent.trigger('render:report',report)},
+				 this.vent.trigger('render:report',report);},
 			     view);
 
 		view.vent.on('render:general-report',
@@ -215,8 +215,8 @@ var general_report_view =
 		return view;
 	    },
 	    events:{
-		'click #generate_report':function(){this.vent.trigger('generate_report')},
-		'click #export':function(){this.vent.trigger('export')}
+		'click #generate_report':function(){this.vent.trigger('generate_report');},
+		'click #export':function(){this.vent.trigger('export');}
 	    },
 	    _render:function(data){
 		var view = templated_view.prototype._render.call(this,data);
@@ -224,7 +224,7 @@ var general_report_view =
 		view.$('#export').hide();
 		return view;
 	    }
-	})
+	});
 
 var general_report_router =
     Backbone.Router.extend(
@@ -248,13 +248,13 @@ var general_report_router =
 	    //rendering report data
 	    router.vent.on('generate_report',function(){
 			       router.fetch_inventory_report(
-				   _.bind(router._finished_fetching_report,router))
+				   _.bind(router._finished_fetching_report,router));
 			   },router);
 
 	     //exporting
 	    router.vent.on('export',function(){
 			       router.export_csv(
-				   _.bind(router._export_csv,router))
+				   _.bind(router._export_csv,router));
 			   }
 			   ,router);
 
@@ -263,7 +263,7 @@ var general_report_router =
 	    router.vent.on('change:end-date',router.update_end_date,router);
 
 	     //entity selection changes
-	    router.vent.on('change:selected-entity',function(id){this.selected_entity = id},router);
+	    router.vent.on('change:selected-entity',function(id){this.selected_entity = id;},router);
 	},
 	setup:function(){
 	    var router = this;
@@ -280,8 +280,8 @@ var general_report_router =
 				    company_navigation:ReportData
 				});
 	},
-	update_start_date:function(date){this.startDate = date},
-	update_end_date:function(date){this.endDate = date},
+	update_start_date:function(date){this.startDate = date;},
+	update_end_date:function(date){this.endDate = date;},
 
 	_finished_fetching_report:function(report){
 	    var router = this;
@@ -294,16 +294,16 @@ var general_report_router =
 	    var router = this;
 	    var handler = {
 		success:function(resp){
-		    var href = window.location.origin + '/'+ export_db +'/_design/app/_show/csv/' + resp.id
-		    window.location.href = href
+		    var href = window.location.origin + '/'+ export_db +'/_design/app/_show/csv/' + resp.id;
+		    window.location.href = href;
 		},
 		error:function(){
-		    alert('there was an error exporting your data')
+		    alert('there was an error exporting your data');
 		}
-	    }
+	    };
 	    if(_.isUndefined(router.current_view_data)){
-		alert("there is no data to save")
-		return
+		alert("there is no data to save");
+		return undefined;
 	    }
 	    var doc = {
 		_id:$.couch.newUUID(),
@@ -315,4 +315,4 @@ var general_report_router =
 	    $.couch.db(export_db).saveDoc(doc,handler);
 	},
 	export_csv:function(){}
-    })
+    });

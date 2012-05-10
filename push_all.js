@@ -13,9 +13,9 @@ function main(user,ip){
 		.createApp(file,
 			   'http://'+ user + '@' + ip + '/' + db,
 			   function(design_doc){
-			       design_doc.push()
-			   })
-	}
+			       design_doc.push();
+			   });
+	};
     }
 
     var push_couchapp = couchapp_push_as_user(user,ip);
@@ -70,9 +70,9 @@ function main(user,ip){
 
       })
 	.each(function(db,file){
-		  var loaded_doc =  require('./'+file)
-		  push_couchapp(loaded_doc,db)
-	      })
+		  var loaded_doc =  require('./'+file);
+		  push_couchapp(loaded_doc,db);
+	  });
 
 }
 main.apply(null,_(process.argv).rest(2));

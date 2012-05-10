@@ -100,6 +100,9 @@ var territoryUsersRouter =
              //router.vent.on('change:selected-entity',router.load_users_for_id,router);
          },
          setup:function(){
+             //alert("we are working on this menu");
+             //window.history.go(-1);
+            
              var router = this;
              var html = ich[router.template]();
                  $("#main").html(html);
@@ -132,6 +135,12 @@ var territoryUsersRouter =
              console.log("change_user_password");
              console.log(arguments);
              
+             function edit_router_user_collection(user_doc,callback){
+             var simple_user = simple_user_format(user_doc);
+             router.user_collection.get(simple_user._id).set(simple_user);
+             callback(undefined);
+             }
+             
              function report(err){
              if(err){
                  alert(JSON.stringify(err));
@@ -155,9 +164,106 @@ var territoryUsersRouter =
 
          },
          edit_user:function(user_id){
+             var router = this;
+             var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
              console.log("edit user: " + user_id);
+             var userJSON = user.toJSON();
+             console.log(userJSON);
              //we_are_fixing_this_feature("editing users is being fixed right now");return;
-             alert("editing users is being fixed right now");
+             
+             function edit_router_user_collection(user_doc,callback){
+             var simple_user = simple_user_format(user_doc);
+             router.user_collection.get(simple_user._id).set(simple_user);
+             callback(undefined);
+             }
+             
+             function report(err){
+             if(err){
+                 alert(JSON.stringify(err));
+             }
+             }
+             
+             var user_edit_rules =  
+                _.extend({}
+                        ,{
+                            consts : 
+                                {
+                                "creationdate": userJSON.creationdate,
+                                "type": "user"
+                                },
+                                
+                            display:
+                            {
+                                user_name:{"var":'userName',label:"User Name",enabled:false,value:userJSON.userName},
+                                password:{"var":'password',label:"Password",enabled:false,value:userJSON.exposed_password},
+                                is_enabled:{"var":"enabled",label:"Enabled",enabled:true,value:userJSON.enabled},
+                                contact:[
+                                {"var":"firstname",label:"First Name", enabled:true,value:userJSON.firstname},
+                                {"var":"lastname",label:"Last Name", enabled:true,value:userJSON.lastname},
+                                {"var":"website",label:"WebSite", enabled:true,value:userJSON.website},
+                                {"var":"email", label:"Email",enabled:true,value:userJSON.email},
+                                {"var":"phone", label:"Phone Number",enabled:true,value:userJSON.phone}
+                                ],
+                                address:[
+                                {"var":"street0",label:"Street 0", enabled:true,value:userJSON.street0},
+                                {"var":"street1", label:"Street 1",enabled:true,value:userJSON.street1},
+                                {"var":"city", label:"City",enabled:true,value:userJSON.city},
+                                {"var":"country", label:"Country",enabled:true,value:userJSON.country},
+                                {"var":"province", label:"Province",enabled:true,value:userJSON.province},
+                                {"var":"postalcode", label:"Postal Code",enabled:true,value:userJSON.postalcode}
+                                ]
+                            }
+                        });
+                        
+             quickInputTerritoryUserInfoDialog(
+             {
+                 title:"Edit New User",
+                 html:ich.inputTerritoryUserInfo_TMP(user_edit_rules.display), //here we have to merge the rules with the default_data to come up with the blueprint for the dialog
+                 on_submit:function(simple_user_data){
+                 console.log(simple_user_data);
+                 function user_name(user){
+                     return _.combine(user, {name:user.userName});
+                 }
+                 function apply_constants(consts){
+                     return function(user){
+                     return _.combine(user,consts);
+                     };
+                 }
+                 function complex_user_format(user_data){
+                     var extract_strings = ['company','company_admin','group','group_admin','store','store_admin','pos_sales','pos_admin'];
+                     var extract_obj = ['companyName','company_id','groupName','group_id','storeName','store_id','storeNumber','userName','enabled'].concat(extract_strings);
+                     //var roles_strings = _.chain(user_data).selectKeys(extract_strings).filter$(_.identity).keys().value();
+                     var roles_strings = ["territory"];
+                     var roles_complex = _.selectKeys(user_data,extract_obj);
+                     var roles = roles_strings.concat(roles_complex);
+                     return _.chain(user_data).removeKeys(extract_obj).combine({roles:roles}).value();
+                 }
+                 var user_data = _.compose(complex_user_format,
+                             user_name)(_.combine(user_edit_rules.consts,
+                                          simple_user_data,
+                                          {exposed_password:simple_user_data.password}));
+
+                 console.log("submitted user");
+                 console.log(user_data);
+                 
+                 $.couch.session({
+                     success: function(session) {
+                         var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
+                         async.waterfall(
+                         [
+                         user.updateUserDoc(session,user_data),
+                         edit_router_user_collection
+                         ],
+                         report);
+                     },
+                     error:function() {
+                         console.log("session error");
+                     }
+                     });
+                 }
+             });           
+             
+             //alert("editing users is being fixed right now");
          },
          add_user:function(){
              console.log("add user button pressed");
@@ -186,8 +292,8 @@ var territoryUsersRouter =
                                 {"var":"phone", label:"Phone Number",enabled:true,value:""}
                                 ],
                                 address:[
-                                {"var":"street0",label:"Street", enabled:true,value:""},
-                                {"var":"street1", label:"Street",enabled:true,value:""},
+                                {"var":"street0",label:"Street 0", enabled:true,value:""},
+                                {"var":"street1", label:"Street 1",enabled:true,value:""},
                                 {"var":"city", label:"City",enabled:true,value:""},
                                 {"var":"country", label:"Country",enabled:true,value:""},
                                 {"var":"province", label:"Province",enabled:true,value:""},

@@ -37,7 +37,7 @@ ddoc.views.to_be_installed_by_user = {
        !_.isEmpty(doc.group_label)&&
        !_.isEmpty(doc.store_label)&&
        !_.isEmpty(doc.terminal_label)){
-        emit([doc.creation_name,doc.company_label,doc.group_label,doc.store_label,doc.terminal_label],doc.terminal_id);
+        emit([doc.creation_user,doc.company_label,doc.group_label,doc.store_label,doc.terminal_label],doc.terminal_id);
     }
     }
 };

@@ -5,6 +5,12 @@ ddoc = { _id:'_design/app'};
 
 ddoc.views = {};
 
+ddoc.views.creation_user_id = {
+    map:function(doc) {
+        emit(doc.creation_user, doc._id);
+    }
+};
+
 ddoc.views.names_to_id = {
     map:function(doc){
 	var _ = require("views/lib/underscore");
@@ -57,9 +63,9 @@ ddoc.views.receipt_id = {
 
 ddoc.shows = {
     branch: function(doc,req){
-	log('branch')
-	log(doc)
-	log(req.query)
+	log('branch');
+	log(doc);
+	log(req.query);
 	var args = req.query;
 
 	var _ = require("views/lib/underscore");
@@ -75,27 +81,27 @@ ddoc.shows = {
 
 	var groupID;
 	_.prewalk(function(o){
-		      log(o)
+		      log(o);
 		      if(o && o.group_id){
-			  log("go")
-			  groupID =  o.group_id
+			  log("go");
+			  groupID =  o.group_id;
 		      }
-		      return o
+		      return o;
 		  },
 		  args);
 	var storeID;
 	_.prewalk(function(o){
 		      if(o && o.store_id){
-			  storeID = o.store_id
+			  storeID = o.store_id;
 		      }
-		      return o
+		      return o;
 		  },
 		  args);
 
-	log('group')
-	log(groupID)
-	log('store')
-	log(storeID)
+	log('group');
+	log(groupID);
+	log('store');
+	log(storeID);
 
 	if(_.isUndefined(groupID)&& _.isUndefined(storeID)){return JSON.stringify(doc);}
 

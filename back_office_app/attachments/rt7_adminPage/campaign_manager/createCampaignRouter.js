@@ -601,6 +601,9 @@ var createCampaignRouter =
                 router.views.add_images_view.on('delete_image',router.delete_image,router);
               },
               _setup:function(){
+                //alert("we are working on this menu");
+                //window.history.go(-1);
+                
                 console.log("campaign manager");
                 var router = this;
                 //router.currentCampaignDoc ={};

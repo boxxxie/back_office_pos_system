@@ -164,7 +164,7 @@ var reportDataToArray = _.memoize(
             .prewalk_r(combineWithSubpart('stores'))
             .prewalk_r(combineWithSubpart('groups'))
             .prewalk_r(combineWithSubpart('company'))
-	    .value()
+	    .value();
 
     },
     reportDataHash
@@ -173,10 +173,10 @@ var reportDataToArray = _.memoize(
 function entity_type_from_id(reportData,id){
     return _.chain(reportDataToArray(ReportData))
 	.find(function(entity){
-		  return _.find(entity,function(val){return val === id})
+		  return _.find(entity,function(val){return val === id;});
 	      })
 	.filter$(function(val){
-		     return val === id
+		     return val === id;
 		 })
 	.renameKeys('_id','company',
 		    'company_id','company',
@@ -184,25 +184,25 @@ function entity_type_from_id(reportData,id){
 		    'group_id','group')
 	.keys()
 	.first()
-	.value()
+	.value();
 }
 
 function entity_from_id(reportData,id){
     var bloated_entity = _.chain(reportDataToArray(reportData))
 	.find(function(entity){
-		  return _.find(entity,function(val){return val === id})
+		  return _.find(entity,function(val){return val === id;});
 	      })
-	.value()
-    var entity_type = entity_type_from_id(reportData,id)
+	.value();
+    var entity_type = entity_type_from_id(reportData,id);
     if (entity_type === 'company'){
 	return _.selectKeys(bloated_entity, 'company_id',
-		       'companyName')
+		       'companyName');
     }
     else if(entity_type === 'group'){
 	return _.selectKeys(bloated_entity, 'company_id',
 		       'companyName',
 		       'group_id',
-		       'groupName')
+		       'groupName');
     }
     else if(entity_type === 'store'){
 	return _.selectKeys(bloated_entity, 'company_id',
@@ -211,7 +211,7 @@ function entity_from_id(reportData,id){
 		       'groupName',
 		       'store_id',
 		       'storeName',
-		       'storeNumber')
+		       'storeNumber');
     }
 }
 
@@ -359,12 +359,12 @@ function simple_user_format(user){
     var user_roles_obj = _.chain(user.roles)
 	.filter(_.isObj)
 	.merge()
-	.value()
+	.value();
 
     return _.chain(user)
 	.removeKeys('roles')
 	.combine(user_roles_obj)
-	.value()
+	.value();
 }
 
 // report page datepicker reset helper function
@@ -557,9 +557,9 @@ function stores_from_id(id,reportData){
     //get a list of stores from the parent id
     return _.chain(reportDataToArray(reportData))
 	.filter(function(store){
-		    return _.find(store,function(val){return val === id})
+		    return _.find(store,function(val){return val === id;});
 		})
 	.pluck('store_id')
 	.unique()
-	.value()
+	.value();
 }
