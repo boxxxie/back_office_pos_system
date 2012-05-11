@@ -96,6 +96,7 @@ function login() {
     function user_login(login_info,callback){
 	    var user = new UserDoc(login_info);
 	    user.login(callback);
+	    //TODO : check enabled to login
     }
 
     function fetch_company_info_for_user(user, session, callback){
@@ -123,7 +124,7 @@ function login() {
 		       callback({
 				    code:1,
 				    type:"company information",
-				    message:"unable to retrieve company information for this user"})
+				    message:"unable to retrieve company information for this user"});
 		   }
 		  });
     }
@@ -147,7 +148,7 @@ function login() {
 	else{
 	    callback({code:3,
 		      type:'company information',
-		      message:'there is an error with the user login data'})
+		      message:'there is an error with the user login data'});
 	}
     }
 
@@ -188,6 +189,6 @@ function logout() {
 	    alert(message);
 	    reset();
 	}
-    }
+    };
     $.couch.logout(SE_handler);
 };

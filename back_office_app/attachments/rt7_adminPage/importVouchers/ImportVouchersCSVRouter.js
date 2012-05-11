@@ -5,6 +5,11 @@ var importVoucherRouter =
               "importvouchers":"_setup"
               },
               _setup:function(){
+                
+                  if(isTerritoryUser(currentSession)) {
+                    window.history.go(-1);
+                }
+                
           console.log("importvouchers");
           var html = ich.importVouchers_TMP({});
           $("#main").html(html);

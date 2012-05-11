@@ -157,13 +157,15 @@ var reportDataToArray = _.memoize(
 			      var o_without_field = _.removeKeys(o,'hierarchy');
 			      var expandedCombinedFields = _.mapCombine(groups,o_without_field);
 			      return _.combine(o_without_field,{groups : expandedCombinedFields});
-			  }
+			  } 
 			  return o;
 		      })
 	    .prewalk_r(combineWithSubpart('terminals'))
             .prewalk_r(combineWithSubpart('stores'))
             .prewalk_r(combineWithSubpart('groups'))
             .prewalk_r(combineWithSubpart('company'))
+            .prewalk_r(combineWithSubpart('group')) // by yunbo
+            .prewalk_r(combineWithSubpart('store')) // by yunbo
 	    .value();
 
     },
@@ -171,7 +173,7 @@ var reportDataToArray = _.memoize(
 );
 
 function entity_type_from_id(reportData,id){
-    return _.chain(reportDataToArray(ReportData))
+    return _.chain(reportDataToArray(reportData))
 	.find(function(entity){
 		  return _.find(entity,function(val){return val === id;});
 	      })

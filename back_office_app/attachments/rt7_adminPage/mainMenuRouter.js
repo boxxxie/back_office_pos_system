@@ -9,16 +9,17 @@ var mainMenuRouter =
                   success:function(session){
                       //TODO : this doesn't work at IE7
                       //if(_.contains(session.userCtx.roles,"rt7")) {
-                        if(_.contains(currentUser.roles, "rt7")) {
+                        if(_.contains(currentSession.roles, "rt7")) {
                             //window.location.href = "#mainMenus";
                             Companies.fetch({error:function(response){alert(response.responseText);}});
                             console.log("mainMenus");
                               var html = ich.mainMenu_TMP({label:"RT7 BackOffice"});
                               $("#main").html(html);    
                         //} else if(_.contains(session.userCtx.roles,"territory")) {
-                        } else if(_.contains(currentUser.roles,"territory")) {
-                            var roleObj = _.find(currentUser.roles,_.isObj);
+                        } else if(_.contains(currentSession.roles,"territory")) {
+                            var roleObj = _.find(currentSession.roles,_.isObj);
                             console.log(roleObj);
+                            
                             var userName = roleObj.userName;
                             console.log(userName);
                             $.couch.db("companies").view("app/creation_user_id", {

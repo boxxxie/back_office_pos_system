@@ -34,11 +34,21 @@ var InventoryManagementRouter = new
 		 "inventorymanagement/add_view/upc/:upc": "addmodifyInventory"  
              },
              inventoryManagementHome:function(){
+                 
+                 if(isTerritoryUser(currentSession)) {
+                    window.history.go(-1);
+                }
+                 
 		 console.log("inventoryManagementHome");
 		 var html = ich.inventoryManagementHome_TMP({});
 		 $("#main").html(html);
              },
              reviewInventoryHome:function(){
+                 
+                 if(isTerritoryUser(currentSession)) {
+                    window.history.go(-1);
+                }
+                 
 		 var html = ich.reviewInventoryPage_TMP({});
 		 $("#main").html(html);
 		 var view = this.view;
@@ -61,6 +71,11 @@ var InventoryManagementRouter = new
 				     });
              },
              addviewInventoryHome:function(){
+                 
+                 if(isTerritoryUser(currentSession)) {
+                    window.history.go(-1);
+                }
+                
 		 var html = ich.addInventoryPage_TMP({});
 		 $("#main").html(html);
 		 $("#upc").focus();

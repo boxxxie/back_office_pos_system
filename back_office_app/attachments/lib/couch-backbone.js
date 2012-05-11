@@ -115,13 +115,13 @@ var UserDoc = couchDoc.extend(
 	    var user = this;
 	    var SE_handler ={
 		success:function(user_login_info){
-		    async.parallel({
-				       user_doc:async.apply(async_method,user,'fetch'),
-				       session_info:async.apply(async_session)
-				   },
-				   function(err,response){
-				       callback(err,response.user_doc,response.session_info);
-				   });
+    		    async.parallel({
+    				       user_doc:async.apply(async_method,user,'fetch'),
+    				       session_info:async.apply(async_session)
+    				   },
+    				   function(err,response){
+    				       callback(err,response.user_doc,response.session_info);
+    				   });
 		},
 		error:function(code,type,message){
 		    callback({code:code,type:type,message:message});
