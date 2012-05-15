@@ -971,15 +971,19 @@
 	<thead>
           <tr>
             <th>LOGGED IN AS</th>
+            <th>NAME</th>
             <th>PASSWORD</th>
             <th>CHANGE PASSWORD</th>
+            <th>EDIT</th>
           </tr>
 	</thead>
 	<tbody>
 	  <tr>
 	    <td align="center">{{userName}}</td>
+	    <td align="center">{{firstname}} {{lastname}}</td>
 	    <td align="center">{{exposed_password}}</td>
 	    <td align="center"><button id="{{_id}}" class="change_logged_in_user_password">change password</button></td>
+	    <td align="center"><button id="{{_id}}" class="edit_logged_in_user">edit</button></td>
 	  </tr>
 	</tbody>
       </table>
@@ -1053,7 +1057,7 @@
     </script>
     
     <script id='generic_checkbox_P' class='partial' type='text/html'>
-      <input type="checkbox" var="{{var}}" {{^enabled}}disabled="disabled"{{/enabled}} {{#value}}checked{{/value}}/>
+      <input type="checkbox" var="{{var}}"  {{^enabled}}disabled="disabled"{{/enabled}} {{#value}}checked{{/value}}/>
     </script>
     <script id='generic_textbox_P' class='partial' type='text/html'>
       <input type="text" class="text ui-widget-content ui-corner-all" var="{{var}}"  value="{{value}}"{{^enabled}}disabled="disabled"{{/enabled}}/>
@@ -1083,7 +1087,7 @@
 	  <ul>
 	    {{#roles}}
 	    <li>
-	       {{>generic_checkbox_P}}{{label}}
+	       {{>generic_checkbox_P}}{{^hidden}}{{label}}{{/hidden}}
 	    </li>
             {{/roles}}
 	  </ul>
@@ -3147,7 +3151,7 @@
 	    <tr>
 	      <td>{{companyName}}</td>
 	      <td>
-	          <a href="#main/group/{{group_id}}/stores">{{groupName}}</a>
+	          <a href="#main/group/{{groupName}}/stores">{{groupName}}</a>
 	      </td>
 	      <td>{{numberOfStores}}</td>
 	      <td>{{numberOfTerminals}}</td>
@@ -3190,7 +3194,7 @@
 	      <td>{{companyName}}</td>
 	      <td>{{groupName}}</td>
 	      <td>
-	          <a href="#main/store/{{store_id}}/terminals">{{storeName}}</a>
+	          <a href="#main/store/{{storeName}}({{storeNumber}})/terminals">{{storeName}}</a>
           </td>
 	      <td>{{storeNumber}}</td>
 	      <td>{{numberOfTerminals}}</td>
@@ -3309,11 +3313,11 @@
     
     <div id="main"></div>
     <div id="timespace" style="width:1000px;margin:0 auto; color:#666;text-align:center;">
-      <script>document.write((new Date()).toDateString() + " / " + (new Date()).toLocaleTimeString())</script>
+      <script>document.write((new Date()).toDateString() + ' / ' + (new Date()).toLocaleTimeString())</script>
     </div>
     <div class="footer">
       <div class="footerin">
-	&copy; 2012 RT7 Incorporated.
+	&copy; 2012 RT7 Incorporated. RT7 Incorporated is a registered ISO/MSP of Chase Paymentech Solutions.
 	<img src="../images/rt7.png" style="float:right;"/>
       </div>
     </div>

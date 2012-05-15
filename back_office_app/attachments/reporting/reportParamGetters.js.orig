@@ -1,0 +1,272 @@
+function breadCrumb(companyName,groupName,storeName,storeNumber,terminalName){
+    return {companyName:companyName,groupName:groupName,storeName:storeName,storeNumber:storeNumber,terminalName:terminalName};
+};
+function smartBreadCrumb(ReportData){
+    if(ReportData.store){
+	return {breadCrumb:breadCrumb(ReportData.companyName,
+	     			 ReportData.groupName,
+	     			 ReportData.store.storeName,
+	     			 ReportData.store.number)};
+    }
+    else if(ReportData.group){
+	return {breadCrumb:breadCrumb(ReportData.companyName,
+				 ReportData.group.groupName)};
+    }
+    else if(ReportData.company){
+	return {breadCrumb:breadCrumb(ReportData.company.companyName)};
+    }
+    else{
+	return {};
+    }
+}
+function autoBreadCrumb(){
+    return smartBreadCrumb(ReportData);
+}
+function dialogTitleMaker(options){
+    var title = "Company: " + options.companyName;
+    if(options.groupName) title = title.concat(" , Group: " + options.groupName);
+    if(options.numberOfGroups) title = title.concat(" , Groups #: " + options.numberOfGroups);
+    if(options.storeName) title = title.concat(" , Store: " + options.storeName);
+    if(options.numberOfStores) title = title.concat(" , Stores #: " + options.numberOfStores);
+    if(options.terminalName) title = title.concat(" , Terminal: " + options.terminalName);
+    if(options.numberOfTerminals) title = title.concat(" , Terminals #: " + options.numberOfTerminals);
+    title = title.concat(", Date: " + (new Date()).toString("yyyy/MM/dd"));
+    return title;
+<<<<<<< HEAD
+=======
+};
+
+function getReportParam() {
+    if(!_.isEmpty(ReportData.company)){
+	var company = ReportData.company;
+	var groups = company.hierarchy.groups;
+	var stores = _(groups).chain().map(function(group) {return group.stores;}).flatten().compact().value();
+
+	var numGroups = _.size(groups);
+	var numStores = _.reduce(groups, function(sum, group){ return sum + _.size(group.stores); }, 0);
+	var numTerminals = _.reduce(stores, function(sum, store){ return sum + _.isUndefined(store.terminals)?0:_.size(store.terminals); }, 0); //FIXME:this is an error when stores have no terminals
+	var for_TMP = {
+	    numberOfGroups:numGroups,
+	    numberOfStores:numStores,
+	    numberOfTerminals:numTerminals,
+	    startPage:'companyReport',
+	    breadCrumb:breadCrumb(company.companyName),
+	    //instead of using this as a title, we could put it at the top of the dialogHTML and have a generic title
+	    quickViewArgs:{id:company._id,
+			   title:dialogTitle(company.companyName,null,numGroups,null,numStores,null,numTerminals)
+			  },
+	    list:[{company_id:company._id}]};
+	return for_TMP;
+    }
+    else if(!_.isEmpty(ReportData.group)) {
+	var group = ReportData.group;
+	var stores = group.stores;
+
+	var numStores = _.size(stores);
+	var numTerminals = _.reduce(stores, function(sum, store){ return sum + _.isUndefined(store.terminals)?0:_.size(store.terminals); }, 0); //FIXME: this may be a bug if there is a store with no terminals
+	return  {
+	    numberOfStores:numStores,
+	    numberOfTerminals:numTerminals,
+	    startPage:"groupReport",
+	    breadCrumb:breadCrumb(ReportData.companyName,group.groupName),
+	    quickViewArgs:{id:ReportData.group.group_id,
+			   title:dialogTitle(ReportData.companyName,group.groupName,null,null,numStores,null,numTerminals)
+			  },
+	    list:[{group_id:ReportData.group.group_id}]};
+    } else if(!_.isEmpty(ReportData.store)) {
+	var store = ReportData.store;
+	var terminals = store.terminals;
+	var numTerminals = _.isUndefined(terminals)?0:_.size(terminals);
+	return  {
+	    numberOfTerminals:numTerminals,
+	    startPage:"storeReport",
+	    breadCrumb:breadCrumb(ReportData.companyName,ReportData.groupName,store.storeName,store.number),
+	    quickViewArgs:{id:ReportData.store.store_id,
+			   title:dialogTitle(ReportData.companyName,ReportData.groupName,null,store.storeName,null,null,numTerminals)
+			  },
+	    list:[{store_id:ReportData.store.store_id}]};
+    }
+};
+
+
+
+function getGroupsTableParam() {
+    var company = ReportData.company;
+    var groups = company.hierarchy.groups;
+    return _.extend({list:
+		_.map(groups, function(group) {
+    			  var numberOfStores = _.size(group.stores);
+			  var numberOfTerminals = _.reduce(group.stores,
+							 function(sum, store){
+							     return sum + _.isUndefined(store.terminals)?0:_.size(store.terminals); },
+							 0);
+			  return {
+			      companyName:company.companyName,
+			      groupName:group.groupName,
+			      group_id:group.group_id,
+			      numberOfStores:numberOfStores,
+			      numberOfTerminals:numberOfTerminals,
+			      quickViewArgs:{
+				  id:group.group_id,
+				  title:dialogTitle(company.companyName,group.groupName,null,null,numberOfStores,null,numberOfTerminals)
+			      }
+			  };
+		      })}, {startPage:"companyReport",
+			    breadCrumb:breadCrumb(company.companyName)});
+};
+
+
+function getStoresTableBreadCrumb(group_id) {
+   if(!_.isEmpty(ReportData.company)) {
+    var company = ReportData.company;
+    var groups;
+
+    //check to see if we are dealing with one or more groups
+    if(_.isEmpty(group_id)){
+        groups = company.hierarchy.groups;
+    } else {
+        groups = _.filter(company.hierarchy.groups, function(group){ return group.group_id==group_id;});
+        var groupName = _.first(groups).groupName;
+    }
+    return breadCrumb(company.companyName,groupName);
+    }
+    else if(!_.isEmpty(ReportData.group)) {
+    var group = ReportData.group;
+    return breadCrumb(ReportData.companyName,group.groupName);
+    }
+>>>>>>> 5159f982ce3725a94776a9d8bdb07634548f129d
+}
+function entity_blob_for_report_params(id){
+    function count_sub_entities(reportData,parent_id,group_by_field){
+	return _.chain(reportDataToArray(reportData)).filterContains(parent_id).pluck(group_by_field).compact().unique().size().value()
+    }
+    var entity_id = id || topLevelEntity(ReportData).id;
+    var entity = entity_from_id(ReportData,entity_id);
+    var numberOfGroups=count_sub_entities(ReportData,entity_id,'group_id');
+    var numberOfStores=count_sub_entities(ReportData,entity_id,'store_id');
+    var numberOfTerminals=count_sub_entities(ReportData,entity_id,'terminal_id');
+
+    if(id){
+	var entity_stats = {
+	    numberOfGroups:numberOfGroups,
+	    numberOfStores:numberOfStores,
+	    numberOfTerminals:numberOfTerminals
+	}
+<<<<<<< HEAD
+    }
+    else if(topLevelEntity(ReportData).type === 'company'){
+	var entity_stats = {
+	    numberOfGroups:numberOfGroups,
+	    numberOfStores:numberOfStores,
+	    numberOfTerminals:numberOfTerminals
+	}
+=======
+
+	var stores = _(groups)
+	    .chain()
+	    .map(function(group) {
+		     return _.map(group.stores,
+			     function(store){
+				 return _.extend(_.clone(store), {groupName:group.groupName});
+			     });
+		 })
+	    .flatten()
+	    .compact()
+	    .value();
+
+	return _.extend({list: _.map(stores, function(store) {
+				    var numberOfTerminals = _.isUndefined(store.terminals)?0:_.size(store.terminals);
+				    return {companyName:company.companyName,
+				       groupName:store.groupName,
+				       store_id:store.store_id,
+				       storeName:store.storeName,
+				       storeNumber:store.number,
+				       numberOfTerminals:numberOfTerminals,
+				       quickViewArgs:{
+					   id:store.store_id,
+					   title:dialogTitle(company.companyName,store.groupName,null,store.storeName,null,null,numberOfTerminals)
+				       }
+				      };
+				})}, {startPage:"companyReport",
+				      breadCrumb:breadCrumb(company.companyName,groupName)});
+    }
+    else if(!_.isEmpty(ReportData.group)) {
+	var group = ReportData.group;
+	var stores = group.stores;
+	return _.extend({list: _.map(stores, function(store) {
+					 var numberOfTerminals = _.isUndefined(store.terminals)?0:_.size(store.terminals);
+					 return {companyName:ReportData.companyName,
+						 groupName:group.groupName,
+						 store_id:store.store_id,
+						 storeName:store.storeName,
+						 storeNumber:store.number,
+						 numberOfTerminals:numberOfTerminals,
+						 quickViewArgs:{id:store.store_id,
+								title:dialogTitle(ReportData.companyName,store.groupName,null,store.storeName,null,null,numberOfTerminals)
+							       }
+						};
+				     })},{startPage:"groupReport",
+					  breadCrumb:breadCrumb(ReportData.companyName,group.groupName)});
+>>>>>>> 5159f982ce3725a94776a9d8bdb07634548f129d
+    }
+    else if(topLevelEntity(ReportData).type === 'group'){
+	var entity_stats = {
+	    numberOfStores:numberOfStores,
+	    numberOfTerminals:numberOfTerminals
+	}
+    }
+    else if(topLevelEntity(ReportData).type === 'store'){
+	var entity_stats = {
+	    numberOfTerminals:numberOfTerminals
+	}
+    }
+    var entity_blob = _.combine(entity,
+			      entity_stats,
+			      {id:entity_id});
+    return _.combine(entity_blob,{
+		    quickViewArgs:{
+			id:entity_blob.id,
+			title:dialogTitleMaker(entity_blob)
+		    }});
+}
+function getReportParam(){
+    var entity_id = topLevelEntity(ReportData).id;
+    var entity_blob = entity_blob_for_report_params();
+    return _.combine(entity_blob,
+		{list:[entity_from_id(ReportData,entity_id)]},
+		autoBreadCrumb(),
+		{title:_.str.capitalize(topLevelEntity(ReportData).type)+" Management"});
+}
+function getGroupsTableParam(id) {return getGeneralTableParam(id,'group_id')};
+function getStoresTableParam(id) {return getGeneralTableParam(id,'store_id')};
+function getTerminalsTableParam(id) {return getGeneralTableParam(id,'terminal_id')};
+function getGeneralTableParam(id,key){
+    var entities=_.chain(reportDataToArray(ReportData))
+	.filterContains(id)
+	.pluck(key)
+	.compact()
+	.unique()
+	.map(entity_blob_for_report_params)
+	.mapRenameKeys('terminal_label','terminalName')
+	.value();
+    return _.combine({list:entities},
+		{breadCrumb:_.first(entities)})
+}
+
+//general
+function extractSalesDataFromIds(items,idField,callback){
+    transactionsSalesFetcher(_(items).pluck(idField),
+			     function(err,totalSalesArr){
+				 var transformedList =
+				     _(items).chain()
+				     .zip(totalSalesArr)
+				     .map(function(item){
+					      var Item = _.first(item);
+					      var salesData = _.second(item);
+					      var Item_w_salesReport = _.extend(_.clone(Item),salesData);
+					      return Item_w_salesReport;
+					  })
+				     .value();
+				 callback(transformedList);
+			     });
+};

@@ -24,7 +24,7 @@ var menuReportsHowAreWeDoingTodayCompanyRouter =
 	     	  console.log("HowAreWeCompany_storesTable");
 	      },
 	      renderTerminals:function(store_name_with_number) {
-		  var store_name = store_name_with_number.split('(')[0];
+		  var store_name = _.str.trim(store_name_with_number.split('(')[0]);
 		  get_id_from_name(ReportData,store_name)
 		  (function(id){
 		       renderHowAreWeTable(id,function(template_data){

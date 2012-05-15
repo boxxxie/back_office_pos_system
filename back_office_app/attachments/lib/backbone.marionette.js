@@ -658,7 +658,7 @@ Backbone.Marionette = (function(Backbone, _, $){
         eventName: eventName, 
         callback: callback, 
         context: context 
-      }
+      };
 
       this.bindings.push(binding);
 
@@ -669,7 +669,7 @@ Backbone.Marionette = (function(Backbone, _, $){
     // returned from the `bindTo` method call. 
     unbindFrom: function(binding){
       binding.obj.off(binding.eventName, binding.callback);
-      this.bindings = _.reject(this.bindings, function(bind){return bind === binding});
+      this.bindings = _.reject(this.bindings, function(bind){return bind === binding;});
     },
 
     // Unbind all of the events that we have stored.

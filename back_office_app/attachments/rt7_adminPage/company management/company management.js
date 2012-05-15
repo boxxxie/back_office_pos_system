@@ -1,4 +1,3 @@
-
 var Companies;
 var rewardsModel;
 var Locations;
@@ -37,7 +36,7 @@ function validateCompany(newCompany_w_options, previous) {
     function companyNameExists(companyName) {
 	return Companies
 	    .find(function(company) {
-		      return company.get('companyName').toLowerCase() == companyName.toLowerCase();
+		      return company.get('companyName').toLowerCase() == _.str.trim(companyName.toLowerCase());
 		  });
     };
 
@@ -477,17 +476,6 @@ function autoBreadCrumb() {
     return smartBreadCrumb(ReportData);
 }
 
-Companies = new (couchCollection(
-		     {db:'companies'},
-		     {model:Company,
-		      getModelById : function(modelId){
-			  return this.find(function(model){return model.get('_id') == modelId;});
-		      },
-		      getSelectedModel : function(){
-			  return this.find(function(model){return model.selected == true;});
-		      }
-		     }));
-Companies.fetch({error:function(response){alert(response.responseText);}});
 
 var CompanyManagementRouter = new (Backbone.Router.extend(
 				       {
@@ -634,106 +622,106 @@ companiesView =
 		var companyJSON = company.toJSON();
 		var db_users = cdb.db("users");
 		
-        db_users.openDoc(("org.couchdb.user:")
-                            .concat(id)
-                            .concat(companyJSON.user),
-            {
-                success:function(userDoc){
-                    var updatedCompanyJSON = _.combine(companyJSON,{password:userDoc.exposed_password});
-                    var html = ich.modify_company_page_TMP(_.extend({company : updatedCompanyJSON,
-                                             company_id : id},
-                                            breadCrumb(id)));
-                    $("#main").html(html);
-                    $('#form').find('input').attr("disabled", true);
-                    $("#dialog-hook").html(ich.companyInputDialog_TMP({title : "Edit the Company",
-                                               company : updatedCompanyJSON
-                                              }));
-            
-                    $('#dialog-hook').find('#company-name,#operationalname,#user,#password').attr("disabled", true);
-            
-                    $("#btnModifyRewards")
-                        .click(function() {
-                               function saveRewardsProgram() {
-                               return function(mobqreditsconversion, qriketconversion, qriketpercentage) {
-                                   var rewardsJson = rewardsModel.toJSON();
-                                   var rewardsdown = $("#rewardsdown");
-                                   var opt = rewardsdown.val();
-            
-                                   if(opt == "none") {
-                                   rewardsJson.use_mobqredits = false;
-                                   rewardsJson.use_qriket = false;
-                                   } else if(opt == "mobqredits") {
-                                   rewardsJson.use_mobqredits = true;
-                                   rewardsJson.use_qriket = false;
-                                   } else {
-                                   rewardsJson.use_mobqredits = false;
-                                   rewardsJson.use_qriket = true;
-                                   }
-            
-                                   rewardsModel.save({use_mobqredits : rewardsJson.use_mobqredits,
-                                          mobqredits_conversion : mobqreditsconversion,
-                                          use_qriket : rewardsJson.use_qriket,
-                                          qriket_conversion : qriketconversion,
-                                          qriket_percentage : qriketpercentage
-                                         });
-                               };
-                               };
-            
-                               fetch_company_rewards(companyJSON._id)
-                               (function(err, rewards) {
-                                console.log(rewards);
-                                rewardsModel = rewards;
-                                var rewardsJson = rewardsModel.toJSON();
-            
-                                var html = ich.companyModifyRewardsDialog_TMP({MobQredits : rewardsJson});
-            
-                                companyModifyRewardsViewDialog(html,
-                                               {title : "Modify Rewards Program",
-                                                saveRewardsProgram : saveRewardsProgram(),
-                                                MobQredits : rewardsJson
-                                               });
-                            });
-                           });
-                    CompanyModifyDialog("edit-thing", editCompany(company));
-                    
-                    $("#changepassword-thing").button()
-                    .click(function(){
-                        var newPassword = prompt("New Password");
-                        if(newPassword!=null) {
-                           $.couch.session({
-                               success:function(session){
-                                    var userModel = new UserDoc({name:(updatedCompanyJSON._id).concat(updatedCompanyJSON.user)});
-                                    userModel.fetch({
-                                        success:function(model){
-                                            userModel.change_password(session,newPassword)
-                                            (function(err,userDoc){
-                                                if(err) {
-                                                    alert(JSON.stringify(err));
-                                                    return;
-                                                }
-                                                var newPassword_Company = _.combine(updatedCompanyJSON,{password:newPassword});
-                                                (editCompany(company)).success(newPassword_Company);
-                                                console.log("change success"); 
-                                            });
-                                        },
-                                        error:function() {
-                                            alert("Error occured. Please, try again");
-                                        }
-                                    });
-                                },
-                                error:function(){
-                                    alert("Error occured. Please, try again");
-                                }}); 
-                        }
-                    });
-                    
-                    console.log("companiesView renderModifyPage " + id);
-                    //return this;
-                },
-                error:function() {
-                    alert("Error occured. Please, try again");
-                }
-            });
+		db_users.openDoc(("org.couchdb.user:")
+				 .concat(id)
+				 .concat(companyJSON.user),
+				 {
+				     success:function(userDoc){
+					 var updatedCompanyJSON = _.combine(companyJSON,{password:userDoc.exposed_password});
+					 var html = ich.modify_company_page_TMP(_.extend({company : updatedCompanyJSON,
+											  company_id : id},
+											 breadCrumb(id)));
+					 $("#main").html(html);
+					 $('#form').find('input').attr("disabled", true);
+					 $("#dialog-hook").html(ich.companyInputDialog_TMP({title : "Edit the Company",
+											    company : updatedCompanyJSON
+											   }));
+					 
+					 $('#dialog-hook').find('#company-name,#operationalname,#user,#password').attr("disabled", true);
+					 
+					 $("#btnModifyRewards")
+					     .click(function() {
+							function saveRewardsProgram() {
+							    return function(mobqreditsconversion, qriketconversion, qriketpercentage) {
+								var rewardsJson = rewardsModel.toJSON();
+								var rewardsdown = $("#rewardsdown");
+								var opt = rewardsdown.val();
+								
+								if(opt == "none") {
+								    rewardsJson.use_mobqredits = false;
+								    rewardsJson.use_qriket = false;
+								} else if(opt == "mobqredits") {
+								    rewardsJson.use_mobqredits = true;
+								    rewardsJson.use_qriket = false;
+								} else {
+								    rewardsJson.use_mobqredits = false;
+								    rewardsJson.use_qriket = true;
+								}
+								
+								rewardsModel.save({use_mobqredits : rewardsJson.use_mobqredits,
+										   mobqredits_conversion : mobqreditsconversion,
+										   use_qriket : rewardsJson.use_qriket,
+										   qriket_conversion : qriketconversion,
+										   qriket_percentage : qriketpercentage
+										  });
+							    };
+							};
+							
+							fetch_company_rewards(companyJSON._id)
+							(function(err, rewards) {
+							     console.log(rewards);
+							     rewardsModel = rewards;
+							     var rewardsJson = rewardsModel.toJSON();
+							     
+							     var html = ich.companyModifyRewardsDialog_TMP({MobQredits : rewardsJson});
+							     
+							     companyModifyRewardsViewDialog(html,
+											    {title : "Modify Rewards Program",
+											     saveRewardsProgram : saveRewardsProgram(),
+											     MobQredits : rewardsJson
+											    });
+							 });
+						    });
+					 CompanyModifyDialog("edit-thing", editCompany(company));
+					 
+					 $("#changepassword-thing").button()
+					     .click(function(){
+							var newPassword = prompt("New Password");
+							if(newPassword!=null) {
+							    $.couch.session({
+										success:function(session){
+										    var userModel = new UserDoc({name:(updatedCompanyJSON._id).concat(updatedCompanyJSON.user)});
+										    userModel.fetch({
+													success:function(model){
+													    userModel.change_password(session,newPassword)
+													    (function(err,userDoc){
+														 if(err) {
+														     alert(JSON.stringify(err));
+														     return;
+														 }
+														 var newPassword_Company = _.combine(updatedCompanyJSON,{password:newPassword});
+														 (editCompany(company)).success(newPassword_Company);
+														 console.log("change success"); 
+													     });
+													},
+													error:function() {
+													    alert("Error occured. Please, try again");
+													}
+												    });
+										},
+										error:function(){
+										    alert("Error occured. Please, try again");
+										}}); 
+							}
+						    });
+					 
+					 console.log("companiesView renderModifyPage " + id);
+					 //return this;
+				     },
+				     error:function() {
+					 alert("Error occured. Please, try again");
+				     }
+				 });
 	    },
 	    updateModel : function() {
 		this.company = this.collection.getModelById(Selection.get('company'));
@@ -798,71 +786,71 @@ groupsView =
 		var selectedgroup = view.model.getGroup(groupID);
 		
 		var db_users = cdb.db("users");
-        
-        db_users.openDoc(("org.couchdb.user:")
-                            .concat(groupID)
-                            .concat(selectedgroup.user),
-            {
-                success:function(userDoc) {
-                    var updatedSelectedgroup = _.combine(selectedgroup,{password:userDoc.exposed_password});
-                    $("#main").html(ich.modify_group_page_TMP(_.extend({
-                                       company_id : company.get("_id"),
-                                       group_id : selectedgroup.group_id,
-                                       groupName : selectedgroup.groupName,
-                                       operationalname : company.get("operationalname"),
-                                       group : updatedSelectedgroup
-                                   }, breadCrumb(companyID, groupID))));
-                    $('#form').find('input').attr("disabled", true);
-                    $("#dialog-hook").html(ich.groupInputDialog_TMP({
-                                                title : "Edit the Group",
-                                                group : updatedSelectedgroup
-                                            }));
-                    $('#dialog-hook').find('#group-name,#user,#password').attr("disabled", true);
-            
-                    GroupModifyDialog("edit-thing", _.extend(editGroup(companyID, groupID), {
-                                             company : company,
-                                             groupName : selectedgroup.groupName
-                                         }));
+		
+		db_users.openDoc(("org.couchdb.user:")
+				 .concat(groupID)
+				 .concat(selectedgroup.user),
+				 {
+				     success:function(userDoc) {
+					 var updatedSelectedgroup = _.combine(selectedgroup,{password:userDoc.exposed_password});
+					 $("#main").html(ich.modify_group_page_TMP(_.extend({
+												company_id : company.get("_id"),
+												group_id : selectedgroup.group_id,
+												groupName : selectedgroup.groupName,
+												operationalname : company.get("operationalname"),
+												group : updatedSelectedgroup
+											    }, breadCrumb(companyID, groupID))));
+					 $('#form').find('input').attr("disabled", true);
+					 $("#dialog-hook").html(ich.groupInputDialog_TMP({
+											     title : "Edit the Group",
+											     group : updatedSelectedgroup
+											 }));
+					 $('#dialog-hook').find('#group-name,#user,#password').attr("disabled", true);
+					 
+					 GroupModifyDialog("edit-thing", _.extend(editGroup(companyID, groupID), {
+										      company : company,
+										      groupName : selectedgroup.groupName
+										  }));
                                          
-                    $("#changepassword-thing").button()
-                    .click(function(){
-                        var newPassword = prompt("New Password");
-                        if(newPassword!=null) {
-                           $.couch.session({
-                               success:function(session){
-                                    var userModel = new UserDoc({name:(updatedSelectedgroup.group_id).concat(updatedSelectedgroup.user)});
-                                    userModel.fetch({
-                                        success:function(model){
-                                            userModel.change_password(session,newPassword)
-                                            (function(err,userDoc){
-                                                if(err) {
-                                                    alert(JSON.stringify(err));
-                                                    return;
-                                                }
-                                                var newPassword_group = _.combine(updatedSelectedgroup,{password:newPassword});
-                                                (editGroup(companyID,groupID)).success(newPassword_group);
-                                                console.log("change success"); 
-                                            });
-                                        },
-                                        error:function() {
-                                            alert("Error occured. Please, try again");
-                                        }
-                                    });
-                                },
-                                error:function(){
-                                    alert("Error occured. Please, try again");
-                                }}); 
-                        }
-                    });
-                    
-                    
-                    console.log("renderModifyPage groupsView");
-                    //return this;
-                },
-                error:function() {
-                    alert("Error occured. Please, try again");
-                }
-            });
+					 $("#changepassword-thing").button()
+					     .click(function(){
+							var newPassword = prompt("New Password");
+							if(newPassword!=null) {
+							    $.couch.session({
+										success:function(session){
+										    var userModel = new UserDoc({name:(updatedSelectedgroup.group_id).concat(updatedSelectedgroup.user)});
+										    userModel.fetch({
+													success:function(model){
+													    userModel.change_password(session,newPassword)
+													    (function(err,userDoc){
+														 if(err) {
+														     alert(JSON.stringify(err));
+														     return;
+														 }
+														 var newPassword_group = _.combine(updatedSelectedgroup,{password:newPassword});
+														 (editGroup(companyID,groupID)).success(newPassword_group);
+														 console.log("change success"); 
+													     });
+													},
+													error:function() {
+													    alert("Error occured. Please, try again");
+													}
+												    });
+										},
+										error:function(){
+										    alert("Error occured. Please, try again");
+										}}); 
+							}
+						    });
+					 
+					 
+					 console.log("renderModifyPage groupsView");
+					 //return this;
+				     },
+				     error:function() {
+					 alert("Error occured. Please, try again");
+				     }
+				 });
 	    },
 	    updateModel : function() {
 		this.company = this.collection.getModelById(Selection.get('company'));
@@ -930,73 +918,73 @@ storesView =
 		var storeToEdit = company.getStore(groupID, storeID);
 		
 		var db_users = cdb.db("users");
-        
-        db_users.openDoc(("org.couchdb.user:")
-                            .concat(storeID)
-                            .concat(storeToEdit.user),
-            {
-                success:function(userDoc) {
-                    var updatedSelectedstore = _.combine(storeToEdit,{password:userDoc.exposed_password});
-                    var html = ich.modify_store_page_TMP(_.extend({
-                                  operationalname : company.get('operationalname'),
-                                  company_id : company.get("_id"),
-                                  group_id : group.group_id,
-                                  groupName : group.groupName,
-                                  storeName : storeToEdit.storeName,
-                                  store_id : storeToEdit.store_id,
-                                  store : updatedSelectedstore
-                                  }, breadCrumb(companyID, groupID, storeID)));
-                    $("#main").html(html);
-                    $('#form').find('input').attr("disabled", true);
-                    $("#dialog-hook").html(ich.storeInputDialog_TMP({
-                                                title : "Edit the store",
-                                                store : updatedSelectedstore
-                                            }));
-                    $('#dialog-hook').find('#store-name,#user,#password').attr("disabled", true);
-                    StoreModifyDialog("edit-thing", _.extend(editStore(companyID, groupID, storeID), {
-                                             company : company,
-                                             groupID : groupID,
-                                             storeNum : storeToEdit.number
-                                         }));
-                    
-                    $("#changepassword-thing").button()
-                    .click(function(){
-                        var newPassword = prompt("New Password");
-                        if(newPassword!=null) {
-                           $.couch.session({
-                               success:function(session){
-                                    var userModel = new UserDoc({name:(updatedSelectedstore.store_id).concat(updatedSelectedstore.user)});
-                                    userModel.fetch({
-                                        success:function(model){
-                                            userModel.change_password(session,newPassword)
-                                            (function(err,userDoc){
-                                                if(err) {
-                                                    alert(JSON.stringify(err));
-                                                    return;
-                                                }
-                                                var newPassword_store = _.combine(updatedSelectedstore,{password:newPassword});
-                                                (editStore(companyID,groupID,storeID)).success(newPassword_store);
-                                                console.log("change success"); 
-                                            });
-                                        },
-                                        error:function() {
-                                            alert("Error occured. Please, try again");
-                                        }
-                                    });
-                                },
-                                error:function(){
-                                    alert("Error occured. Please, try again");
-                                }}); 
-                        }
-                    });
-                    
-                    
-                    console.log("renderModifyPage stores view rendered " + companyID + "" + groupID + " " + storeID);
-                },
-                error:function() {
-                    alert("Error occured. Please, try again");
-                }
-             });
+		
+		db_users.openDoc(("org.couchdb.user:")
+				 .concat(storeID)
+				 .concat(storeToEdit.user),
+				 {
+				     success:function(userDoc) {
+					 var updatedSelectedstore = _.combine(storeToEdit,{password:userDoc.exposed_password});
+					 var html = ich.modify_store_page_TMP(_.extend({
+											   operationalname : company.get('operationalname'),
+											   company_id : company.get("_id"),
+											   group_id : group.group_id,
+											   groupName : group.groupName,
+											   storeName : storeToEdit.storeName,
+											   store_id : storeToEdit.store_id,
+											   store : updatedSelectedstore
+										       }, breadCrumb(companyID, groupID, storeID)));
+					 $("#main").html(html);
+					 $('#form').find('input').attr("disabled", true);
+					 $("#dialog-hook").html(ich.storeInputDialog_TMP({
+											     title : "Edit the store",
+											     store : updatedSelectedstore
+											 }));
+					 $('#dialog-hook').find('#store-name,#store-num,#user,#password').attr("disabled", true);
+					 StoreModifyDialog("edit-thing", _.extend(editStore(companyID, groupID, storeID), {
+										      company : company,
+										      groupID : groupID,
+										      storeNum : storeToEdit.number
+										  }));
+					 
+					 $("#changepassword-thing").button()
+					     .click(function(){
+							var newPassword = prompt("New Password");
+							if(newPassword!=null) {
+							    $.couch.session({
+										success:function(session){
+										    var userModel = new UserDoc({name:(updatedSelectedstore.store_id).concat(updatedSelectedstore.user)});
+										    userModel.fetch({
+													success:function(model){
+													    userModel.change_password(session,newPassword)
+													    (function(err,userDoc){
+														 if(err) {
+														     alert(JSON.stringify(err));
+														     return;
+														 }
+														 var newPassword_store = _.combine(updatedSelectedstore,{password:newPassword});
+														 (editStore(companyID,groupID,storeID)).success(newPassword_store);
+														 console.log("change success"); 
+													     });
+													},
+													error:function() {
+													    alert("Error occured. Please, try again");
+													}
+												    });
+										},
+										error:function(){
+										    alert("Error occured. Please, try again");
+										}}); 
+							}
+						    });
+					 
+					 
+					 console.log("renderModifyPage stores view rendered " + companyID + "" + groupID + " " + storeID);
+				     },
+				     error:function() {
+					 alert("Error occured. Please, try again");
+				     }
+				 });
 	    }
 	});
 terminalsView =
@@ -1067,7 +1055,7 @@ terminalsView =
 								       title : "Edit the Terminal",
 								       //terminal : terminalToEdit
 								       companyCode:terminalToEdit.companyCode,
-                                       storeCode:terminalToEdit.storeCode
+								       storeCode:terminalToEdit.storeCode
 								   }));
 		TerminalModifyDialog("edit-thing", editTerminal(companyID, groupID, storeID, terminalID));
 		console.log("renderModifyPage terminals view rendered");
@@ -1078,145 +1066,145 @@ terminalsView =
 
 var location_codes_view = 
     Backbone.View.extend({
-        initialize : function() {
-            var view = this;
-            $.couch.db("locations_rt7").allDocs({
-                success:function(data){
-                    console.log(data);
-                    Locations = _.pluck(data.rows,"doc");
-                    view.locations = Locations;
-                },
-                error:function() {
-                    alert("Fail to load Locations. Please, try again.");
-                },
-                include_docs:true
-            });
-            
-        },
-        _reset : function(form,terminal) {
-            var view = this;
-            view.form = form;
-            view.countryDrop = form.find("#countryCode");
-            view.provinceDrop = form.find("#provinceCode");
-            view.cityDrop = form.find("#cityCode");
-            view.areaDrop = form.find("#areaCode");
-            view.empty_all();
-            view.load_countries();
-            if(_.isNotEmpty(terminal)) {
-                var terminal_label = form.find("#terminal-id");
-                var storeCode = form.find("#storeCode");
-                var companyCode = form.find("#companyCode");
-                var postalCode = form.find("#postalCode");
-                
-                terminal_label.val(terminal.terminal_label);
-                storeCode.val(terminal.storeCode);
-                companyCode.val(terminal.companyCode);
-                postalCode.val(terminal.postalCode);
-                view.countryDrop.val(terminal.countryCode).change();
-                view.provinceDrop.val(terminal.provinceCode).change();
-                view.cityDrop.val(terminal.cityCode).change();
-                view.areaDrop.val(terminal.areaCode).change();
-            }
-        },
-        empty_countries:function() {
-            var view = this;
-            $('option', view.countryDrop).remove();
-        },
-        empty_provinces:function() {
-            var view = this;
-            $('option', view.provinceDrop).remove();
-        },
-        empty_cities:function() {
-            var view = this;
-            $('option', view.cityDrop).remove();
-        },
-        empty_area:function() {
-            var view = this;
-            $('option', view.areaDrop).remove();
-        },
-        empty_all:function() {
-            var view = this;
-            view.empty_countries();
-            view.empty_provinces();
-            view.empty_cities();
-            view.empty_area();
-        },
-        load_countries:function() {
-            var view = this;
-            view.empty_all();
-            view.countryDrop.append('<option value="">' + ' ' + '</option>');
-            view.countryDrop.append('<option value="US">' + 'US' + '</option>');
-            view.countryDrop.append('<option value="Canada">' + 'Canada' + '</option>');
-            view.countryDrop
-                .change(function(event){
-                    view.empty_provinces();
-                    view.empty_cities();                    
-                    view.empty_area();
-                    var country = $(this).val();
-                    view.load_provinces(country);
-                });
-        },
-        load_provinces:function(country) {
-            var view = this;
-            var selectedLocations = 
-                _.filter(view.locations,function(item){
-                    return item.country_code == country;  
-                });
-            var listProvinces = _(selectedLocations).chain()
-                                    .pluck("province_code")
-                                    .uniq()
-                                    .sortBy(function(name){return name;})
-                                    .value();
-                                    
-            view.provinceDrop.append('<option value="">' + ' ' + '</option>');
-            _.each(listProvinces,function(item){
-                view.provinceDrop.append('<option value=\"'+item.replace(/ /g,'\ ')+'\"">' + item + '</option>');
-            });
+			     initialize : function() {
+				 var view = this;
+				 $.couch.db("locations_rt7").allDocs({
+									 success:function(data){
+									     console.log(data);
+									     Locations = _.pluck(data.rows,"doc");
+									     view.locations = Locations;
+									 },
+									 error:function() {
+									     alert("Fail to load Locations. Please, try again.");
+									 },
+									 include_docs:true
+								     });
+				 
+			     },
+			     _reset : function(form,terminal) {
+				 var view = this;
+				 view.form = form;
+				 view.countryDrop = form.find("#countryCode");
+				 view.provinceDrop = form.find("#provinceCode");
+				 view.cityDrop = form.find("#cityCode");
+				 view.areaDrop = form.find("#areaCode");
+				 view.empty_all();
+				 view.load_countries();
+				 if(_.isNotEmpty(terminal)) {
+				     var terminal_label = form.find("#terminal-id");
+				     var storeCode = form.find("#storeCode");
+				     var companyCode = form.find("#companyCode");
+				     var postalCode = form.find("#postalCode");
+				     
+				     terminal_label.val(terminal.terminal_label);
+				     storeCode.val(terminal.storeCode);
+				     companyCode.val(terminal.companyCode);
+				     postalCode.val(terminal.postalCode);
+				     view.countryDrop.val(terminal.countryCode).change();
+				     view.provinceDrop.val(terminal.provinceCode).change();
+				     view.cityDrop.val(terminal.cityCode).change();
+				     view.areaDrop.val(terminal.areaCode).change();
+				 }
+			     },
+			     empty_countries:function() {
+				 var view = this;
+				 $('option', view.countryDrop).remove();
+			     },
+			     empty_provinces:function() {
+				 var view = this;
+				 $('option', view.provinceDrop).remove();
+			     },
+			     empty_cities:function() {
+				 var view = this;
+				 $('option', view.cityDrop).remove();
+			     },
+			     empty_area:function() {
+				 var view = this;
+				 $('option', view.areaDrop).remove();
+			     },
+			     empty_all:function() {
+				 var view = this;
+				 view.empty_countries();
+				 view.empty_provinces();
+				 view.empty_cities();
+				 view.empty_area();
+			     },
+			     load_countries:function() {
+				 var view = this;
+				 view.empty_all();
+				 view.countryDrop.append('<option value="">' + ' ' + '</option>');
+				 view.countryDrop.append('<option value="US">' + 'US' + '</option>');
+				 view.countryDrop.append('<option value="Canada">' + 'Canada' + '</option>');
+				 view.countryDrop
+				     .change(function(event){
+						 view.empty_provinces();
+						 view.empty_cities();                    
+						 view.empty_area();
+						 var country = $(this).val();
+						 view.load_provinces(country);
+					     });
+			     },
+			     load_provinces:function(country) {
+				 var view = this;
+				 var selectedLocations = 
+				     _.filter(view.locations,function(item){
+						  return item.country_code == country;  
+					      });
+				 var listProvinces = _(selectedLocations).chain()
+                                     .pluck("province_code")
+                                     .uniq()
+                                     .sortBy(function(name){return name;})
+                                     .value();
+                                 
+				 view.provinceDrop.append('<option value="">' + ' ' + '</option>');
+				 _.each(listProvinces,function(item){
+					    view.provinceDrop.append('<option value=\"'+item.replace(/ /g,'\ ')+'\"">' + item + '</option>');
+					});
 
-            view.provinceDrop
-                .change(function(event){
-                    view.empty_cities();                    
-                    view.empty_area();
-                    var province = $(this).val();
-                    view.load_cities(country, province);
-                });
-        },
-        load_cities:function(country, province) {
-            var view = this;
-            var selectedLocations = 
-                _.filter(view.locations,function(item){
-                    return item.country_code == country && item.province_code==province;  
-                });
-            var listCities = _(selectedLocations).chain()
-                                    .pluck("city_code")
-                                    .uniq()
-                                    .sortBy(function(name){return name;})
-                                    .value();
-            view.cityDrop.append('<option value="">' + ' ' + '</option>');
-            _.each(listCities,function(item){
-                view.cityDrop.append('<option value=\"'+item.replace(/ /g,'\ ')+'\">' + item + '</option>');
-            });
-            view.cityDrop
-                .change(function(event){
-                    view.empty_area();
-                    var city = $(this).val();
-                    view.load_area(country, province, city);
-                });
-        },
-        load_area:function(country,province,city) {
-            var view = this;
-            var selectedLocations = 
-                _.filter(view.locations,function(item){
-                    return item.country_code == country && item.province_code==province && item.city_code==city;  
-                });
-            var listArea = _(selectedLocations).chain()
-                                    .pluck("area_code")
-                                    .uniq()
-                                    .sortBy(function(name){return name;})
-                                    .value();
-            view.areaDrop.append('<option value="">' + ' ' + '</option>');
-            _.each(listArea,function(item){
-                view.areaDrop.append('<option value='+item+'>' + item + '</option>');
-            });
-        }
-    });
+				 view.provinceDrop
+				     .change(function(event){
+						 view.empty_cities();                    
+						 view.empty_area();
+						 var province = $(this).val();
+						 view.load_cities(country, province);
+					     });
+			     },
+			     load_cities:function(country, province) {
+				 var view = this;
+				 var selectedLocations = 
+				     _.filter(view.locations,function(item){
+						  return item.country_code == country && item.province_code==province;  
+					      });
+				 var listCities = _(selectedLocations).chain()
+                                     .pluck("city_code")
+                                     .uniq()
+                                     .sortBy(function(name){return name;})
+                                     .value();
+				 view.cityDrop.append('<option value="">' + ' ' + '</option>');
+				 _.each(listCities,function(item){
+					    view.cityDrop.append('<option value=\"'+item.replace(/ /g,'\ ')+'\">' + item + '</option>');
+					});
+				 view.cityDrop
+				     .change(function(event){
+						 view.empty_area();
+						 var city = $(this).val();
+						 view.load_area(country, province, city);
+					     });
+			     },
+			     load_area:function(country,province,city) {
+				 var view = this;
+				 var selectedLocations = 
+				     _.filter(view.locations,function(item){
+						  return item.country_code == country && item.province_code==province && item.city_code==city;  
+					      });
+				 var listArea = _(selectedLocations).chain()
+                                     .pluck("area_code")
+                                     .uniq()
+                                     .sortBy(function(name){return name;})
+                                     .value();
+				 view.areaDrop.append('<option value="">' + ' ' + '</option>');
+				 _.each(listArea,function(item){
+					    view.areaDrop.append('<option value='+item+'>' + item + '</option>');
+					});
+			     }
+			 });

@@ -74,7 +74,7 @@ var Company = couchDoc.extend(
 	     return _.find(groups,function(group){return group.user==user;});
 	 };
 	 function groupNameExists(groups,groupName){
-	     return _.find(groups,function(group){return group.groupName==groupName;});
+	     return _.find(groups,function(group){return group.groupName==groupName.trim();});
 	 };
 	 var results = [];
 	 var groups = this.get('hierarchy').groups;
@@ -151,7 +151,7 @@ var Company = couchDoc.extend(
 	     return _.find(stores,function(store){return store.storeName==storeName;});
 	 };
 	 function storeNumberExists(stores,storeNumber){
-	     return _.find(stores,function(store){return store.number==storeNumber;});
+	     return _.find(stores,function(store){return store.number==storeNumber.trim();});
 	 };
 	 var results = [];
     
@@ -247,7 +247,7 @@ var Company = couchDoc.extend(
      },
      validateTerminal : function (newTerminal,previous,terminals) {
 	 function terminalIDExists(terminals,terminalName){
-	     return _.find(terminals,function(terminal){return terminal.terminal_label == terminalName;});
+	     return _.find(terminals,function(terminal){return terminal.terminal_label == _.str.trim(terminalName);});
 	 };
 	 var results = [];
 	 var terminalID = newTerminal.terminal_label;

@@ -35,8 +35,8 @@ var mainReportRouter =
 		 routes: {
 		     "main/":"mainReport",
 		     "main/groups" :"groupsTable",
-		     "main/group/:group_id/stores" :"storesTable",
-		     "main/store/:store_id/terminals" :"terminalsTable",
+		     "main/group/:group_name/stores" :"storesTable",
+		     "main/store/:store_name_num/terminals" :"terminalsTable",
 		     "main/stores" :"storesTable",
 		     "main/terminals" :"terminalsTable"
 		 },
@@ -48,25 +48,47 @@ var mainReportRouter =
 			  $("#dialog-quickView").html();
 			  console.log("companyReportView rendercompanymanagement");});
 		 },
-		 storesTable:function() {
-		     var id = topLevelEntity(ReportData).id;
-		     generalReportRenderer(getStoresTableParam(id),
-					   'storestable_TMP',
-					   'store_id')
-		     (log("companyReportView renderStoresTable"));
-		 },
 		 groupsTable:function() {
 		     var id = topLevelEntity(ReportData).id;
 		     generalReportRenderer(getGroupsTableParam(id),
 					   'groupstable_TMP',
 					   'group_id')
 		     (log("companyReportView renderGroupsTable"));
-
 		 },
-		 terminalsTable:function() {
-		     var id = topLevelEntity(ReportData).id;
-		     generalReportRenderer(getTerminalsTableParam(id),
-					   'terminalstable_TMP',
-					   'terminal_id')
-		     (log("companyReportView renderTerminalsTable"));
+		 storesTable:function(group_name) {
+		     if(group_name){
+			 get_id_from_name(ReportData,group_name)
+			 (function(id){
+			      generalReportRenderer(getStoresTableParam(id),
+						    'storestable_TMP',
+						    'store_id')
+			      (log("companyReportView renderStoresTable"));
+			  });
+		     }
+		     else{
+			 var id = topLevelEntity(ReportData).id;
+			 generalReportRenderer(getStoresTableParam(id),
+					       'storestable_TMP',
+					       'store_id')
+			 (log("companyReportView renderStoresTable"));
+		     }
+		 },
+		 terminalsTable:function(store_name_num) {
+		     if(store_name_num){
+			 var store_name = _.str.trim(store_name_num.split('(')[0]);
+			 get_id_from_name(ReportData,store_name)
+			 (function(id){
+			      generalReportRenderer(getTerminalsTableParam(id),
+						    'terminalstable_TMP',
+						    'terminal_id')
+			      (log("companyReportView renderTerminalsTable"));
+			  })
+		     }
+		     else{
+			 var id = topLevelEntity(ReportData).id;
+			 generalReportRenderer(getTerminalsTableParam(id),
+					       'terminalstable_TMP',
+					       'terminal_id')
+			 (log("companyReportView renderTerminalsTable"));
+		     }
 		 }}));

@@ -127,23 +127,33 @@ var reportDataToArray = _.memoize(
 			      var o_without_field = _.removeKeys(o,'hierarchy');
 			      var expandedCombinedFields = _.mapCombine(groups,o_without_field);
 			      return _.combine(o_without_field,{groups : expandedCombinedFields});
-			  }
+			  } 
 			  return o;
 		      })
 	    .prewalk_r(combineWithSubpart('terminals'))
             .prewalk_r(combineWithSubpart('stores'))
             .prewalk_r(combineWithSubpart('groups'))
             .prewalk_r(combineWithSubpart('company'))
+<<<<<<< HEAD
 	    .prewalk_r(combineWithSubpart('group'))
 	    .prewalk_r(combineWithSubpart('store'))
 	    .value();
+	//if(_.isArray(compressed_entities)){return _.mapCombine(compressed_entities,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
+	//else if(compressed_entities.group){return _.mapCombine(compressed_entities.group,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
+	//else if(compressed_entities.store){return _.mapCombine(compressed_entities.store,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
+=======
+            .prewalk_r(combineWithSubpart('group')) // by yunbo
+            .prewalk_r(combineWithSubpart('store')) // by yunbo
+	    .value();
+>>>>>>> 5159f982ce3725a94776a9d8bdb07634548f129d
+
     },
     reportDataHash
 );
 function entity_type_from_id(reportData,id){
     return _.chain(reportDataToArray(reportData))
 	.find(function(entity){
-		  return _.find(entity,function(val){return val === id})
+		  return _.find(entity,function(val){return val === id;});
 	      })
 	.filter$(function(val){
 		     return val === id;
@@ -155,13 +165,14 @@ function entity_type_from_id(reportData,id){
 		    'terminal_id','terminal')
 	.keys()
 	.first()
-	.value()
+	.value();
 }
 function _find_entity_from_id(reportData,id){
     return _.chain(reportDataToArray(reportData))
 	.find(function(entity){
-		  return _.find(entity,function(val){return val === id})
+		  return _.find(entity,function(val){return val === id;});
 	      })
+<<<<<<< HEAD
 	.renameKeys('number','storeNumber')
 	.value()
 }
@@ -189,6 +200,28 @@ var extract_entity_info={
 		    _.selectKeys(entity_data,
 				 'terminal_id',
 				 'terminal_label'))
+=======
+	.value();
+    var entity_type = entity_type_from_id(reportData,id);
+    if (entity_type === 'company'){
+	return _.selectKeys(bloated_entity, 'company_id',
+		       'companyName');
+    }
+    else if(entity_type === 'group'){
+	return _.selectKeys(bloated_entity, 'company_id',
+		       'companyName',
+		       'group_id',
+		       'groupName');
+    }
+    else if(entity_type === 'store'){
+	return _.selectKeys(bloated_entity, 'company_id',
+		       'companyName',
+		       'group_id',
+		       'groupName',
+		       'store_id',
+		       'storeName',
+		       'storeNumber');
+>>>>>>> 5159f982ce3725a94776a9d8bdb07634548f129d
     }
 }
 var entity_from_id = multimethod()
@@ -572,6 +605,17 @@ function entityIDs_from_id(reportData,id,entity_type){
 }
 function storeIDs_from_id(reportData,id){
     return entityIDs_from_id(reportData,id,'store');
+    //get a list of stores from the parent id
+/*    return _.chain(reportDataToArray(reportData))
+	.filter(function(store){
+		    return _.find(store,function(val){return val === id;});
+		})
+	.pluck('store_id')
+	.compact()
+	.unique()
+<<<<<<< HEAD
+	.value()
+*/
 }
 function entities_info_from_id(reportData,id,entity_type){
     return _.map(entityIDs_from_id(reportData,id,entity_type),
@@ -579,6 +623,8 @@ function entities_info_from_id(reportData,id,entity_type){
 }
 function stores_info_from_id(reportData,id){
     return entities_info_from_id(reportData,id,'store');
+   /* return _.map(storeIDs_from_id(reportData,id),
+	    function(id){ return entity_from_id(ReportData,id)});*/
 }
 
 function child_type_of(parent_type){
@@ -608,4 +654,7 @@ function get_id_from_name(reportData,name){
 		      return obj;
 		  }, reportData)
     }
+=======
+	.value();
+>>>>>>> 5159f982ce3725a94776a9d8bdb07634548f129d
 }

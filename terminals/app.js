@@ -29,6 +29,19 @@ ddoc.views.to_be_installed = {
     }
 };
 
+ddoc.views.to_be_installed_by_user = {
+    map:function(doc){
+    var _ = require("views/lib/underscore");
+    if(_.isEmpty(doc.uuid)&&
+       !_.isEmpty(doc.company_label)&&
+       !_.isEmpty(doc.group_label)&&
+       !_.isEmpty(doc.store_label)&&
+       !_.isEmpty(doc.terminal_label)){
+        emit([doc.creation_user,doc.company_label,doc.group_label,doc.store_label,doc.terminal_label],doc.terminal_id);
+    }
+    }
+};
+
 ddoc.views.campaignFilterQuery ={
     map:function(doc){
 	var _ = require("views/lib/underscore");

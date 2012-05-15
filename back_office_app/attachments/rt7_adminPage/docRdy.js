@@ -35,3 +35,8 @@ function updateDate() {
 function showMsg() {
     alert("Sorry, We are working on this menu.");
 }
+
+function isTerritoryUser(session) {
+    var roleObj = _.find(session.roles,_.isObj);
+    return (session && session.roles && _.contains(session.roles,"territory"));
+}
