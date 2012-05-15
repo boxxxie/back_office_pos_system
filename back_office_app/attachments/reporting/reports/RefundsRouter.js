@@ -1,104 +1,37 @@
-var menuReportsRefundsRouter = 
+var menuReportsRefundsRouter =
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuReports/Refunds":"menuReportsCompanyRefunds",
-		  "menuReports/groupReportRefunds":"menuReportsGroupRefunds",
-		  "menuReports/storeReportRefunds":"menuReportsStoreRefunds"
+		  "reports/refunds":"menuReportsCompanyRefunds"
 	      },
 	      menuReportsCompanyRefunds:function() {
 		  console.log("menuReportsCompanyRefunds  ");
-	      },
-	      menuReportsGroupRefunds:function() {
-		  console.log("menuReportsGroupRefunds  ");
-	      },
-	      menuReportsStoreRefunds:function() {
-		  console.log("menuReportsStoreRefunds  ");
 	      }
 	     }));
 
-var menuReportsRefundsView = 
+var menuReportsRefundsView =
     Backbone.View.extend(
 	{initialize:function(){
 	     var view = this;
 	     view.el = $("#main");
-	     
-	     _.bindAll(view, 
-		       'renderMenuReportsCompanyRefunds',
-		       'renderMenuReportsGroupRefunds',
-		       'renderMenuReportsStoreRefunds');
+
+	     _.bindAll(view, 'renderMenuReportsCompanyRefunds');
 	     menuReportsRefundsRouter
-		 .bind('route:menuReportsCompanyRefunds', 
+		 .bind('route:menuReportsCompanyRefunds',
 		       function(){
 			   console.log("menuReportsView, route:menuReportsCompanyRefunds");
 			   view.renderMenuReportsCompanyRefunds();
 		       });
-	     
-	     menuReportsRefundsRouter
-		 .bind('route:menuReportsGroupRefunds', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsGroupRefunds");
-			   view.renderMenuReportsGroupRefunds();
-		       });
-	     
-	     menuReportsRefundsRouter
-		 .bind('route:menuReportsStoreRefunds', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsStoreRefunds");
-			   view.renderMenuReportsStoreRefunds();
-		       });
 	 },
 	 renderMenuReportsCompanyRefunds: function() {
-	     
-	     var html = ich.menuReportsRefundsReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.menuReportsRefundsReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
-	     
 	     resetDatePicker();
-	     
              resetDropdownBox(ReportData, true, true);
-	     
 	     var btn = $('#generalgobtn')
 		 .button()
 		 .click(function(){
 			    renderRefundsTable();
 			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsGroupRefunds: function() {
-	     
-	     var html = ich.menuReportsRefundsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
-	     $(this.el).html(html);
-	     
-	     resetDatePicker();	     
-	     
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderRefundsTable();
-			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsStoreRefunds: function() {
-	     
-	     var html = ich.menuReportsRefundsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName,
-	     						   			 ReportData.groupName, 
-	     						   			 ReportData.store.storeName,
-	     						   			 ReportData.store.number)});
-	     $(this.el).html(html);
-	     
-	     resetDatePicker();
-	     
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderRefundsTable();
-			});
-	     
 	     console.log("rendered general report");
 	 }
 	});
@@ -110,13 +43,13 @@ function renderRefundsTable() {
     var dropdownGroup = $("#groupsdown");
     var dropdownStore = $("#storesdown");
     var dropdownTerminal = $("#terminalsdown");
-    
+
     if(!_.isEmpty($("#dateFrom").val()) && !_.isEmpty($("#dateTo").val())) {
 	var startDate = new Date($("#dateFrom").val());
 	var endDate = new Date($("#dateTo").val());
 	var endDateForQuery = new Date($("#dateTo").val());
 	endDateForQuery.addDays(1);
-	
+
 	//TODO
 	if(dropdownTerminal.val()=="ALL") {
 	    ids = _($('option', dropdownTerminal)).chain()
@@ -130,10 +63,10 @@ function renderRefundsTable() {
 	    ids =[{id:sd.val(), name:sd.text()}];
 	}
 	console.log(ids);
-	
+
 	refundTransactionsFromCashoutsFetcher(ids,startDate,endDateForQuery)
 	(function(err,data_TMP){
-	     
+
 	     var totalrow = {};
 	     totalrow.numofrefund = data_TMP.length + "";
 	     totalrow.subTotal = currency_format(_.reduce(data_TMP, function(init, item){
@@ -149,19 +82,19 @@ function renderRefundsTable() {
 							   return init + Number(item.total);
 						       }, 0));
 
-	     
+
 	     data_TMP = processTransactionsTMP(data_TMP);
-	     
+
 	     var html = ich.menuReportsRefundstable_TMP({items:data_TMP, totalrow:totalrow});
-	     
+
 
 	     $("#refundstable").html(html);
-	     
-	     _.each(data_TMP, function(item){	
+
+	     _.each(data_TMP, function(item){
 			var item = _.clone(item);
-			
+
 			var dialogtitle=getDialogTitle(ReportData,item);
-			
+
 			var btn = $('#'+item._id)
 			    .each(function(){
 				      $(this).button()
@@ -177,14 +110,14 @@ function renderRefundsTable() {
 									 return o;
 								     }
 								     ,true);
-						     
+
 						     var html = ich.generalTransactionQuickViewDialog_TMP(btnData);
 						     quickmenuReportsTransactionViewDialog(html, {title:dialogtitle});
 						 });
-				  });		    
+				  });
 		    });
 	 });
-	
+
     } else {
    	alert("Input Date");
     }

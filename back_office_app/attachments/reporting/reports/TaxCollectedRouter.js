@@ -1,108 +1,37 @@
-var menuReportsTaxCollectedRouter = 
+var menuReportsTaxCollectedRouter =
     new (Backbone.Router.extend(
 	     {routes: {
-	     	  "menuReports/TaxCollected":"menuReportsCompanyTaxes",
-	     	  "menuReports/groupReportTaxCollected":"menuReportsGroupTaxes",
-		  "menuReports/storeReportTaxCollected":"menuReportsStoreTaxes"
+	     	  "reports/tax_collected":"menuReportsCompanyTaxes"
 	      },
 	      menuReportsCompanyTaxes:function() {
 		  console.log("menuReportsCompanyTaxes  ");
-	      },
-	      menuReportsGroupTaxes:function() {
-		  console.log("menuReportsGroupTaxes  ");
-	      },
-	      menuReportsStoreTaxes:function() {
-		  console.log("menuReportsStoreTaxes  ");
-	      }	      
+	      }
 	     }));
 
-var menuReportsTaxCollectedView = 
+var menuReportsTaxCollectedView =
     Backbone.View.extend(
 	{initialize:function(){
 	     var view = this;
 	     view.el = $("#main");
-	     
-	     _.bindAll(view, 
-		       'renderMenuReportsCompanyTaxes',
-		       'renderMenuReportsGroupTaxes',
-		       'renderMenuReportsStoreTaxes');
+
+	     _.bindAll(view, 'renderMenuReportsCompanyTaxes');
 	     menuReportsTaxCollectedRouter
-		 .bind('route:menuReportsCompanyTaxes', 
+		 .bind('route:menuReportsCompanyTaxes',
 		       function(){
 			   console.log("menuReportsView, route:menuReportsCompanyTaxes");
 			   view.renderMenuReportsCompanyTaxes();
 		       });
-	     
-	     menuReportsTaxCollectedRouter
-		 .bind('route:menuReportsGroupTaxes', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsGroupTaxes");
-			   view.renderMenuReportsGroupTaxes();
-		       });
-	     
-	     menuReportsTaxCollectedRouter
-		 .bind('route:menuReportsStoreTaxes', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsStoreTaxes");
-			   view.renderMenuReportsStoreTaxes();
-		       });
 	 },
 	 renderMenuReportsCompanyTaxes: function() {
-	     
-	     var html = ich.taxCollectedReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.taxCollectedReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
-	     
 	     resetDatePicker();
-
-	     //resetGroupStoreTerminalDropdownbox(ReportData, false);
              resetDropdownBox(ReportData, true, true);
-	     
 	     var btn = $('#generalgobtn')
 		 .button()
 		 .click(function(){
 			    renderTaxCollectedTable();
 			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsGroupTaxes: function() {
-	     
-	     var html = ich.taxCollectedReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, 
-									   ReportData.group.groupName)});
-	     $(this.el).html(html);
-	     
-	     resetDatePicker();
-	     
-	     //resetGroupStoreTerminalDropdownbox(ReportData, false);
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderTaxCollectedTable();
-			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsStoreTaxes: function() {
-	     
-	     var html = ich.taxCollectedReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, 
-									   ReportData.groupName, 
-									   ReportData.store.storeName,
-									   ReportData.store.number)});
-	     $(this.el).html(html);
-	     
-	     resetDatePicker();
-	     
-	     //resetGroupStoreTerminalDropdownbox(ReportData, false);
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderTaxCollectedTable();
-			});
-	     
 	     console.log("rendered general report");
 	 }
 	});
@@ -110,19 +39,19 @@ var menuReportsTaxCollectedView =
 /******************************************** helper functions ************************************/
 function renderTaxCollectedTable() {
     console.log("renderTaxCollectedTable");
-    
+
     var dropdownGroup = $("#groupsdown");
     var dropdownStore = $("#storesdown");
     var dropdownTerminal = $("#terminalsdown");
-    
+
     if(!_.isEmpty($("#dateFrom").val()) && !_.isEmpty($("#dateTo").val())) {
 	var startDate = new Date($("#dateFrom").val());
 	var endDate = new Date($("#dateTo").val());
 	var endDateForQuery = new Date($("#dateTo").val());
 	endDateForQuery.addDays(1);
-	
+
 	var ids;
-	
+
 	if(dropdownTerminal.val()=="ALL") {
 	    ids = _($('option', dropdownTerminal)).chain()
 	    	.filter(function(item){ return item.value!=="ALL";})
@@ -152,14 +81,14 @@ function renderTaxCollectedTable() {
 			     totalrow.totalsales = (_.reduce(data_TMP, function(init, item){
 								 return init + Number(item.totalsales);
 							     }, 0)).toFixed(2);
-			     
+
 			     data_TMP=
 				 _.map(data_TMP, function(item){
 					   item._id = item.id;
 					   return item;
 				       });
 			     data_TMP = _.applyToValues(data_TMP,toFixed(2),true);
-			     
+
 
 			     _.applyToValues(data_TMP, function(obj){
 						 var strObj = obj+"";
@@ -175,35 +104,35 @@ function renderTaxCollectedTable() {
 						 }
 						 return obj;
 					     }, true);
-			     
+
 			     data_TMP = appendGroupStoreInfoFromTerminalID(data_TMP);
-			     
+
 			     var html = ich.taxCollectedtable_TMP({items:data_TMP, totalrow:totalrow});
-			     
+
 
 			     $("#taxcollectedtable").html(html);
-			     _.each(data_TMP, function(item){	
+			     _.each(data_TMP, function(item){
 					var btn = $('#'+item._id)
 					    .button()
 					    .click(function(){
 					    	       var dialogtitle= getDialogTitle(ReportData,
-										       item,
-										       startDate,
-										       endDateForQuery);
+										     item,
+										     startDate,
+										     endDateForQuery);
 						       var firstindex = Number(item.firstindex)+"";
 			     			       var lastindex = Number(item.lastindex)+"";
 						       quickTaxView(item._id,dialogtitle ,firstindex,lastindex);
 						   });
 				    });
 			 });
-	
+
     } else {
    	alert("Input Date");
     }
 };
 
 function appendGroupStoreInfoFromTerminalID(list) {
-    
+
     function getStoreIdFromTerminalId(obj, terminal_id){
 	var storeid;
 	_.prewalk(function(o){
@@ -214,12 +143,12 @@ function appendGroupStoreInfoFromTerminalID(list) {
 		      }
 		      return o;
 		  },obj);
-	return storeid;		
+	return storeid;
     };
-    
+
     list = _.map(list, function(item){
 		     return _.extend({},item,{store_id:getStoreIdFromTerminalId(ReportData,item.id)});
 		 });
-    
+
     return appendGroupStoreInfoFromStoreID(list);
 };

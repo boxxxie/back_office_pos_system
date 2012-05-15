@@ -1,4 +1,4 @@
-var menuReportsHourlyActivityRouter = 
+var menuReportsHourlyActivityRouter =
     new (Backbone.Router.extend(
 	     {routes: {
 		  "reports/hourly_activity":"menuReportsCompanyHourly"
@@ -9,16 +9,15 @@ var menuReportsHourlyActivityRouter =
 	     }));
 
 
-var menuReportsHourlyActivityView = 
+var menuReportsHourlyActivityView =
     Backbone.View.extend(
 	{initialize:function(){
 	     var view = this;
 	     view.el = $("#main");
-	     
-	     _.bindAll(view, 
-		       'renderMenuReportsCompanyHourly');
+
+	     _.bindAll(view, 'renderMenuReportsCompanyHourly');
 	     menuReportsHourlyActivityRouter
-		 .bind('route:menuReportsCompanyHourly', 
+		 .bind('route:menuReportsCompanyHourly',
 		       function(){
 			   console.log("menuReportsHourlyActivityView, route:menuReportsCompanyHourly");
 			   view.renderMenuReportsCompanyHourly();
@@ -26,19 +25,14 @@ var menuReportsHourlyActivityView =
 
 	 },
 	 renderMenuReportsCompanyHourly: function() {
-	     
 	     var html = ich.hourlyActivityReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
-	     
-	     
-             resetDropdownBox(ReportData, true, true);
-	     
+	     resetDropdownBox(ReportData, true, true);
 	     var btn = $('#generalgobtn')
 		 .button()
 		 .click(function(){
 			    renderHourlyActivityTable();
 			});
-	     
 	     console.log("rendered general report");
 	 }
 	});
@@ -50,7 +44,7 @@ function renderHourlyActivityTable() {
     var dropdownStore = $("#storesdown");
     var dropdownTerminal = $("#terminalsdown");
     var id;
-    
+
     if(dropdownTerminal.val()!="ALL") {
 	//alert("terminal id : "+dropdownTerminal.val());
 	id=dropdownTerminal.val();
@@ -69,8 +63,8 @@ function renderHourlyActivityTable() {
 	    id=ReportData.store.store_id;
 	}
     }
-    
-    //TODO : hourly activity talble data 
+
+    //TODO : hourly activity talble data
     hourlyReportFetcher(id, function(data_param){
     			    var totalrow={};
     			    totalrow.transactions = (_.reduce(data_param, function(init, item){
@@ -96,7 +90,7 @@ function renderHourlyActivityTable() {
 			    } else {
 				totalrow.avgsale = "0.00";
 			    }
-			    
+
 			    data_param = _.map(data_param, function(item){
 	    					   //item.avgsale = currency_format(Number(item.avgsale));
 	    					   //item.ecr = currency_format(Number(item.ecr));
@@ -108,10 +102,10 @@ function renderHourlyActivityTable() {
 	    					   item.inventory = Number(item.inventory)>=0?currency_format(Number(item.inventory)):"-"+currency_format(Number(item.inventory)*-1);
 	    					   item.menu = Number(item.menu)>=0?currency_format(Number(item.menu)):"-"+currency_format(Number(item.menu)*-1);
 	    					   item.total = Number(item.total)>=0?currency_format(Number(item.total)):"-"+currency_format(Number(item.total)*-1);
-	    					   
-						   return item;	    		
+
+						   return item;
 	    				       });
-    			    
+
 			    //totalrow.avgsale = currency_format(totalrow.avgsale);
     			    //totalrow.ecr = currency_format(totalrow.ecr);
     			    //totalrow.inventory = currency_format(totalrow.inventory);
@@ -122,10 +116,9 @@ function renderHourlyActivityTable() {
 			    totalrow.inventory = Number(totalrow.inventory)>=0?currency_format(Number(totalrow.inventory)):"-"+currency_format(Number(totalrow.inventory)*-1);
 			    totalrow.menu = Number(totalrow.menu)>=0?currency_format(Number(totalrow.menu)):"-"+currency_format(Number(totalrow.menu)*-1);
 			    totalrow.total = Number(totalrow.total)>=0?currency_format(Number(totalrow.total)):"-"+currency_format(Number(totalrow.total)*-1);
-    			    
+
     			    var data = {items:data_param, totalrow:totalrow};
 			    var html = ich.hourlyActivitytable_TMP(data);
-    			    $("#hourlytable").html(html);    	
+    			    $("#hourlytable").html(html);
 			});
 };
-

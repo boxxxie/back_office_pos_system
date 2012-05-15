@@ -1,11 +1,3 @@
-function range_of_dates(start_date,end_date){
-    var dayCounter = start_date.clone();
-    var daysList = [dayCounter.clone()];
-    while(Date.compare(dayCounter.addDays(1),end_date) !== 1){
-	daysList.push(dayCounter.clone());
-    }
-    return daysList;
-}
 var sales_details_report_router =
     general_report_router.extend(
 	{
@@ -46,6 +38,14 @@ var sales_details_report_router =
 		callback(convert_to_array,'sales_details_report')
 	    },
 	    fetch_inventory_report:function(callback) {
+		function range_of_dates(start_date,end_date){
+		    var dayCounter = start_date.clone();
+		    var daysList = [dayCounter.clone()];
+		    while(Date.compare(dayCounter.addDays(1),end_date) !== 1){
+			daysList.push(dayCounter.clone());
+		    }
+		    return daysList;
+		}
 		function extractTableInfo(cashouts) {
 		    var entities = _(reportDataToArray(ReportData)).mapRenameKeys('number','storeNumber');
 		    var cashout_summaries = _.map(cashouts, function(cashout){

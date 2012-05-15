@@ -89,10 +89,11 @@
     <script language="javascript" type="text/javascript" src="../reporting/reports/RefundsRouter.js"></script>
     <script language="javascript" type="text/javascript" src="../reporting/reports/DiscountsRouter.js"></script>
     <script language="javascript" type="text/javascript" src="../reporting/reports/ElectronicPaymentsRouter.js"></script>
-    <script language="javascript" type="text/javascript" src="../reporting/reports/InventoryRouter.js"></script>
     <script language="javascript" type="text/javascript" src="../reporting/reports/VoucherHistoryRouter.js"></script>
 
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/mainInvRouter.js"></script>
     <script language="javascript" type="text/javascript" src="../reporting/inventory/helpers.js"></script>
+    <script language="javascript" type="text/javascript" src="../reporting/inventory/InventoryRouter.js"></script>
     <script language="javascript" type="text/javascript" src="../reporting/inventory/IdleInventoryReportRouter.js"></script>
     <script language="javascript" type="text/javascript" src="../reporting/inventory/InventoryStockManagementRouter.js"></script>
     <script language="javascript" type="text/javascript" src="../reporting/inventory/menuPriceChangeRouter.js"></script>
@@ -1121,66 +1122,13 @@
 	{{>main_navigation_buttons_P}}
 	<h1>Reports</h1>
 	<h2>{{>breadcrumb_P}}</h2>
+	{{#options}}
 	<div class="report-menu">
-	  <a href='#reports/sales_summary'>
-	    <img src="../images/reports/salessummary.png" border="0" class="report-menu-icon"/>Sales Summary
+	  <a href='#reports/{{link}}'>
+	    <img src="../images/reports/{{img}}" border="0" class="report-menu-icon"/>{{title}}
 	  </a>
 	</div>
-	<div class="report-menu">
-	  <a href='#reports/sales_details'>
-	    <img src="../images/reports/salesdetails.png" border="0" class="report-menu-icon"/>Sales Detail
-	  </a>
-	</div>
-	<div class="report-menu">
-	  <a href='#reports/how_are_we_doing_today'>
-	    <img src="../images/reports/howarewedoingtoday.png" border="0" class="report-menu-icon"/>How Are We Doing Today?
-	  </a>
-	</div>
-	<div class="report-menu">
-	  <a href='#reports/hourly_activity'>
-	    <img src="../images/reports/hourlyactivity.png" border="0" class="report-menu-icon"/>Hourly Activity
-	  </a>
-	</div>
-	<div class="report-menu">
-	  <a href='#reports/electronic_payments'>
-	    <img src="../images/reports/epayment.png" border="0" class="report-menu-icon"/>Electronic Payments
-	  </a>
-	</div>
-	<div class="report-menu">
-	  <a href='#reports/tax_collected'>
-	    <img src="../images/reports/tax.png" border="0" class="report-menu-icon"/>Tax Collected
-	  </a>
-	</div>
-	<div class="report-menu">
-	  <a href='#reports/cash_outs'>
-	    <img src="../images/reports/cashouts.png" border="0" class="report-menu-icon"/>Cash Outs
-	  </a>
-	</div>
-	<div class="report-menu">
-	  <a href='#reports/transactions_detail'>
-	    <img src="../images/reports/transactionsdetails.png" border="0" class="report-menu-icon"/>Transactions Detail
-	  </a>
-	</div>
-	<div class="report-menu">
-	  <a href='#reports/cancelled_transactions'>
-	    <img src="../images/reports/cancelledtransactions.png" border="0" class="report-menu-icon"/>Cancelled Transactions
-	  </a>
-	</div>
-	<div class="report-menu">
-	  <a href='#reports/refunds'>
-	    <img src="../images/reports/refunds.png" border="0" class="report-menu-icon"/>Refunds
-	  </a>
-	</div>
-	<div class="report-menu">
-	  <a href='#reports/discounts'>
-	    <img src="../images/reports/discounts.png" border="0" class="report-menu-icon"/>Discounts
-	  </a>
-	</div>
-	<div class="report-menu">
-      <a href='#reports/vouchers_history'>
-        <img src="../images/reports/voucherhistory.png" border="0" class="report-menu-icon"/>Vouchers History
-      </a>
-    </div>
+	{{/options}}
 	<div style="clear: both;"></div>
       </div>
     </script>
@@ -2497,19 +2445,13 @@
 	{{>main_navigation_buttons_P}}
 	<h1>Inventory</h1>
 	<h2>{{>breadcrumb_P}}</h2>
-	<!--<div style="height:200px;">-->
-	  <div class="report-menu"><a href='#reports/inventory'><img src="../images/reports/inventorysold.png" border="0" class="report-menu-icon"/>Inventory Sold Report</a></div>
-	  <div class="report-menu"><a href='#inventory/idle_inventory'><img src="../images/inventory-idle.png" border="0" class="report-menu-icon"/>Idle Inventory Report</a></div>
-	  <div class="report-menu"><a href='#inventory/stock_management'><img src="../images/inventory-idle.png" border="0" class="report-menu-icon"/>Inventory Stock Management</a></div>
-	  <div class="report-menu"><a href='#inventory/scan_price_change'><img src="../images/reports/scanprice.png" border="0" class="report-menu-icon"/>SCAN Item Price Changes</a></div>
-	  <div class="report-menu"><a href='#inventory/scan_tax_change'><img src="../images/reports/scantax.png" border="0" class="report-menu-icon"/>SCAN Sales Tax Changes</a></div>
-	  <div class="report-menu"><a href='#inventory/add_scan_item'><img src="../images/reports/scanaddnew.png" border="0" class="report-menu-icon"/>Add New Inventory SCAN Items</a></div>
-	  <div class="report-menu"><a href='#inventory/price_change_log'><img src="../images/reports/pricelog.png" border="0" class="report-menu-icon"/>Price Change Log</a></div>
-	  <div class="report-menu"><a href='#inventory/scan_tax_change_log'><img src="../images/reports/taxlog.png" border="0" class="report-menu-icon"/>Tax Change Log</a></div>
-	  {{#showMenuPriceChange}}
-	  <div class="report-menu"><a href='#inventory/menu_price_change'><img src="../images/reports/menupricechange.png" border="0" class="report-menu-icon"/>Menu Price Change</a></div>
-	  {{/showMenuPriceChange}}
-	<!--</div>-->
+	{{#options}}
+	<div class="report-menu">
+	  <a href='#inventory/{{link}}'>
+	    <img src="../images/{{img}}" border="0" class="report-menu-icon"/>{{title}}
+	  </a>
+	</div>
+	{{/options}}
 	<div style="clear: both;"></div>
       </div>
     </script>

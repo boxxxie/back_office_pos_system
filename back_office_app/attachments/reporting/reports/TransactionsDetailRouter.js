@@ -1,106 +1,39 @@
-var menuReportsTransactionsDetailRouter = 
+var menuReportsTransactionsDetailRouter =
     new (Backbone.Router.extend(
 	     {routes: {
-	     	  "menuReports/TransactionsDetail":"menuReportsCompanyTransactionsDetail",
-	     	  "menuReports/groupReportTransactionsDetail":"menuReportsGroupTransactionsDetail",
-	  	  "menuReports/storeReportTransactionsDetail":"menuReportsStoreTransactionsDetail"
+	     	  "reports/transactions_detail":"menuReportsCompanyTransactionsDetail"
 	      },
 	      menuReportsCompanyTransactionsDetail:function() {
 		  console.log("menuReportsCompanyTransactionsDetail  ");
-	      },
-	      menuReportsGroupTransactionsDetail:function() {
-		  console.log("menuReportsGroupTransactionsDetail  ");
-	      },
-	      menuReportsStoreTransactionsDetail:function() {
-		  console.log("menuReportsStoreTransactionsDetail  ");
 	      }
 	     }));
 
-var menuReportsTransactionsDetailView = 
+var menuReportsTransactionsDetailView =
     Backbone.View.extend(
 	{initialize:function(){
 	     var view = this;
 	     view.el = $("#main");
-	     
-	     _.bindAll(view, 
-		       'renderMenuReportsCompanyTransactionsDetail',
-		       'renderMenuReportsGroupTransactionsDetail',
-		       'renderMenuReportsStoreTransactionsDetail');
+
+	     _.bindAll(view, 'renderMenuReportsCompanyTransactionsDetail');
 	     menuReportsTransactionsDetailRouter
-		 .bind('route:menuReportsCompanyTransactionsDetail', 
+		 .bind('route:menuReportsCompanyTransactionsDetail',
 		       function(){
 			   console.log("menuReportsView, route:menuReportsCompanyTransactionsDetail");
 			   view.renderMenuReportsCompanyTransactionsDetail();
 		       });
-	     menuReportsTransactionsDetailRouter
-		 .bind('route:menuReportsGroupTransactionsDetail', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsGroupTransactionsDetail");
-			   view.renderMenuReportsGroupTransactionsDetail();
-		       });
-	     menuReportsTransactionsDetailRouter
-		 .bind('route:menuReportsStoreTransactionsDetail', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsStoreTransactionsDetail");
-			   view.renderMenuReportsStoreTransactionsDetail();
-		       });
+
 	 },
 	 renderMenuReportsCompanyTransactionsDetail: function() {
-	     
-	     var html = ich.transactionsDetailReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.transactionsDetailReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
 	     $("#btnBack2").hide();
-	     
 	     resetDatePicker();
-	     
              resetDropdownBox(ReportData, false, false);
-	     
 	     var btn = $('#generalgobtn')
 		 .button()
 		 .click(function(){
 			    renderTransactionsDetailTable();
 			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsGroupTransactionsDetail: function() {
-	     
-	     var html = ich.transactionsDetailReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, 
-										 ReportData.group.groupName)});
-	     $(this.el).html(html);
-	     $("#btnBack2").hide();
-	     
-	     resetDatePicker();
-	     
-             resetDropdownBox(ReportData, false, false);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderTransactionsDetailTable();
-			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsStoreTransactionsDetail: function() {
-	     
-	     var html = ich.transactionsDetailReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, 
-										 ReportData.groupName, 
-										 ReportData.store.storeName, 
-										 ReportData.store.number)});
-	     $(this.el).html(html);
-	     $("#btnBack2").hide();
-	     
-	     resetDatePicker();
-	     
-             resetDropdownBox(ReportData, false, false);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderTransactionsDetailTable();
-			});
-	     
 	     console.log("rendered general report");
 	 }
 	});
@@ -116,17 +49,17 @@ function renderTransactionsDetailTable() {
 		}
 		return obj;
 	    },ReportData);
-	return terminal_label;	
+	return terminal_label;
     };
     function renderTransactionDetail(startDate, endDateForQuery, option) {
         transactionsReportFetcher(startDate,endDateForQuery)
         ([option.id])
         (function(err,resp){
              var respForBtn = _.extend({},resp);
-             
+
              resp.transactions = _.map(resp.transactions, function(item) {
 					   var terminal_label = getTerminalLabel(item.terminal_id);
-					   return _.extend(item,{name:terminal_label} 
+					   return _.extend(item,{name:terminal_label}
 							   ,{date:item.time.start}
 							   ,{transdate:jodaDatePartFormatter(item.time.start)}
 							   ,{transtime:jodaTimePartFormatter(item.time.start)}
@@ -135,7 +68,7 @@ function renderTransactionsDetailTable() {
 							   ,{tax3:currency_format(item.tax3)}
 							   ,{total:currency_format(item.total)});
 				       });
-             
+
              var html = ich.transactionsDetailTable_TMP(resp);
              $("#transactionsdetailtable").html(html);
              $("#printdetail").click(function(){
@@ -145,21 +78,21 @@ function renderTransactionsDetailTable() {
 					     form.find("#printdetail").hide();
 					     var exBorder = form.find("table").attr("border");
 					     form.find("table").attr("border",1);
-					     
+
 					     var w = window.open();
 					     if(_.isEmpty(ReportData.company)) {
-						 w.document.write("Company : " + ReportData.companyName );    
+						 w.document.write("Company : " + ReportData.companyName );
 					     } else {
 						 w.document.write("Company : " + ReportData.company.companyName);
 					     }
 					     w.document.write(" , Store : " + $("#storesdown option:selected").text());
-					     
+
 					     w.document.write(form.html());
 					     w.document.close();
 					     w.focus();
 					     w.print();
 					     w.close();
-					     
+
 					     form.find("#detail").show();
 					     form.find("#printdetail").show();
 					     form.find("table").attr("border",exBorder);
@@ -167,15 +100,15 @@ function renderTransactionsDetailTable() {
 					     alert("No transactions to save.");
 					 }
 				     });
-             
-             
-             $("#transactionssummarytable").hide();             
+
+
+             $("#transactionssummarytable").hide();
              $("#ulGroupDropDown").find("select").attr("disabled",true);
              $("#dateRangePicker").hide();
              $("#generalgobtn").hide();
              $("#btnBackHistory").hide();
              $("#btnBack2").show();
-             
+
              $("#btnBack2").click(function(){
 				      $("#transactionssummarytable").show();
 				      $("#transactionsdetailtable").html({});
@@ -185,21 +118,21 @@ function renderTransactionsDetailTable() {
 				      $("#btnBackHistory").show();
 				      $("#btnBack2").hide();
 				  });
-             
-             
+
+
              respForBtn.transactions = _.map(respForBtn.transactions, function(item) {
 						 var terminal_label = getTerminalLabel(item.terminal_id);
-                                                 return _.extend(item,{name:terminal_label} 
+                                                 return _.extend(item,{name:terminal_label}
                                                                  ,{date:item.time.start});
                                              });
-             
+
              respForBtn.transactions = processTransactionsTMP(respForBtn.transactions);
-             
+
              _.each(respForBtn.transactions, function(item) {
 			var item = _.clone(item);
-			
+
 			var dialogtitle=getDialogTitle(ReportData,item);
-			
+
 			var btn = $('#'+item._id)
                             .each(function(){
 				      $(this).button()
@@ -215,7 +148,7 @@ function renderTransactionsDetailTable() {
 									 return o;
 								     }
 								     ,true);
-						     
+
 						     var html = ich.generalTransactionQuickViewDialog_TMP(btnData);
 						     quickmenuReportsTransactionViewDialog(html, {title:dialogtitle});
 						 });
@@ -223,31 +156,31 @@ function renderTransactionsDetailTable() {
                     });
          });
     };
-    
+
     console.log("renderTransactionsDetailTable");
     var dropdownGroup = $("#groupsdown");
     var dropdownStore = $("#storesdown");
-    
+
     if(!_.isEmpty($("#dateFrom").val()) && !_.isEmpty($("#dateTo").val())) {
 	var startDate = new Date($("#dateFrom").val());
 	var endDate = new Date($("#dateTo").val());
 	var endDateForQuery = new Date($("#dateTo").val());
 	endDateForQuery.addDays(1);
-	
+
 	var sd = $("#storesdown option:selected");
 	ids =[{id:sd.val(), name:sd.text()}];
-	
+
 	console.log(ids);
-	
+
 	startDate = startDate.toArray().slice(0,3);
 	endDateForQuery = endDateForQuery.toArray().slice(0,3);
-	
+
 	transactionsReportDaySummaryFetcher(startDate,endDateForQuery)
 	([_.first(ids).id])
 	(function(err,resp){
 	     var formattedTemplateData = _.prewalk(transactionFormattingWalk,resp);
 	     $("#transactionssummarytable").html(ich.transactionsSummaryTable_TMP({list:formattedTemplateData.transactions,total:formattedTemplateData.total}));
-	     
+
 	     _.each(resp.transactions,function(item){
 			var row = $("#"+item.dateString);
 			row.click(function(){
@@ -257,5 +190,5 @@ function renderTransactionsDetailTable() {
 				  });
 		    });
 	 });
-    } 
+    }
 };

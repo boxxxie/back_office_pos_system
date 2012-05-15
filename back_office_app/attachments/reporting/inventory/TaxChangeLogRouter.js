@@ -1,7 +1,7 @@
-var menuInventorytaxChangeLogRouter = 
+var menuInventorytaxChangeLogRouter =
     new (Backbone.Router.extend(
 	     {routes: {
-		  "inventory/tax_change_log":"menuInventoryTaxChangeLog"
+		  "inventory/scan_tax_change_log":"menuInventoryTaxChangeLog"
 	      },
 	      menuInventoryTaxChangeLog:function() {
 		  console.log("menuInventoryCompanytaxChangeLog");
