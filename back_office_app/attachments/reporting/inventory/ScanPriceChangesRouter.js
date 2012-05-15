@@ -1,9 +1,7 @@
 var menuInventoryscanPriceChangeRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuInventory/scanPriceChange":"menuInventoryScanPriceChange",
-		  "menuInventory/groupReportscanPriceChange":"menuInventoryScanPriceChange",
-		  "menuInventory/storeReportscanPriceChange":"menuInventoryScanPriceChange"
+		  "inventory/scan_price_change":"menuInventoryScanPriceChange"
 	      },
 	      getTopView:_.once(function(){return new menuInventoryscanPriceChangeView();}),
 	      menuInventoryScanPriceChange:function() {

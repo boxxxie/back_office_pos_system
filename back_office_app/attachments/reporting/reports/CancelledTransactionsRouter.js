@@ -1,18 +1,10 @@
 var menuReportsCancelledTransactionsRouter =
     new (Backbone.Router.extend(
 	     {routes: {
-	     	  "menuReports/Cancelled":"menuReportsCompanyCancelled",
-	     	  "menuReports/groupReportCancelled":"menuReportsGroupCancelled",
-		  "menuReports/storeReportCancelled":"menuReportsStoreCancelled"
+	     	  "reports/cancelled_transactions":"menuReportsCompanyCancelled"
 	      },
 	      menuReportsCompanyCancelled:function() {
 		  console.log("menuReportsCompanyCancelled  ");
-	      },
-	      menuReportsGroupCancelled:function() {
-		  console.log("menuReportsGroupCancelled  ");
-	      },
-	      menuReportsStoreCancelled:function() {
-		  console.log("menuReportsStoreCancelled  ");
 	      }
 	     }));
 
@@ -23,71 +15,23 @@ var menuReportsCancelledTransactionsView =
 	     view.el = $("#main");
 
 	     _.bindAll(view,
-		       'renderMenuReportsCompanyCancelled',
-		       'renderMenuReportsGroupCancelled',
-		       'renderMenuReportsStoreCancelled');
+		       'renderMenuReportsCompanyCancelled');
 	     menuReportsCancelledTransactionsRouter
 		 .bind('route:menuReportsCompanyCancelled',
 		       function(){
 			   console.log("menuReportsView, route:menuReportsCompanyCancelled");
 			   view.renderMenuReportsCompanyCancelled();
 		       });
-	     menuReportsCancelledTransactionsRouter
-		 .bind('route:menuReportsGroupCancelled',
-		       function(){
-			   console.log("menuReportsView, route:menuReportsGroupCancelled");
-			   view.renderMenuReportsGroupCancelled();
-		       });
-	     menuReportsCancelledTransactionsRouter
-		 .bind('route:menuReportsStoreCancelled',
-		       function(){
-			   console.log("menuReportsView, route:menuReportsStoreCancelled");
-			   view.renderMenuReportsStoreCancelled();
-		       });
+
 	 },
 	 renderMenuReportsCompanyCancelled: function() {
 
-	     var html = ich.menuReportsCancelledReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.menuReportsCancelledReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
 	     
 	     resetDatePicker();
 	     
 	     resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderCancelledTransactionsTable();
-			});
-
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsGroupCancelled: function() {
-
-	     var html = ich.menuReportsCancelledReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
-	     $(this.el).html(html);
-
-	     
-	     resetDatePicker();
-	     
-             resetDropdownBox(ReportData, true, true);
-
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderCancelledTransactionsTable();
-			});
-
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsStoreCancelled: function() {
-
-	     var html = ich.menuReportsCancelledReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.groupName, ReportData.store.storeName, ReportData.store.number)});
-	     $(this.el).html(html);
-
-	     resetDatePicker();
-	     
-             resetDropdownBox(ReportData, true, true);
 	     
 	     var btn = $('#generalgobtn')
 		 .button()

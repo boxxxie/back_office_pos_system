@@ -3,10 +3,8 @@ var menuModelforInventory;
 var menuInventoryRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuInventory/Inventory":"menuInventoryCompanyInventory",
-		  "menuInventory/menuPriceChange":"menuInventoryCompanymenuPriceChange",
-		  "menuInventory/groupReportInventory":"menuInventoryGroupInventory",
-		  "menuInventory/storeReportInventory":"menuInventoryStoreInventory"
+		  "inventory/":"menuInventoryCompanyInventory",
+		  "inventory/menu_price_change":"menuInventoryCompanymenuPriceChange"
 	      },
 	      menuInventoryCompanyInventory:function() {
 		  console.log("menuInventoryCompanyInventory");
@@ -31,26 +29,12 @@ var menuInventoryView =
 	     
 	     _.bindAll(view, 
 		       'renderMenuInventoryCompanyInventory',
-		       'renderMenuInventoryGroupInventory',
-		       'renderMenuInventoryStoreInventory',
 		       'renderMenuInventoryCompanymenuPriceChange');
 	     menuInventoryRouter
 		 .bind('route:menuInventoryCompanyInventory', 
 		       function(){
 			   console.log("menuInventoryView, route:menuReportsCompanyInventory");
 			   view.renderMenuInventoryCompanyInventory();
-		       });
-	     menuInventoryRouter
-		 .bind('route:menuInventoryGroupInventory', 
-		       function(){
-			   console.log("menuInventoryView, route:menuReportsGroupInventory");
-			   view.renderMenuInventoryGroupInventory();
-		       });
-	     menuInventoryRouter
-		 .bind('route:menuInventoryStoreInventory',
-		       function(){
-			   console.log("menuInventoryView, route:menuReportsStoreInventory");
-			   view.renderMenuInventoryStoreInventory();
 		       });
 	     menuInventoryRouter
 		 .bind('route:menuInventoryCompanymenuPriceChange',
@@ -60,26 +44,8 @@ var menuInventoryView =
 		       });
 	 },
 	 renderMenuInventoryCompanyInventory: function() {
-	     
-	     var html = ich.menuInventory_TMP({ 
-	     				       breadCrumb:breadCrumb(ReportData.company.companyName),
-	     				       showMenuPriceChange:true});
-	     $(this.el).html(html);
-	 },
-	 renderMenuInventoryGroupInventory: function() {
-	     
-	     var html = ich.menuInventory_TMP({ 
-	 				       breadCrumb:breadCrumb(ReportData.companyName,
-	 					     		     ReportData.group.groupName)});
-	     $(this.el).html(html);
-	 },
-	 renderMenuInventoryStoreInventory: function() {
-	     
-	     var html = ich.menuInventory_TMP({ 
-	 				       breadCrumb:breadCrumb(ReportData.companyName,
-	 					     		     ReportData.groupName,
-	 					     		     ReportData.store.storeName,
-	 					     		     ReportData.store.number)});
+	     var entity_level_is_company = (topLevelEntity(ReportData).type === 'company');
+	     var html = ich.menuInventory_TMP(_.extend(autoBreadCrumb(),{showMenuPriceChange:entity_level_is_company}));
 	     $(this.el).html(html);
 	 },
 	 renderMenuInventoryCompanymenuPriceChange: function() {
@@ -205,14 +171,14 @@ var menuInventoryView =
 
 /*********************************************** helper functions *********************************************/
 function renderEditMenuPrice(num,position) {
-    if(_.isNumber(position)) {
+    if(_.isNumber(position)) { //FIXME: wtf does this mean?
 	var button = menuModelforInventory.get_button(num,position);
 	
 	var htmlright = ich.menuSetMenus_Right_TMP(button);
 	$("#menusetmenusright").html(htmlright);
 
 	$('input:checkbox').parent().hide();
-	$('#displayColor').parent().parent().hide();
+	$('#color-selection-area').hide();
 	
 	var txtLine1 = $("#editmenudescription0");
 	var txtLine2 = $("#editmenudescription1");
@@ -229,9 +195,6 @@ function renderEditMenuPrice(num,position) {
 		       console.log("menuInventory Price Change");
 		       save_button_into_db();
 		   });
-	
-    } else {
-	//renderEditHeader ???
     }
 };
 

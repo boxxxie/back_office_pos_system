@@ -419,53 +419,112 @@ _.mixin({
 _.mixin({
 	    //depricated, use combine
 	    extend_r:function(extendTo,extendFrom){
-		function isObject(obj) {
-		    return obj === Object(obj) && !(obj instanceof Array);
-		};
-		function mergeRecursive(extendTo, extendFrom) {
-		    for (var p in extendFrom) {
-			if (isObject(extendFrom[p])) {
-			    extendTo[p] = mergeRecursive({}, extendFrom[p]);
-			} else {
-			    extendTo[p] = extendFrom[p];
-			}
+		function mergeRecursive(mergeTo, mergeFrom) {
+		    function arrayMerge(mergeTo,mergeFrom,rest){
+			return _.chain(mergeTo)
+			    .map(function(itemToExtend,index){
+				     return mergeRecursive(itemToExtend, mergeFrom[index]);
+				 })
+			    .concat(rest)
+			    .value()
 		    }
-		    return extendTo;
+		    //Array logic
+		    if(_.isArray(mergeTo) && _.isArray(mergeFrom)){ //both items are arrays
+			if(_.size(mergeTo) === _.size(mergeFrom)){ //arrays are same length
+			    var subMergeTo = mergeTo;
+			    var subMergeFrom = mergeFrom;
+			    var rest = [];
+
+			}
+			else if(_.size(mergeTo) < _.size(mergeFrom)){ //array we are merging onto is smaller than one we are merging from
+			    var subMergeTo = mergeTo;
+			    var subMergeFrom = _.first(mergeFrom,_.size(mergeTo));
+			    var rest = _.rest(mergeFrom,_.size(mergeTo));
+			}
+			else{ //array we are merging onto is larger than one we are merging from
+			    var subMergeTo = _.first(mergeTo,_.size(mergeFrom));
+			    var subMergeFrom = mergeFrom;
+			    var rest = _.rest(mergeTo,_.size(mergeFrom));
+			}
+			return arrayMerge(subMergeTo,subMergeFrom,rest);
+		    }
+		    //Object logic
+		    if(_.isObject(mergeTo) && _.isObject(mergeFrom)){
+			var sharedKeys = _.intersection(_.keys(mergeTo),_.keys(mergeFrom));
+			var mergeToSplit = _.splitKeys(mergeTo,sharedKeys);
+			var mergeFromSplit = _.splitKeys(mergeFrom,_.keys(mergeTo));
+			var subMergeFrom = _.first(mergeFromSplit);
+			var subMergeTo = _.first(mergeToSplit);
+			var restMergeFrom = _.second(mergeFromSplit);
+			var restMergeTo = _.second(mergeToSplit);
+			return _.chain(subMergeTo)
+			    .map$(function(pair){
+				      var key = _.first(pair);
+				      var val = _.second(pair);
+				      var mergeFromVal = subMergeFrom[key];
+				      return [key, mergeRecursive(val,mergeFromVal)];
+				  })
+			    .extend(restMergeTo,restMergeFrom)
+			    .value()
+		    }
+		    else{ //primative logic
+			return mergeFrom;
+		    }
 		}
 		return mergeRecursive(extendTo, extendFrom);
 	    },
-	    fill:function(fillIn,fillFrom){
-		function isObject(obj) {
-		    return obj === Object(obj) && !(obj instanceof Array);
-		};
-		function mergeRecursive(fillIn, fillFrom) {
-		    for (var p in fillFrom) {
-			if (isObject(fillFrom[p])) {
-			    if(fillIn[p] === undefined){
-				fillIn[p] = mergeRecursive({}, fillFrom[p]);
-			    }
-			    else{
-				fillIn[p] = mergeRecursive(fillIn[p], fillFrom[p]);
-			    }
+	    defaults_r:function(to,from){
+		function mergeRecursive(mergeTo, mergeFrom) {
+		    //Array logic
+		    if(_.isArray(mergeTo) && _.isArray(mergeFrom)){ //both items are arrays
+			if(_.size(mergeTo) < _.size(mergeFrom)){ //array we are merging onto is smaller than one we are merging from
+			    var rest = _.rest(mergeFrom,_.size(mergeTo));
+			    return _.concat(mergeTo,rest)
 			}
-			else if(fillIn[p] === undefined){
-			    fillIn[p] = fillFrom[p];
+			else{ //array we are merging onto is larger than one we are merging from, or they are the same size
+			    return mergeTo;
 			}
 		    }
-		    return fillIn;
+		    //Object logic
+		    if(_.isObject(mergeTo) && _.isObject(mergeFrom)){
+			var sharedKeys = _.intersection(_.keys(mergeTo),_.keys(mergeFrom));
+			var mergeToSplit = _.splitKeys(mergeTo,sharedKeys);
+			var mergeFromSplit = _.splitKeys(mergeFrom,_.keys(mergeTo));
+			var subMergeFrom = _.first(mergeFromSplit);
+			var subMergeTo = _.first(mergeToSplit);
+			var restMergeFrom = _.second(mergeFromSplit);
+			var restMergeTo = _.second(mergeToSplit);
+			return _.chain(subMergeTo)
+			    .map$(function(pair){
+				      var key = _.first(pair);
+				      var val = _.second(pair);
+				      var mergeFromVal = subMergeFrom[key];
+				      return [key, mergeRecursive(val,mergeFromVal)];
+				  })
+			    .extend(restMergeTo,restMergeFrom)
+			    .value()
+		    }
+		    else{ //primative logic
+			return mergeTo;
+		    }
 		}
-		return mergeRecursive(fillIn, fillFrom);
-	    }
-	});
+		return mergeRecursive(to,from);
+	    },
 
-_.mixin({
+	    fill:function(){
+		return _.reduce(arguments,
+			   function(returnItem,curItem){
+			       return _.defaults_r(returnItem,curItem);
+			   },{});
+	    },
+
 	    //supposed to be a safe _.extend that is recursive and takes in v-args
 	    //use inplace of extend_r
 	    combine:function(){
-		return _.reduce(_(arguments).toArray(),
-				function(returnItem,curItem){
-				    return _.extend_r(returnItem,curItem);
-				},{});
+		return _.reduce(arguments,
+			   function(returnItem,curItem){
+			       return _.extend_r(returnItem,curItem);
+			   },{});
 	    }
 	});
 
@@ -527,7 +586,7 @@ _.mixin({
 		    return fn.apply(this, args);
 		};
 	    }
-	})
+	});
 
 _.mixin({
 	    toNumber:function(obj){

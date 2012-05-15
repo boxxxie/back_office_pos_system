@@ -20,58 +20,60 @@ function main(user,ip){
 
     var push_couchapp = couchapp_push_as_user(user,ip);
 
-    _({
-	  //'locations/app.js':'locations_rt7',
-	  'export_request/app.js':'export_requests_rt7',
+    _([
+	  {file:'export_request/app.js',db:'export_requests_rt7'},
 
-	  'vouchers/app.js':'vouchers_rt7',
+	  {file:'vouchers/app.js',db:'vouchers_rt7'},
 
-	  'users/app.js':'_users',
-	  'users/validation.js':'_users',
-	  'users/app.js':'users',
-	  'users/validation.js':'users',
-	  'users/app.js':'users_designs',
-	  'users/validation.js':'users_designs',
+	  {file:'users/app.js',db:'_users'},
+	  {file:'users/validation.js',db:'_users'},
 
-	  'transactions/app.js':'transactions',
-	  'transactions/app.js':'cashedout_transactions',
-	  'transactions/pos.js':'transactions',
-	  'transactions/pos.js':'cashedout_transactions',
-	  'transactions/app.js':'transactions_designs',
-	  'transactions/pos.js':'transactions_designs',
+	  //{file:'users/app.js',db:'users'},
+	 //{file:'users/validation.js',db:'users'},
 
-	  'terminals/app.js':'terminals_corp',
-	  'terminals/app.js':'terminals_rt7',
-	  'terminals/app.js':'terminals_designs',
+	  {file:'users/app.js',db:'users_designs'},
+	  {file:'users/validation.js',db:'users_designs'},
 
-	  //'stores/app.js':'stores',
-	  'stores/app.js':'stores_designs',
+	  {file:'transactions/app.js',db:'transactions'},
+	  {file:'transactions/app.js',db:'cashedout_transactions'},
+	  {file:'transactions/app.js',db:'transactions_designs'},
 
-	  'back_office_app/app.js':'rt7_backoffice_app',
+	  {file:'transactions/pos.js',db:'transactions'},
+	  {file:'transactions/pos.js',db:'cashedout_transactions'},
+	  {file:'transactions/pos.js',db:'transactions_designs'},
 
-	  'media_stats/app.js':'media_stats',
-	  'media_stats/app.js':'media_stats_designs',
+	  {file:'terminals/app.js',db:'terminals_corp'},
+	  {file:'terminals/app.js',db:'terminals_rt7'},
+	  {file:'terminals/app.js',db:'terminals_designs'},
 
-	  'inventory_changes/app.js':'inventory_changes',
-	  'inventory_changes/app.js':'inventory_changes_designs',
+	  {file:'stores/app.js',db:'stores_designs'},
 
-	  'inventory/app.js':'inventory',
-	  'inventory/app.js':'inventory_designs',
+	  {file:'back_office_app/app.js',db:'rt7_backoffice_app'},
 
-	  'companies/app.js':'companies',
+	  {file:'media_stats/app.js',db:'media_stats'},
+	  {file:'media_stats/app.js',db:'media_stats_designs'},
 
-	  'cashout/app.js':'cashouts',
-	  'cashout/pos.js':'cashouts',
-	  'cashout/app.js':'cashout_designs',
-	  'cashout/pos.js':'cashout_designs',
+	  {file:'inventory_changes/app.js',db:'inventory_changes'},
+	  {file:'inventory_changes/app.js',db:'inventory_changes_designs'},
 
-	  'campaign-manager/app.js':'campaigns',
-	  'campaign-manager/app.js':'campaigns_designs'
+	  {file:'inventory/app.js',db:'inventory'},
+	  {file:'inventory/app.js',db:'inventory_designs'},
 
-      })
-	.each(function(db,file){
-		  var loaded_doc =  require('./'+file)
-		  push_couchapp(loaded_doc,db)
+	  {file:'companies/app.js',db:'companies'},
+
+	  {file:'cashout/app.js',db:'cashouts'},
+	  {file:'cashout/pos.js',db:'cashouts'},
+
+	  {file:'cashout/app.js',db:'cashout_designs'},
+	  {file:'cashout/pos.js',db:'cashout_designs'},
+
+	  {file:'campaign-manager/app.js',db:'campaigns'},
+	  {file:'campaign-manager/app.js',db:'campaigns_designs'}
+
+      ])
+	.each(function(transfer){
+		  var loaded_doc =  require('./'+transfer.file)
+		  push_couchapp(loaded_doc,transfer.db)
 	      })
 
 }

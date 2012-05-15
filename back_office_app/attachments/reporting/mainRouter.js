@@ -2,9 +2,6 @@
 function log(text){return function(){console.log(text);};};
 function generalReportRenderer(param,template,idField){
     function generateFormattedSales(sales){
-	function safeSum(total,cur){
-	    return total + Number(cur);
-	};
 	function sumSalesType(sales,type){
 	    return _(sales)
 		.chain()

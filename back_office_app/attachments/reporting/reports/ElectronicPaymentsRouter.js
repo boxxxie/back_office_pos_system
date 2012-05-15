@@ -1,18 +1,10 @@
 var menuReportsElectronicPaymentsRouter =
     new (Backbone.Router.extend(
 	     {routes: {
-	     	  "menuReports/ElectronicPayments":"menuReportsCompanyPayments",
-	     	  "menuReports/groupReportElectronicPayments":"menuReportsGroupPayments",
-		  "menuReports/storeReportElectronicPayments":"menuReportsStorePayments"
+	     	  "reports/electronic_payments":"menuReportsCompanyPayments"
 	      },
 	      menuReportsCompanyPayments:function() {
 		  console.log("menuReportsCompanyPayments  ");
-	      },
-	      menuReportsGroupPayments:function() {
-		  console.log("menuReportsGroupPayments  ");
-	      },
-	      menuReportsStorePayments:function() {
-		  console.log("menuReportsStorePayments  ");
 	      }
 	     }));
 
@@ -23,9 +15,7 @@ var menuReportsElectronicPaymentsView =
 	     view.el = $("#main");
 
 	     _.bindAll(view,
-		       'renderMenuReportsCompanyPayments',
-		       'renderMenuReportsGroupPayments',
-		       'renderMenuReportsStorePayments');
+		       'renderMenuReportsCompanyPayments');
 	     menuReportsElectronicPaymentsRouter
 		 .bind('route:menuReportsCompanyPayments',
 		       function(){
@@ -33,61 +23,10 @@ var menuReportsElectronicPaymentsView =
 			   view.renderMenuReportsCompanyPayments();
 		       });
 
-	     menuReportsElectronicPaymentsRouter
-		 .bind('route:menuReportsGroupPayments',
-		       function(){
-			   console.log("menuReportsView, route:menuReportsGroupPayments");
-			   view.renderMenuReportsGroupPayments();
-		       });
-
-	     menuReportsElectronicPaymentsRouter
-		 .bind('route:menuReportsStorePayments',
-		       function(){
-			   console.log("menuReportsView, route:menuReportsStorePayments");
-			   view.renderMenuReportsStorePayments();
-		       });
 	 },
 	 renderMenuReportsCompanyPayments: function() {
 
-	     var html = ich.electronicPaymentsReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
-	     $(this.el).html(html);
-
-	     resetDatePicker();
-
-             resetDropdownBox(ReportData, true, true);
-
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderElectronicPaymentsTable();
-			});
-
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsGroupPayments: function() {
-
-	     var html = ich.electronicPaymentsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName,
-									       ReportData.group.groupName)});
-	     $(this.el).html(html);
-
-	     resetDatePicker();
-
-             resetDropdownBox(ReportData, true, true);
-
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderElectronicPaymentsTable();
-			});
-
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsStorePayments: function() {
-
-	     var html = ich.electronicPaymentsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName,
-									       ReportData.groupName,
-									       ReportData.store.storeName,
-									       ReportData.store.number)});
+	     var html = ich.electronicPaymentsReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
 
 	     resetDatePicker();

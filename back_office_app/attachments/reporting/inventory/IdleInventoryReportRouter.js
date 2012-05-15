@@ -1,7 +1,7 @@
 var idleInventoryRouter = 
     new (Backbone.Router.extend({
 				    routes: {
-					"menuInventory/IdleInventory":"idleInventory"
+					"inventory/idle_inventory":"idleInventory"
 				    },
 				    idleInventory:function() {
 					this._setup();

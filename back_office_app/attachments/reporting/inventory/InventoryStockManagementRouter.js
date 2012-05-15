@@ -1,7 +1,7 @@
 var inventoryStockManagementRouter = 
     new (Backbone.Router.extend({
 				    routes: {
-					"menuInventory/InventoryStockMng":"inventoryStockMng"
+					"inventory/stock_management":"inventoryStockMng"
 				    },
 				    inventoryStockMng:function() {
 					this._setup();

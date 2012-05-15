@@ -97,9 +97,7 @@ function getGeneralTableParam(id,key){
 	.map(entity_blob_for_report_params)
 	.mapRenameKeys('terminal_label','terminalName')
 	.value();
-    return _.combine({
-		    list:entities,
-		},
+    return _.combine({list:entities},
 		{breadCrumb:_.first(entities)})
 }
 

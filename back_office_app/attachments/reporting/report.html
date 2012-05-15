@@ -16,10 +16,9 @@
     <script language="javascript" type="text/javascript" src="../lib/jquery-ui-1.8.16.custom.min.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/jquery.jstree.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/jquery.couch.0.11.0.js"></script>
+    <script language="javascript" type="text/javascript" src="../lib/jquery.colorPicker.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/table2CSV.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/couchDBhelpers.js"></script>
-
-    <script language="javascript" type="text/javascript" src="../lib/colorpicker.js"></script>
     
     <script language="javascript" type="text/javascript" src="../lib/underscore.js"></script>
     <script language="javascript" type="text/javascript" src="../lib/underscore.string.js"></script>
@@ -170,11 +169,11 @@
     </script>
     
     <script id="adminButton_P" class="partial" type="text/html">
-      <a href='#menuAdministration/'>Administration</a>
+      <a href='#administration/'>Administration</a>
     </script>
     
     <script id="inventoryButton_P" class="partial" type="text/html">
-      <a href='#menuInventory/Inventory'>Inventory</a>
+      <a href='#inventory/'>Inventory</a>
     </script>
 
     <script id="reportsButton_P" class="partial" type="text/html">
@@ -182,7 +181,7 @@
     </script>
     
     <script id="setMenusButton_P" class="partial" type="text/html">
-      <a href="#menuSetMenus/">Default Menus</a>
+      <a href="#set_menus/">Default Menus</a>
     </script>
     
     <script id="main_navigation_buttons_P" class="partial" type="text/html">
@@ -1133,7 +1132,7 @@
 	  </a>
 	</div>
 	<div class="report-menu">
-	  <a href='#reports/how_are_we_doing'>
+	  <a href='#reports/how_are_we_doing_today'>
 	    <img src="../images/reports/howarewedoingtoday.png" border="0" class="report-menu-icon"/>How Are We Doing Today?
 	  </a>
 	</div>
@@ -1163,7 +1162,7 @@
 	  </a>
 	</div>
 	<div class="report-menu">
-	  <a href='#reports/cancelled'>
+	  <a href='#reports/cancelled_transactions'>
 	    <img src="../images/reports/cancelledtransactions.png" border="0" class="report-menu-icon"/>Cancelled Transactions
 	  </a>
 	</div>
@@ -1437,14 +1436,14 @@
 	      <th align="right">{{menu}}</th>
 	      <th align="right">{{scan}}</th>
 	      <th align="right">{{ecr}}</th>
-	      <th align="right">{{origintotal}}</th>
+	      <th align="right">{{total}}</th>
 	      {{/origin_sales}}
 	      <th align="right">{{refunds}}</th>
 	      {{#origin_refunds}}
 	      <th align="right">{{menu}}</th>
 	      <th align="right">{{scan}}</th>
 	      <th align="right">{{ecr}}</th>
-	      <th align="right">{{origintotal}}</th>
+	      <th align="right">{{total}}</th>
 	      {{/origin_refunds}}
 	      <th align="right">{{sales_minus_refunds}}</th>
 	      <th align="right">{{avgsale}}</th>
@@ -1468,14 +1467,14 @@
 	      <td align="right">{{menu}}</td>
 	      <td align="right">{{scan}}</td>
 	      <td align="right">{{ecr}}</td>
-	      <td align="right">{{origintotal}}</td>
+	      <td align="right">{{total}}</td>
 	      {{/origin_sales}}
 	      <td align="right">{{refunds}}</td>
 	      {{#origin_refunds}}
 	      <td align="right">{{menu}}</td>
 	      <td align="right">{{scan}}</td>
 	      <td align="right">{{ecr}}</td>
-	      <td align="right">{{origintotal}}</td>
+	      <td align="right">{{total}}</td>
 	      {{/origin_refunds}}
 	      <td align="right">{{sales_minus_refunds}}</td>
 	      <td align="right">{{avgsale}}</td>
@@ -2501,12 +2500,12 @@
 	<!--<div style="height:200px;">-->
 	  <div class="report-menu"><a href='#reports/inventory'><img src="../images/reports/inventorysold.png" border="0" class="report-menu-icon"/>Inventory Sold Report</a></div>
 	  <div class="report-menu"><a href='#inventory/idle_inventory'><img src="../images/inventory-idle.png" border="0" class="report-menu-icon"/>Idle Inventory Report</a></div>
-	  <div class="report-menu"><a href='#inventory/inventory_stock_management'><img src="../images/inventory-idle.png" border="0" class="report-menu-icon"/>Inventory Stock Management</a></div>
+	  <div class="report-menu"><a href='#inventory/stock_management'><img src="../images/inventory-idle.png" border="0" class="report-menu-icon"/>Inventory Stock Management</a></div>
 	  <div class="report-menu"><a href='#inventory/scan_price_change'><img src="../images/reports/scanprice.png" border="0" class="report-menu-icon"/>SCAN Item Price Changes</a></div>
-	  <div class="report-menu"><a href='#inventory/tax_change'><img src="../images/reports/scantax.png" border="0" class="report-menu-icon"/>SCAN Sales Tax Changes</a></div>
+	  <div class="report-menu"><a href='#inventory/scan_tax_change'><img src="../images/reports/scantax.png" border="0" class="report-menu-icon"/>SCAN Sales Tax Changes</a></div>
 	  <div class="report-menu"><a href='#inventory/add_scan_item'><img src="../images/reports/scanaddnew.png" border="0" class="report-menu-icon"/>Add New Inventory SCAN Items</a></div>
 	  <div class="report-menu"><a href='#inventory/price_change_log'><img src="../images/reports/pricelog.png" border="0" class="report-menu-icon"/>Price Change Log</a></div>
-	  <div class="report-menu"><a href='#inventory/tax_change_log'><img src="../images/reports/taxlog.png" border="0" class="report-menu-icon"/>Tax Change Log</a></div>
+	  <div class="report-menu"><a href='#inventory/scan_tax_change_log'><img src="../images/reports/taxlog.png" border="0" class="report-menu-icon"/>Tax Change Log</a></div>
 	  {{#showMenuPriceChange}}
 	  <div class="report-menu"><a href='#inventory/menu_price_change'><img src="../images/reports/menupricechange.png" border="0" class="report-menu-icon"/>Menu Price Change</a></div>
 	  {{/showMenuPriceChange}}
@@ -3016,9 +3015,10 @@
 	    <td><label for="editmenudescription2">Line 3:</label></td>
 	    <td><input class="menuEditInput" type="text" maxlength="10" size="10" var="display.description.2" id="editmenudescription2" value="{{description.2}}"/></td>
 	  </tr>
-	  <tr>
+	  <tr id="color-selection-area">
 	    <td><label for="displayColor"> Menu Color :</label></td>
-	    <td><input class="menuEditInput" type="text" maxlength="10" size="10" id="displayColor" var="display.color"  value="{{color}}" /></td>
+	    <td><input id="displayColor" type="text" name="displayColor" var="display.color" value="{{color}}" /></td>
+	    <!--<td><input class="menuEditInput" type="text"  id="displayColor" var="display.color"  value="{{color}}" /></td>-->
 	  </tr>	
 	  {{/display}}
 	  {{#foodItem}}

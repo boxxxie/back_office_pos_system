@@ -1,12 +1,3 @@
-//FIXME BAD NAMESPACE!!!!!
-
-function identity(o){
-    return o;
-}
-function sum(sum,cur){
-    return sum + cur;
-}
-
 function applyReceiptInfo(templateData){
     return _.map(templateData, function(an_item){
 		     var item = _.clone(an_item);

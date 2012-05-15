@@ -85,27 +85,7 @@ ddoc.views.salesPeople = {
 
 ddoc.filters.forLocation = function(doc, req) {
     var _ = require("views/lib/underscore");
-    require("views/lib/underscore_extended");
-    
-/*
-    function contains(array, item){return (array.indexOf(item) != -1);};
-    function isArray(obj) {return toString.call(obj) === '[object Array]';};
-    function isEmpty(array){return (array.length != 0);};    
-    Date.compareTo = function (date1, date2) {
-        if (date1.valueOf() < date2.valueOf()) {
-            return -1;
-        } else if (date1.valueOf() > date2.valueOf()) {
-            return 1;
-        }
-        return 0;
-    };
-    Date.prototype.isBefore = function (date){
-        date = date ? date : new Date();
-        return (Date.compareTo(this,date) < 0);
-    };
-  */  
-    //log("campaign filter here, log!!!");
-    
+
     var locations_in_doc = doc.locations;
     var locations_in_query = req.query;
     log("doc");
@@ -114,16 +94,16 @@ ddoc.filters.forLocation = function(doc, req) {
     log(locations_in_doc);
     log("locs in query");
     log(locations_in_query);
-    
-    
+
+
     var results = _.some(locations_in_doc, function(loc){
         if(loc.all_terminals) {
-            log("all_terminals");            
+            log("all_terminals");
             return true;
         } else {
             var keys = _.keys(loc);
-            var selected_obj_in_query = _.selectKeys(locations_in_query, keys);
-            
+            var selected_obj_in_query = _.pick(locations_in_query, keys);
+
             log("check!");
             log("loc");
             log(loc);
@@ -139,13 +119,7 @@ ddoc.filters.forLocation = function(doc, req) {
             }
         }
     });
-    //log(req.query);
-    //log("not match!");
-    log("result!");
-    log(results);
     return results;
-    //return true;
-
 };
 
 ddoc.views.lib = couchapp.loadFiles(path.join(__dirname, 'common'));

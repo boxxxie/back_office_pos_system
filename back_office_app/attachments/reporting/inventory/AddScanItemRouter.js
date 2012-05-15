@@ -1,7 +1,7 @@
 var menuInventoryaddScanItemRouter =
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuInventory/addScanItem":"main"
+		  "inventory/add_scan_item":"main"
 	      },
 	      main:function(){
 		  console.log("add scan item page");

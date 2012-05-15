@@ -18,9 +18,9 @@ function doc_setup() {
     var LoginDisplay = new reportLoginView();
 
     //var MenuReportsDisplay = new menuReportsView();
-    var CompanyHowAreWeDisplay = new HowAreWeTodayView();
-    var GroupHowAreWeDisplay = new groupReportHowAreWeTodayView();
-    var StroeHowAreWeDisplay = new storeReportHowAreWeTodayView();
+   // var CompanyHowAreWeDisplay = new HowAreWeTodayView();
+   // var GroupHowAreWeDisplay = new groupReportHowAreWeTodayView();
+   // var StroeHowAreWeDisplay = new storeReportHowAreWeTodayView();
     var MenuReportsHourlyActivityDisplay = new menuReportsHourlyActivityView();
     var MenuReportsTaxCollcetedDisplay = new menuReportsTaxCollectedView();
     var MenuReportsElectronicPaymentsDisplay = new menuReportsElectronicPaymentsView();

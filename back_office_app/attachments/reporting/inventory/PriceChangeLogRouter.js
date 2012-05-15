@@ -1,9 +1,7 @@
 var menuInventorypriceChangeLogRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuInventory/priceChangeLog":"menuInventoryPriceChangeLog",
-		  "menuInventory/groupReportpriceChangeLog":"menuInventoryPriceChangeLog",
-		  "menuInventory/storeReportpriceChangeLog":"menuInventoryPriceChangeLog"
+		  "inventory/price_change_log":"menuInventoryPriceChangeLog"
 	      },
 	      menuInventoryPriceChangeLog:function() {
 		  //inv_helpers.renderPriceChangesLog({el: $("#main")});

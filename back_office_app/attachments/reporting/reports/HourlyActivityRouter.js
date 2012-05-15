@@ -1,18 +1,10 @@
 var menuReportsHourlyActivityRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuReports/HourlyActivity":"menuReportsCompanyHourly",
-		  "menuReports/groupReportHourlyActivity":"menuReportsGroupHourly",
-		  "menuReports/storeReportHourlyActivity":"menuReportsStoreHourly"
+		  "reports/hourly_activity":"menuReportsCompanyHourly"
 	      },
 	      menuReportsCompanyHourly:function() {
 		  console.log("menuReportsCompanyHourly  ");
-	      },
-	      menuReportsGroupHourly:function() {
-		  console.log("menuReportsGroupHourly  ");
-	      },
-	      menuReportsStoreHourly:function() {
-		  console.log("menuReportsStoreHourly  ");
 	      }
 	     }));
 
@@ -24,66 +16,20 @@ var menuReportsHourlyActivityView =
 	     view.el = $("#main");
 	     
 	     _.bindAll(view, 
-		       'renderMenuReportsCompanyHourly',
-		       'renderMenuReportsGroupHourly',
-		       'renderMenuReportsStoreHourly');
+		       'renderMenuReportsCompanyHourly');
 	     menuReportsHourlyActivityRouter
 		 .bind('route:menuReportsCompanyHourly', 
 		       function(){
 			   console.log("menuReportsHourlyActivityView, route:menuReportsCompanyHourly");
 			   view.renderMenuReportsCompanyHourly();
 		       });
-	     menuReportsHourlyActivityRouter
-		 .bind('route:menuReportsGroupHourly', 
-		       function(){
-			   console.log("menuReportsHourlyActivityView, route:menuReportsGroupHourly");
-			   view.renderMenuReportsGroupHourly();
-		       });
-	     menuReportsHourlyActivityRouter
-		 .bind('route:menuReportsStoreHourly', 
-		       function(){
-			   console.log("menuReportsHourlyActivityView, route:menuReportsStoreHourly");
-			   view.renderMenuReportsStoreHourly();
-		       });
+
 	 },
 	 renderMenuReportsCompanyHourly: function() {
 	     
-	     var html = ich.hourlyActivityReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.hourlyActivityReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
 	     
-	     
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderHourlyActivityTable();
-			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsGroupHourly: function() {
-	     
-	     var html = ich.hourlyActivityReports_TMP({breadCrumb:breadCrumb(ReportData.companyName,ReportData.group.groupName)});
-	     $(this.el).html(html);
-	     
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderHourlyActivityTable();
-			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsStoreHourly: function() {
-	     
-	     var html = ich.hourlyActivityReports_TMP({breadCrumb:breadCrumb(ReportData.companyName,
-	 					     			     ReportData.groupName,
-	 					     			     ReportData.store.storeName,
-	 					     			     ReportData.store.number)});
-	     $(this.el).html(html);
 	     
              resetDropdownBox(ReportData, true, true);
 	     

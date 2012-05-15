@@ -53,31 +53,7 @@ function topLevelEntity(reportData){
     else {return {id:undefined,type:undefined};}
 };
 function topLevelEntityInfo(reportData){
-    if(reportData.company) {
-	return {
-	    company_id:reportData.company._id,
-	    companyName:reportData.company.companyName
-	};
-    } else if(reportData.group) {
-	return {
-	    company_id:reportData.company_id,
-	    companyName:reportData.companyName,
-	    group_id:reportData.group.group_id,
-	    groupName:reportData.group.groupName
-	};
-    } else if(reportData.store) {
-	return {
-	    company_id:reportData.company_id,
-	    companyName:reportData.companyName,
-	    group_id:reportData.group_id,
-	    groupName:reportData.groupName,
-	    store_id:reportData.store.store_id,
-	    storeName:reportData.store.storeName,
-	    storeNumber:reportData.store.number
-	};
-    } else {
-        return undefined;
-    }
+    return entity_type_from_id(reportData,topLevelEntity.id);
 };
 var getParentsInfo = _.memoize(
     function getParentsInfo(reportData){
@@ -143,7 +119,7 @@ var reportDataToArray = _.memoize(
 		return o;
 	    };
 	}
-	var compressed_entities = _.chain(reportData)
+	return _.chain(reportData)
 	    .selectKeys('company','group','store')
             .prewalk_r(function(o){
 			  if (o.hierarchy){
@@ -158,10 +134,12 @@ var reportDataToArray = _.memoize(
             .prewalk_r(combineWithSubpart('stores'))
             .prewalk_r(combineWithSubpart('groups'))
             .prewalk_r(combineWithSubpart('company'))
-	    .value()
-	if(_.isArray(compressed_entities)){return _.mapCombine(compressed_entities,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
-	else if(compressed_entities.group){return _.mapCombine(compressed_entities.group,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
-	else if(compressed_entities.store){return _.mapCombine(compressed_entities.store,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
+	    .prewalk_r(combineWithSubpart('group'))
+	    .prewalk_r(combineWithSubpart('store'))
+	    .value();
+	//if(_.isArray(compressed_entities)){return _.mapCombine(compressed_entities,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
+	//else if(compressed_entities.group){return _.mapCombine(compressed_entities.group,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
+	//else if(compressed_entities.store){return _.mapCombine(compressed_entities.store,_.pick(reportData,'companyName','company_id','groupName','group_id','storeName','store_id'))}
 
     },
     reportDataHash
@@ -191,43 +169,71 @@ function _find_entity_from_id(reportData,id){
 	.renameKeys('number','storeNumber')
 	.value()
 }
+var extract_entity_info={
+    company:function(entity_data){
+	return _.selectKeys(entity_data,
+		       'company_id',
+		       'companyName')
+    },
+    group:function(entity_data){
+	return _.combine(this.company(entity_data),
+		    _.selectKeys(entity_data,
+				 'group_id',
+				 'groupName'))
+    },
+    store:function(entity_data){
+	return _.combine(this.group(entity_data),
+		    _.selectKeys(entity_data,
+				 'store_id',
+				 'storeName',
+				 'storeNumber'))
+    },
+    terminal:function(entity_data){
+	return _.combine(this.store(entity_data),
+		    _.selectKeys(entity_data,
+				 'terminal_id',
+				 'terminal_label'))
+    }
+}
 var entity_from_id = multimethod()
     .dispatch(function(reportData,id){
 		  return entity_type_from_id(reportData,id)
 	      })
     .when('company',function(reportData,id){
-	      return _.selectKeys(_find_entity_from_id(reportData,id),
-			     'company_id',
-			     'companyName')
+	      var entity_info = extract_entity_info.company(_find_entity_from_id(reportData,id))
+	      return _.combine(entity_info,
+			  {
+			      id:entity_info.company_id,
+			      name:entity_info.companyName,
+			      type:'company'
+			  });
 	  })
     .when('group',function(reportData,id){
-	      return _.selectKeys(_find_entity_from_id(reportData,id),
-			     'company_id',
-			     'companyName',
-			     'group_id',
-			     'groupName')
+	      var entity_info = extract_entity_info.group(_find_entity_from_id(reportData,id))
+	      return _.combine(entity_info,
+			  {
+			      id:entity_info.group_id,
+			      name:entity_info.groupName,
+			      type:'group'
+			  });
 	  })
     .when('store',function(reportData,id){
-	      return _.selectKeys(_find_entity_from_id(reportData,id),
-			     'company_id',
-			     'companyName',
-			     'group_id',
-			     'groupName',
-			     'store_id',
-			     'storeName',
-			     'storeNumber')
+	      var entity_info = extract_entity_info.store(_find_entity_from_id(reportData,id))
+	      return _.combine(entity_info,
+			  {
+			      id:entity_info.store_id,
+			      name:entity_info.storeName+ "(" + entity_info.storeNumber +")",
+			      type:'store'
+			  });
 	  })
     .when('terminal',function(reportData,id){
-	      return _.selectKeys(_find_entity_from_id(reportData,id),
-			     'company_id',
-			     'companyName',
-			     'group_id',
-			     'groupName',
-			     'store_id',
-			     'storeName',
-			     'storeNumber',
-			     'terminal_id',
-			     'terminal_label')
+	      var entity_info = extract_entity_info.terminal(_find_entity_from_id(reportData,id))
+	      return _.combine(entity_info,
+			  {
+			      id:entity_info.terminal_id,
+			      name:entity_info.terminal_label,
+			      type:'terminal'
+			  });
 	  })
 function reportDataHash(reportData){
     return topLevelEntity(reportData).id;
@@ -557,13 +563,65 @@ function processTransactionsTMP(listTrans) {
 
     return data_TMP;
 }
-function stores_from_id(id,reportData){
+function entityIDs_from_id(reportData,id,entity_type){
     //get a list of stores from the parent id
     return _.chain(reportDataToArray(reportData))
+	.filter(function(entity){
+		    return _.find(entity,function(val){return val === id})
+		})
+	.pluck(entity_type+'_id')
+	.compact()
+	.unique()
+	.value()
+}
+function storeIDs_from_id(reportData,id){
+    return entityIDs_from_id(reportData,id,'store');
+    //get a list of stores from the parent id
+/*    return _.chain(reportDataToArray(reportData))
 	.filter(function(store){
 		    return _.find(store,function(val){return val === id})
 		})
-	.pluck('store_id').compact()
+	.pluck('store_id')
+	.compact()
 	.unique()
 	.value()
+*/
+}
+function entities_info_from_id(reportData,id,entity_type){
+    return _.map(entityIDs_from_id(reportData,id,entity_type),
+	    function(id){ return entity_from_id(ReportData,id)});
+}
+function stores_info_from_id(reportData,id){
+    return entities_info_from_id(reportData,id,'store');
+   /* return _.map(storeIDs_from_id(reportData,id),
+	    function(id){ return entity_from_id(ReportData,id)});*/
+}
+
+function child_type_of(parent_type){
+    var company_hierarchy={
+	company:'group',
+	group:'store',
+	store:'terminal'
+    }
+    return company_hierarchy[parent_type];
+}
+
+function get_id_from_name(reportData,name){
+    //given a name (store/company/group), do a lookup for the id that is associated with that name
+    return function(callback){
+	function containsVal(obj, val) {
+	    return _.find(obj, function (val) {
+			 return val === name;
+		     })
+	}
+	_.prewalk(function (obj) {
+		      if (!_.isArray(obj) && _.isObject(obj) && containsVal(obj, name)) {
+			  callback(_.find(obj, function (val, key) {
+					      return /id$/.test(key);
+					  }));
+			  return null;
+		      }
+		      return obj;
+		  }, reportData)
+    }
 }

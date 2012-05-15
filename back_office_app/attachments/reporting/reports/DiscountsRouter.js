@@ -1,18 +1,10 @@
 var menuReportsDiscountsRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-		  "menuReports/Discounts":"menuReportsCompanyDiscounts",
-		  "menuReports/groupReportDiscounts":"menuReportsGroupDiscounts",
-		  "menuReports/storeReportDiscounts":"menuReportsStoreDiscounts"
+		  "reports/discounts":"menuReportsCompanyDiscounts"
 	      },
 	      menuReportsCompanyDiscounts:function() {
 		  console.log("menuReportsCompanyDiscounts  ");
-	      },
-	      menuReportsGroupDiscounts:function() {
-		  console.log("menuReportsGroupDiscounts  ");
-	      },
-	      menuReportsStoreDiscounts:function() {
-		  console.log("menuReportsStoreDiscounts  ");
 	      }
 	     }));
 
@@ -23,33 +15,18 @@ var menuReportsDiscountsView =
 	     view.el = $("#main");
 	     
 	     _.bindAll(view, 
-		       'renderMenuReportsCompanyDiscounts',
-		       'renderMenuReportsGroupDiscounts',
-		       'renderMenuReportsStoreDiscounts');
+		       'renderMenuReportsCompanyDiscounts');
 	     menuReportsDiscountsRouter
 		 .bind('route:menuReportsCompanyDiscounts', 
 		       function(){
 			   console.log("menuReportsView, route:menuReportsCompanyDiscounts");
 			   view.renderMenuReportsCompanyDiscounts();
 		       });
-	     
-	     menuReportsDiscountsRouter
-		 .bind('route:menuReportsGroupDiscounts', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsGroupDiscounts");
-			   view.renderMenuReportsGroupDiscounts();
-		       });
-	     
-	     menuReportsDiscountsRouter
-		 .bind('route:menuReportsStoreDiscounts', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsStoreDiscounts");
-			   view.renderMenuReportsStoreDiscounts();
-		       });
+
 	 },
 	 renderMenuReportsCompanyDiscounts: function() {
 	     
-	     var html = ich.menuReportsDiscountsReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
+	     var html = ich.menuReportsDiscountsReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
 	     
 	     resetDatePicker();
@@ -64,40 +41,7 @@ var menuReportsDiscountsView =
 	     
 	     console.log("rendered general report");
 	 },
-	 renderMenuReportsGroupDiscounts: function() {
-	     
-	     var html = ich.menuReportsDiscountsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
-	     $(this.el).html(html);
-	     
-	     resetDatePicker();
-	     
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderDiscountsTable();
-			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsStoreDiscounts: function() {
-	     
-	     var html = ich.menuReportsDiscountsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.groupName, ReportData.store.storeName, ReportData.store.number)});
-	     $(this.el).html(html);
-	     
-	     resetDatePicker();
-	     
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    renderDiscountsTable();
-			});
-	     
-	     console.log("rendered general report");
-	 }
+
 	});
 
 /******************************************** helper functions ************************************/

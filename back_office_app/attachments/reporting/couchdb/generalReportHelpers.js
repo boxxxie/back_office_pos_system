@@ -716,37 +716,39 @@ function cashoutFetcher_Period(ids,startDate,endDate,callback){
     }
 };
 
-function howAreWeDoingTodayReportFetcher(childrenObjs,parentObj,runAfter){
-    var childrenIDs = _.pluck(childrenObjs,'id');
-    var parentID = parentObj.id;
+function howAreWeDoingTodayReportFetcher(childrenObjs,parentObj){
+    return function(runAfter){
+	var childrenIDs = _.pluck(childrenObjs,'id');
+	var parentID = parentObj.id;
 
-    var transactionsView = cdb.view('reporting','id_type_origin_date');
-    var transactionsTotalView = cdb.view('reporting','id_type_date');
-    var transaction_db = cdb.db('transactions',{},true);
-    if(!_.isArray(childrenIDs)){childrenIDs = [childrenIDs];}
-    if(!_.isArray(parentID)){parentID = [parentID];}
+	var transactionsView = cdb.view('reporting','id_type_origin_date');
+	var transactionsTotalView = cdb.view('reporting','id_type_date');
+	var transaction_db = cdb.db('transactions',{},true);
+	if(!_.isArray(childrenIDs)){childrenIDs = [childrenIDs];}
+	if(!_.isArray(parentID)){parentID = [parentID];}
 
-    async
-	.parallel(
-	    {originSales:function(callback){originTodaysSalesArrayFetcher(transactionsView,transaction_db,childrenIDs,function(err,data){callback(null, data);});},
-	     totalSales:function(callback){todaysSalesArrayFetcher(transactionsTotalView,transaction_db,childrenIDs,function(err,data){callback(null, data);});},
-	     parentOriginSales:function(callback){originTodaysSalesArrayFetcher(transactionsView,transaction_db,parentID,function(err,data){callback(null, data);});},
-	     parentTotalSales:function(callback){todaysSalesArrayFetcher(transactionsTotalView,transaction_db,parentID,function(err,data){callback(null, data);});}
-	    },
-	    function(err,report){
-		var salesActivityList = {items:_(report.originSales)
-				       .chain()
-				       .zip(report.totalSales,childrenObjs)
-				       .map(function(group){return _.applyToValues(_.merge(group),toFixed(2));})
-				       .value(),
-				       total:_.applyToValues(_.extend({},
-								      _.first(report.parentOriginSales),
-								      _.first(report.parentTotalSales)),
-							     toFixed(2))
-				      };
-		runAfter(salesActivityList);
-	    });
-};
+	async
+	    .parallel(
+		{originSales:function(callback){originTodaysSalesArrayFetcher(transactionsView,transaction_db,childrenIDs,function(err,data){callback(null, data);});},
+		 totalSales:function(callback){todaysSalesArrayFetcher(transactionsTotalView,transaction_db,childrenIDs,function(err,data){callback(null, data);});},
+		 parentOriginSales:function(callback){originTodaysSalesArrayFetcher(transactionsView,transaction_db,parentID,function(err,data){callback(null, data);});},
+		 parentTotalSales:function(callback){todaysSalesArrayFetcher(transactionsTotalView,transaction_db,parentID,function(err,data){callback(null, data);});}
+		},
+		function(err,report){
+		    var salesActivityList = {items:_(report.originSales)
+					   .chain()
+					   .zip(report.totalSales,childrenObjs)
+					   .map(function(group){return _.applyToValues(_.merge(group),toFixed(2));})
+					   .value(),
+					   total:_.applyToValues(_.extend({},
+									  _.first(report.parentOriginSales),
+									  _.first(report.parentTotalSales)),
+								 toFixed(2))
+					  };
+		    runAfter(salesActivityList);
+		});
+    };
+}
 
 function howAreWeDoingTodayTerminalReportFetcher(childrenObjs,parentObj,runAfter){
     var childrenIDs = _.pluck(childrenObjs,'id');

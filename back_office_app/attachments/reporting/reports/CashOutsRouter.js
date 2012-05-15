@@ -1,18 +1,10 @@
 var menuReportsCashOutsRouter = 
     new (Backbone.Router.extend(
 	     {routes: {
-	     	  "menuReports/CashOuts":"menuReportsCompanyCashouts",
-	     	  "menuReports/groupReportCashOuts":"menuReportsGroupCashouts",
-		  "menuReports/storeReportCashOuts":"menuReportsStoreCashouts"
+	     	  "reports/cashouts":"menuReportsCompanyCashouts"
 	      },
 	      menuReportsCompanyCashouts:function() {
 		  console.log("menuReportsCompanyCashouts  ");
-	      },
-	      menuReportsGroupCashouts:function() {
-		  console.log("menuReportsGroupCashouts  ");
-	      },
-	      menuReportsStoreCashouts:function() {
-		  console.log("menuReportsStoreCashouts  ");
 	      }
 	     }));
 
@@ -23,65 +15,17 @@ var menuReportsCashOutsView =
 	     view.el = $("#main");
 	     
 	     _.bindAll(view, 
-		       'renderMenuReportsCompanyCashouts',
-		       'renderMenuReportsGroupCashouts',
-		       'renderMenuReportsStoreCashouts');
+		       'renderMenuReportsCompanyCashouts');
 	     menuReportsCashOutsRouter
 		 .bind('route:menuReportsCompanyCashouts', 
 		       function(){
 			   console.log("menuReportsView, route:menuReportsCompanyCashouts");
 			   view.renderMenuReportsCompanyCashouts();
 		       });
-	     menuReportsCashOutsRouter
-		 .bind('route:menuReportsGroupCashouts', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsGroupCashouts");
-			   view.renderMenuReportsGroupCashouts();
-		       });
-	     menuReportsCashOutsRouter
-		 .bind('route:menuReportsStoreCashouts', 
-		       function(){
-			   console.log("menuReportsView, route:menuReportsStoreCashouts");
-			   view.renderMenuReportsStoreCashouts();
-		       });
 	 },
 	 renderMenuReportsCompanyCashouts: function() {
 	     
-	     var html = ich.menuReportsCashOutsReports_TMP({breadCrumb:breadCrumb(ReportData.company.companyName)});
-	     $(this.el).html(html);
-	     
-             resetDatePicker();
-	     
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    rendermenuReportsCashOutsTable();
-			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsGroupCashouts: function() {
-	     
-	     var html = ich.menuReportsCashOutsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.group.groupName)});
-	     $(this.el).html(html);
-	     
-	     resetDatePicker();
-	     
-             resetDropdownBox(ReportData, true, true);
-	     
-	     var btn = $('#generalgobtn')
-		 .button()
-		 .click(function(){
-			    rendermenuReportsCashOutsTable();
-			});
-	     
-	     console.log("rendered general report");
-	 },
-	 renderMenuReportsStoreCashouts: function() {
-	     
-	     var html = ich.menuReportsCashOutsReports_TMP({breadCrumb:breadCrumb(ReportData.companyName, ReportData.groupName, ReportData.store.storeName, ReportData.store.number)});
+	     var html = ich.menuReportsCashOutsReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
 	     
              resetDatePicker();

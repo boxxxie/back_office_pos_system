@@ -70,7 +70,7 @@ var adminRouter =
     new (Backbone.Router.extend(
 	     {
 		 routes: {
-		     "menuAdministration/":"setup"
+		     "administration/":"setup"
 		 },
 		 initialize:function(){
 		     var router = this;

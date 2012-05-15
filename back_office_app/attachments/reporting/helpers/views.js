@@ -184,7 +184,7 @@ var general_report_view =
 				 report_table : new report_table_view(
 				     {
 					 vent:vent,
-					 auto_el:'#report_table',
+					 auto_el:'#report_table'
 				     }
 				 )
 			     });
