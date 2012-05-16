@@ -53,7 +53,7 @@ function topLevelEntity(reportData){
     else {return {id:undefined,type:undefined};}
 };
 function topLevelEntityInfo(reportData){
-    return entity_type_from_id(reportData,topLevelEntity.id);
+    return entity_type_from_id(reportData,topLevelEntity(reportData).id);
 };
 var getParentsInfo = _.memoize(
     function getParentsInfo(reportData){
@@ -278,6 +278,7 @@ function groupsFromStoreSets(stores,groups,reportData){
     return groupsToSave;
 }
 // report page store drop downbox helper funtion
+//FIXME: we are getting ride of the drop down, remove this
 function updateStoreDropdown(isNotShowAll) {
     var groups = ReportData.company.hierarchy.groups;
     var dropdownGroup = $("#groupsdown");

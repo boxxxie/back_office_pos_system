@@ -110,7 +110,7 @@ var voucherHistoryView =
 var voucherHistoryRouter =
     new (Backbone.Router.extend({
 				    routes: {
-					"reports/vouchers_history":"_setup"
+					"reports/voucher_history":"_setup"
 				    },
 				    initialize:function() {
 					var router = this;

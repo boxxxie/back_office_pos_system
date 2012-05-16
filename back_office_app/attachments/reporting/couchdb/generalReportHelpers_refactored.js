@@ -120,14 +120,14 @@ var _async = {
 	/*
 	 * fn() must return a function of the form fn(err,response)
 	 */
-	async.map(array, 
+	async.map(array,
 		  function(array_item,callback){fn(array_item)(callback);},
 		  runAfter);
     },
     parallel:function(array,fn,runAfter){
 	/*
 	 * fn() must return a function of the form fn(err,response)
-	 *todo needs to look like this -> below 
+	 *todo needs to look like this -> below
 	 * function(callback){async.parallel(_.map(store_ids,function(id){return keyQ(id);}),returnQuery(callback));}
 	 */
 
@@ -139,13 +139,13 @@ function extract(dataArrays,field){
 	return _(data.rows).pluck(field);
     }
     if(_.isEmpty(dataArrays)) {
-	return [];	
+	return [];
     }
 
     else if(!_.isArray(dataArrays)){
 	return extractProperty(dataArrays,field);
     }
-    
+
     return _(dataArrays)
 	.chain()
 	.pluck('rows')
@@ -168,33 +168,33 @@ function extractSum(dataArrays){
 	return value.sum;
     }
     else{
-	return 0;	
+	return 0;
     }
 }
 function extractDocs(parallelFunctionsArray){
     return function(callback){
 	async.parallel(parallelFunctionsArray,
-		       function(err,responses){  
-			   callback(err,extract(responses,'doc'));	  
+		       function(err,responses){
+			   callback(err,extract(responses,'doc'));
 		       });
     };
 }
 function extractVals(parallelFunctionsArray){
     return function(callback){
 	async.parallel(parallelFunctionsArray,
-		       function(err,responses){  
-			   callback(err,extract(responses,'value'));	  
+		       function(err,responses){
+			   callback(err,extract(responses,'value'));
 		       });
     };
 }
 function extractDocValMerge(parallelFunctionsArray){
     return function(callback){
 	async.parallel(parallelFunctionsArray,
-		       function(err,responses){  
+		       function(err,responses){
 			   var extractedDocs = extractDoc(responses);
 			   var extractedValues = extractValue(responses);
 			   var extractedData = _.zipMerge(extractedDocs,extractedValues);
-			   callback(err,extractedData);	  
+			   callback(err,extractedData);
 		       });
     };
 }
@@ -279,10 +279,10 @@ function electronicPaymentsTotalsIndexRangeFetcher_F(id){
 			       var deposit = {deposit_sale : credit.credit_sale + totals.debit_sale,
 					      deposit_refund : credit.credit_refund + totals.debit_refund,
 					      deposit_declined : credit.credit_declined + totals.debit_declined};
-			       
+
 			       _.extend(totals,credit,deposit);
-						
-			       callback(err,totals);	  
+
+			       callback(err,totals);
 			   });
 	};
     };
@@ -328,13 +328,13 @@ function generalCashoutFetcher_Period_F(startDate,endDate){
     var db = cdb.db('cashouts',{},true);
     return function(id){
 	return function(callback){
-	    
+
             var baseKey = [id];
 	    var dateStart = date.toArray.until.day(startDate);
 	    var dateEnd = date.toArray.until.day(endDate);
 
             var cashoutQuery = _async.typedTransactionQuery(dateStart,dateEnd)(view,db,baseKey);
-	    
+
 	    cashoutQuery
 	    (function(err,report){
 		 var cashouts = (_.isFirstNotEmpty(report.rows)? _.first(report.rows).value:ZEROED_FIELDS);
@@ -352,7 +352,7 @@ function generalCashoutFetcher_Period_F(startDate,endDate){
 		     }
 		     return cashout;
 		 };
-		 
+
 		 function modifiedCashouts(input) {
 		     var data = _.clone(input);
 		     return _(data).chain()
@@ -360,14 +360,14 @@ function generalCashoutFetcher_Period_F(startDate,endDate){
 			 .extend(_.selectKeys(data, ['noofpayment','noofrefund','firstindex','lastindex']))
 			 .value();
 		 };
-		 
+
 		 var totalperiod = cashouts['menusalesamount'] + cashouts['scansalesamount'] + cashouts['ecrsalesamount'];
-		 
+
 		 cashouts = appendCategorySalesPercent(totalperiod, cashouts);
-		 cashouts = modifiedCashouts(cashouts); 
+		 cashouts = modifiedCashouts(cashouts);
 		 cashouts.id  = id;
-		 
-		 callback(null,cashouts);      
+
+		 callback(null,cashouts);
 	     });
 	};
     };
@@ -386,25 +386,25 @@ function transactionsFromIndexRange(indexFn,transactionFn){
 }
 function processTransactions(mapFn,callback){
     return function(err,transactions){
-	var terminals_merged_with_reduced_transactions = 
+	var terminals_merged_with_reduced_transactions =
 	    _(transactions)
 	    .chain()
 	    .flatten()
 	    .map(mapFn)
-	    .value(); 
+	    .value();
 	callback(err,terminals_merged_with_reduced_transactions);
     };
 };
 
 function mapReduceTransactions(mapFn,reduceFn,callback){
     return function(err,transactions){
-	var terminals_merged_with_reduced_transactions = 
+	var terminals_merged_with_reduced_transactions =
 	    _(transactions)
 	    .chain()
 	    .flatten()
 	    .map(mapFn)
 	    .reduce(reduceFn,{})
-	    .value(); 
+	    .value();
 	callback(err,terminals_merged_with_reduced_transactions);
     };
 };
@@ -488,7 +488,7 @@ function otherTransactionsRangeFetcher(id, startDate, endDate) {
     return function(callback){
         var dateStart = date.toArray.until.day(startDate);
         var dateEnd = date.toArray.until.day(endDate);
-        
+
         $.couch.db("cashedout_transactions").view("reporting/voucher_id_date", {
             reduce:false,
             startkey:[id].concat(dateStart),
@@ -498,10 +498,10 @@ function otherTransactionsRangeFetcher(id, startDate, endDate) {
                 var data = _.map(resp.rows,function(row){
                     var doc = row.doc;
                     var val = row.value;
-                    
+
                     return _.extend(val,doc,{date: jodaDateFormatter(doc.time.start)});
                 });
-                
+
                 callback(undefined,data);
             },
             error:function(status) {
@@ -519,7 +519,7 @@ function cashoutReportFetcher(terminals,startDate,endDate){
 		_(cashouts).chain()
 	    	.flatten()
 		.map(function(cashout){
-			 var transformedCashout 
+			 var transformedCashout
 			     =  {cashout : cashout,
 				 id: cashout._id,
 				 name: cashout.terminalname,
@@ -527,7 +527,7 @@ function cashoutReportFetcher(terminals,startDate,endDate){
 				 cashoutnumber: cashout.cashoutnumber.toString()};
 			 return transformedCashout;
 		     })
-        	.value();	    
+        	.value();
 	    callback(templateData);
 	};
     }
@@ -555,7 +555,7 @@ function electronicPaymentsReportFetcher(terminals,startDate,endDate){
     return function(callback){
 	async.parallel({
 			   paymentList: processedTransactionsFromCashouts(terminals,startDate,endDate)(electronicPaymentsIndexRangeFetcher_F,paymentMap(terminals)),
-			   totals: mapReduceTransactionsFromCashouts(terminals,startDate,endDate)(electronicPaymentsTotalsIndexRangeFetcher_F,identity,_.addPropertiesTogether)
+			   totals: mapReduceTransactionsFromCashouts(terminals,startDate,endDate)(electronicPaymentsTotalsIndexRangeFetcher_F,_.identity,_.addPropertiesTogether)
 		       },
 		       callback);
     };

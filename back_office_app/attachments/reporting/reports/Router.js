@@ -14,7 +14,7 @@
 	       cancelled_transactions:{img:'cancelledtransactions.png',title:'Cancelled Transactions',link:'cancelled_transactions'},
 	       refunds:{img:'refunds.png',title:'Refunds',link:'refunds'},
 	       discounts:{img:'discounts.png',title:'Discounts',link:'discounts'},
-	       vouchers_history:{img:"voucherhistory.png",title:'Vouchers History',link:'vouchers_history'}
+	       voucher_history:{img:"voucherhistory.png",title:'Voucher History',link:'voucher_history'}
 	   },
 	   render:function(template_data){
 	       var html = ich.menuReports_TMP(template_data);
@@ -30,12 +30,12 @@
 		     this.render(template_data);
 		 })
 	   .when('group',function(){
-		     var options_list = _.chain(this.menu_options).removeKeys('vouchers_history').toArray().value();
+		     var options_list = _.chain(this.menu_options).removeKeys('voucher_history').toArray().value();
 		     var template_data = _.extend(autoBreadCrumb(),{options:options_list});
 		     this.render(template_data);
 		 })
 	   .when('store',function(){
-		     var options_list = _.chain(this.menu_options).removeKeys('vouchers_history').toArray().value();
+		     var options_list = _.chain(this.menu_options).removeKeys('voucher_history').toArray().value();
 		     var template_data = _.extend(autoBreadCrumb(),{options:options_list});
 		     this.render(template_data);
 		 })
