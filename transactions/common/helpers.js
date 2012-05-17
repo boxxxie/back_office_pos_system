@@ -46,6 +46,9 @@ var paymentType = {
 function transactionDate(doc){
     return (new Date(doc.time.start)).toArray();
 };
+function transaction_date_as_int(doc){
+    return (new Date(doc.time.start)).getTime();
+}
 function ids(doc){
     return _.compact([doc.terminal_id,doc.store_id,doc.group_id,doc.company_id]);
 };
@@ -103,6 +106,7 @@ function commonProperties(doc){
     }
     return {
 	date : transactionDate(doc),
+	date_int : transaction_date_as_int(doc),
 	ids : ids(doc),
 	index : doc.transaction_index,
 	total : doc.total,
@@ -127,7 +131,20 @@ function orderPriceNoTax(order){
 		  });
     return Number(toFixed(2)(prices.reduce(sum,0)));
 };
-
+function emit_id_date_type_origin_price_no_tax(doc){
+    var d = commonProperties(doc);
+    _.each(d.order, function(order){
+	       _.each(d.ids, function(id){
+			  var key = {
+			      id:id,
+			      date:d.date_int,
+			      type:doc.type,
+			      origin:order.origin,
+			  }
+			  emit(key, orderPriceNoTax(order));
+		      });
+	   });
+}
 function emitDoc(doc){
     //we have to do this because we need to recalculate the prices for each item in the order due to it being from menu/scan/ecr
     var d = commonProperties(doc);
@@ -330,10 +347,10 @@ function emitTypedElectronicPayments(doc){
 function emitVoucherPayment_id_date(doc){
     if(_.isNotEmpty(doc.payments)){
     var d = commonProperties(doc);
-    
+
     transDate = new Date(doc.time.start),
     transDateArray = (transDate).toArray();
-    
+
     _.each(d.ids, function(id){
            _.each(d.payments,function(payment){
                   var paymentAmount = payment.amount;
@@ -341,13 +358,13 @@ function emitVoucherPayment_id_date(doc){
                       if(paymentAmount && paymentAmount != 0){
                           var bal = Number(payment.response.voucher_balance);
                           var redeemed = Number(payment.response.redeemed);
-                          
+
                           var key = ([]).
                           concat(id).
                           concat(transDateArray);
-                          
-                          emit(key, {voucherBalance:bal, 
-                                     voucherRedeemed:redeemed, 
+
+                          emit(key, {voucherBalance:bal,
+                                     voucherRedeemed:redeemed,
                                      voucherID:payment.response.voucher_id,
                                      voucherName:payment.response.voucher_name,
                                      voucherType:payment.response.voucher_type});
@@ -409,4 +426,5 @@ if (typeof module !== 'undefined' &&
     module.exports.emit_ID_date_summary = emit_ID_date_summary;
     module.exports.emitInventoryStockSold = emitInventoryStockSold;
     module.exports.emitVoucherPayment_id_date = emitVoucherPayment_id_date;
+    module.exports.emit_id_date_type_origin_price_no_tax = emit_id_date_type_origin_price_no_tax;
 }

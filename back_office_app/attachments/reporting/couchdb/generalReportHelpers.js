@@ -107,21 +107,7 @@ function transactionRangeQuery(start,end){
     };
 };
 
-function typedTransactionDateRangeGroupedQuery(startDate,endDate){
-    return function(view,db){
-	return function (base){
-	    var startKey = base.concat(startDate);
-	    var endKey = base.concat(endDate);
-	    var options = {
-		group_level:_.size(endKey),
-		startkey:startKey,
-		endkey:endKey,
-		inclusive_end: false
-	    };
-	    return queryF(view,db)(options);
-	};
-    };
-};
+
 
 function generalTransactionsIndexRangeFetcher(view,db,id,startIndex,endIndex,continuation){
     var transactionsQuery = transactionRangeQuery(startIndex,endIndex)(view,db,[id]);
@@ -221,213 +207,7 @@ function originTodaysSalesFetcher(view,db,id,runAfter){
 	    });
 };
 
-function originTodaysHourlySalesFetcher(view,db,id,runAfter){
-    var d = relative_dates();
-    var todaysQuery = typedTransactionDateRangeGroupedQuery(d.today_h,d.tomorrow_h)(view,db);
-    var menuSales = todaysQuery([id,'SALE','MENU']);
-    var menuRefunds = todaysQuery([id,'REFUND','MENU']);
-    var scanSales = todaysQuery([id,'SALE','INVENTORY']);
-    var scanRefunds = todaysQuery([id,'REFUND','INVENTORY']);
-    var ecrSales = todaysQuery([id,'SALE','ECR']);
-    var ecrRefunds = todaysQuery([id,'REFUND','ECR']);
 
-    function assign(fn){
-	function returnQuery(callback){
-	    return function(query){
-		callback(null, query);
-	    };
-	};
-	return function(callback){
-	    fn(returnQuery(callback));
-	};
-    }
-    async
-	.parallel(
-	    {menuSales:assign(menuSales),
-	     menuRefunds:assign(menuRefunds),
-	     scanSales:assign(scanSales),
-	     scanRefunds:assign(scanRefunds),
-	     ecrSales:assign(ecrSales),
-	     ecrRefunds:assign(ecrRefunds)
-	    },
-	    function(err,report){
-		//need to join things together based on the same time from the key
-		function time(item){
-		    return item.key[6];
-		}
-		function salesAmount(item){
-		    if(_.isNumber(item.value.sum)){return item.value.sum;}
-		    return 0;
-		}
-		function type(item){
-		    return item.key[1];
-		}
-		function origin(item){
-		    return item.key[2].toLowerCase();
-		}
-		function isSale(item){
-		    return item.type == 'SALE';
-		};
-		function isRefund(item){
-		    return item.type == 'REFUND';
-		}
-
-		function extractTotalSales(salesData,refundsData){
-		    var sales = 0, refunds = 0;
-		    (_.isNotEmpty(salesData))? sales = salesData.value: sales = 0;
-		    (_.isNotEmpty(refundsData))? refunds = refundsData.value: refunds = 0;
-		    return sales - refunds;
-		}
-
-		function template(){
-		    return {menu:0,inventory:0,ecr:0};
-		}
-
-		var stuff = _([]).
-		    chain().
-		    concat(report.menuRefunds.rows,
-			   report.menuSales.rows,
-			   report.scanSales.rows,
-			   report.scanRefunds.rows,
-			   report.ecrSales.rows,
-			   report.ecrRefunds.rows).
-		    map(function(item){return {type:type(item),origin:origin(item),time:time(item),value:salesAmount(item)};}).
-		    groupBy(function(item){return item.time+item.origin;}).
-		    map(function(sale_refund){
-			    var sales = _(sale_refund).chain().filter(isSale).first().value();
-			    var refunds = _(sale_refund).chain().filter(isRefund).first().value();
-			    var totalSales = extractTotalSales(sales,refunds);
-			    return _.removeKeys(_.extend({},refunds,sales,{value:totalSales}),['type']);
-			}).
-		    groupBy(function(item){return item.time;}).
-		    map(function(menu_scan_ecrs,time){
-			    var originsForKeys = _.extend({},
-							template(),
-							_.reduce(menu_scan_ecrs,function(sum,cur){
-								     sum[cur.origin] = cur.value;
-								     return sum;
-								 },{}));
-			    var timeForKey = {};
-			    timeForKey[time] = originsForKeys;
-			    return timeForKey;
-			}).
-		    reduce(function(sum,cur){
-			       sum[_.first(_.keys(cur))] = _.first(_.values(cur));
-			       return sum;
-			   },{})
-		    .value();
-
-		var mergeTimes = _(24).chain().
-		    range().
-		    map(function(val,key){return [key,template()];}).
-		    toObject().
-		    extend(stuff).
-		    map$(function(pair){
-			     var time = _.first(pair);
-			     var val = _.second(pair);
-			     return [formatTime(time),val];
-			 }).
-		    value();
-		runAfter(null,mergeTimes);
-	    });
-};
-function todaysHourlySalesFetcher(view,db,id,runAfter){
-    var d = relative_dates();
-    var todaysQuery = typedTransactionDateRangeGroupedQuery(d.today_h,d.tomorrow_h)(view,db);
-    var sales = todaysQuery([id,'SALE']);
-    var refunds = todaysQuery([id,'REFUND']);
-
-
-    function assign(fn){
-	function returnQuery(callback){
-	    return function(query){
-		callback(null, query);
-	    };
-	};
-	return function(callback){
-	    fn(returnQuery(callback));
-	};
-    }
-    async
-	.parallel(
-	    {sales:assign(sales),
-	     refunds:assign(refunds)
-	    },
-	    function(err,report){
-		//need to join things together based on the same time from the key
-		function time(item){
-		    return item.key[5];
-		}
-		function salesAmount(item){
-		    if(_.isNumber(item.value.sum)){return item.value.sum;}
-		    return 0;
-		}
-		function numSales(item){
-		    if(_.isNumber(item.value.count)){return item.value.count;}
-		    return 0;
-		}
-		function type(item){
-		    return item.key[1];
-		}
-		function isSale(item){
-		    return item.type == 'SALE';
-		};
-		function isRefund(item){
-		    return item.type == 'REFUND';
-		}
-
-		function template(){
-		    return {total:0,refunds:"0",transactions:"0",avgsale:0};
-		}
-
-		function transactionSummary(salesData,refundsData){
-		    var sales = 0, refunds = 0, saleCount = 0, refundCount = 0, avgsale = 0, net_sales = 0;
-		    if(_.isNotEmpty(salesData)){
-			sales = salesData.value;
-			saleCount = salesData.count;
-		    }
-		    if(_.isNotEmpty(refundsData)){
-			refunds = refundsData.value;
-			refundCount = refundsData.count;
-		    };
-		    net_sales = sales - refunds;
-		    if(saleCount){avgsale = net_sales / saleCount;}
-		    return {total:net_sales,refunds:refundCount+"",transactions:saleCount+"",avgsale:avgsale};
-		}
-
-		var stuff = _([]).
-		    chain().
-		    concat(report.refunds.rows,
-			   report.sales.rows).
-		    map(function(item){return {type:type(item),time:time(item),value:salesAmount(item),count:numSales(item)};}).
-		    groupBy(function(item){return item.time;}).
-		    map$(function(pair){
-			     var time = _.first(pair);
-			     var sale_refund = _.second(pair);
-			     var sales = _(sale_refund).chain().filter(isSale).first().value();
-			     var refunds = _(sale_refund).chain().filter(isRefund).first().value();
-			     var summary = transactionSummary(sales,refunds);
-
-			     var timeForKey = {};
-			     timeForKey[time] = summary;
-			     return [time,summary];
-			 }).
-		    value();
-
-		var mergeTimes = _(24).chain().
-		    range().
-		    map(function(val,key){return [key,template()];}).
-		    toObject().
-		    extend(stuff).
-		    map$(function(pair){
-			     var time = _.first(pair);
-			     var val = _.second(pair);
-			     return [formatTime(time),val];
-			 }).
-		    value();
-		runAfter(null,mergeTimes);
-	    });
-};
 
 function todaysRefundsFetcher(view,db,id,runAfter){
     var d = relative_dates();
@@ -768,24 +548,279 @@ function howAreWeDoingTodayTerminalReportFetcher(childrenObjs,parentObj,runAfter
 		  });
 };
 
-function hourlyReportFetcher(id,runAfter){
-    var transactionsView = cdb.view('reporting','id_type_origin_date');
-    var transactionsTotalView = cdb.view('reporting','id_type_date');
-    var transaction_db = cdb.db('transactions',{},true);
-    async
-	.parallel(
-	    {originSales:function(callback){originTodaysHourlySalesFetcher(transactionsView,transaction_db,id,function(err,data){callback(null, data);});},
-	     totalSales:function(callback){todaysHourlySalesFetcher(transactionsTotalView,transaction_db,id,function(err,data){callback(null, data);});}
-	    },
-	    function(err,report){
-		var templateData = _(_.fill(report.originSales,report.totalSales)).
-		    map(function(mergedVals,time){
-			    return _.extend({},{timerange:time},mergedVals);
-			});
+function typedTransactionDateRangeGroupedQuery(startDate,endDate){
+    //the groupby value is based on the length of the date array given
+    // var db = cdb.db('transactions',{},true);
+    // var view = cdb.view('reporting','id_type_date');
+    return function(view,db){
+	return function (base){
+	    var startKey = base.concat(startDate);
+	    var endKey = base.concat(endDate);
+	    var options = {
+		group_level:_.size(endKey),
+		startkey:startKey,
+		endkey:endKey,
+		inclusive_end: false
+	    };
+	    return queryF(view,db)(options);
+	};
+    };
+}
+function todaysHourlySalesFetcher(id){
+    return function(start,end){
+	return function(returnReport){
+	    var d = relative_dates();
+	    var todaysQuery = typedTransactionDateRangeGroupedQuery(d.today_h,d.tomorrow_h);
+	    var sales = todaysQuery([id,'SALE']);
+	    var refunds = todaysQuery([id,'REFUND']);
 
-		runAfter(templateData);
-	    });
+
+	    function assign(fn){
+		function returnQuery(callback){
+		    return function(query){
+			callback(null, query);
+		    };
+		};
+		return function(callback){
+		    fn(returnQuery(callback));
+		};
+	    }
+	    async
+		.parallel(
+		    {sales:assign(sales),
+		     refunds:assign(refunds)
+		    },
+		    function(err,report){
+			//need to join things together based on the same time from the key
+			function time(item){
+			    return item.key[5];
+			}
+			function hour(item){
+			    return item.key[5];
+			}
+			function salesAmount(item){
+			    if(_.isNumber(item.value.sum)){return item.value.sum;}
+			    return 0;
+			}
+			function numSales(item){
+			    if(_.isNumber(item.value.count)){return item.value.count;}
+			    return 0;
+			}
+			function type(item){
+			    return item.key[1];
+			}
+			function isSale(item){
+			    return item.type === 'SALE';
+			};
+			function isRefund(item){
+			    return item.type === 'REFUND';
+			}
+
+			function template(){
+			    return {total:0,refunds:"0",transactions:"0",avgsale:0};
+			}
+
+			function transactionSummary(salesData,refundsData){
+			    var sales = 0, refunds = 0, saleCount = 0, refundCount = 0, avgsale = 0, net_sales = 0;
+			    if(_.isNotEmpty(salesData)){
+				sales = salesData.value;
+				saleCount = salesData.count;
+			    }
+			    if(_.isNotEmpty(refundsData)){
+				refunds = refundsData.value;
+				refundCount = refundsData.count;
+			    };
+			    net_sales = sales - refunds;
+			    if(saleCount){avgsale = net_sales / saleCount;}
+			    return {total:net_sales,refunds:refundCount+"",transactions:saleCount+"",avgsale:avgsale};
+			}
+
+			var stuff = _([]).
+			    chain()
+			    .concat(report.refunds.rows, report.sales.rows)
+			    .map(function(item){return {type:type(item),time:hour(item),value:salesAmount(item),count:numSales(item)};})
+			    .groupBy(function(item){return item.time;})
+			    .map$(function(pair){
+				     var time = _.first(pair);
+				     var sale_refund = _.second(pair);
+				     var sales = _(sale_refund).chain().filter(isSale).first().value();
+				     var refunds = _(sale_refund).chain().filter(isRefund).first().value();
+				     var summary = transactionSummary(sales,refunds);
+
+				     var timeForKey = {};
+				     timeForKey[time] = summary;
+				     return [time,summary];
+				 })
+			    .value();
+
+			var mergeTimes = _.chain(24)
+			    .range()
+			    .map(function(val,key){return [key,template()];})
+			    .toObject()
+			    .extend(stuff)
+			    .map$(function(pair){
+				     var time = _.first(pair);
+				     var val = _.second(pair);
+				     return [formatTime(time),val];
+				 })
+			    .value();
+			returnReport(null,mergeTimes);
+		    })
+	}
+    }
+}
+function originTodaysHourlySalesFetcher(id){
+    return function(start,end){
+	return function(returnReport){
+
+	    var db = cdb.db('transactions',{},true);
+	    var view = cdb.view('reporting','id_type_origin_date');
+
+	    var todaysQuery = typedTransactionDateRangeGroupedQuery(start,end)(view,db);
+	    var menuSales = todaysQuery([id,'SALE','MENU']);
+	    var menuRefunds = todaysQuery([id,'REFUND','MENU']);
+	    var scanSales = todaysQuery([id,'SALE','INVENTORY']);
+	    var scanRefunds = todaysQuery([id,'REFUND','INVENTORY']);
+	    var ecrSales = todaysQuery([id,'SALE','ECR']);
+	    var ecrRefunds = todaysQuery([id,'REFUND','ECR']);
+
+	    function assign(fn){
+		function returnQuery(callback){
+		    return function(query){
+			callback(null, query);
+		    };
+		};
+		return function(callback){
+		    fn(returnQuery(callback));
+		};
+	    }
+	    function hour(item){
+		return item.key[6].toString();
+	    }
+	    function sales(item){
+		return item.value.sum;
+	    }
+	    function type(item){
+		return item.key[1];
+	    }
+	    function origin(item){
+		return item.key[2].toLowerCase();
+	    }
+	    function transactions(item){
+		return item.value.count;
+	    }
+	    function sales_query(fn){
+		function returnQuery(callback){
+		    return function(query){
+			callback(null,_.map(query.rows, function(row){
+						var transaction_stats= {
+						    time:hour(row),
+						    transactions:transactions(row),
+						    sale_transactions:transactions(row),
+						    total_sales:sales(row)
+						};
+						transaction_stats[origin(row).toLowerCase()+'_sales'] = transaction_stats.total_sales;
+						return transaction_stats;
+					    }))
+		    };
+		};
+		return function(callback){
+		    fn(returnQuery(callback));
+		};
+	    }
+	    function refunds_query(fn){
+		function returnQuery(callback){
+		    return function(query){
+			callback(null,_.map(query.rows, function(row){
+						var transaction_stats= {
+						    time:hour(row),
+						    transactions:transactions(row),
+						    refund_transactions:transactions(row),
+						    total_sales:-sales(row)
+						};
+						transaction_stats[origin(row).toLowerCase()+'_sales'] = transaction_stats.total_sales;
+						return transaction_stats;
+					    }))
+		    };
+		};
+		return function(callback){
+		    fn(returnQuery(callback));
+		};
+	    }
+	    async
+		.parallel(
+		    {
+			menuSales:sales_query(menuSales),
+			menuRefunds:refunds_query(menuRefunds),
+			scanSales:sales_query(scanSales),
+			scanRefunds:refunds_query(scanRefunds),
+			ecrSales:sales_query(ecrSales),
+			ecrRefunds:refunds_query(ecrRefunds)
+		    },
+		    function(err,report){
+			function hourly_report_row_defaults(){
+			    return {
+				transactions:0,
+				refund_transactions:0,
+				sale_transactions:0,
+				total_sales:0,
+				ecr_sales:0,
+				menu_sales:0,
+				inventory_sales:0,
+				avg_sales:0
+			    }
+			}
+			var agrigated_reports =
+			    _.chain([])
+			    .concat(report.menuRefunds,
+				    report.menuSales,
+				    report.scanSales,
+				    report.scanRefunds,
+				    report.ecrSales,
+				    report.ecrRefunds)
+			    .value()
+
+			var stats_by_hour =
+			    _.chain(agrigated_reports)
+			    .groupBy('time')
+			    .map$(function(stats_kv){return [stats_kv[0],_.reduce(stats_kv[1],_.add)]})
+			    .value();
+
+			var stats_by_hour_with_defaults = _.chain(24)
+			    .range()
+			    .map(function(val,key){return [key,hourly_report_row_defaults()]})
+			    .toObject()
+			    .combine(stats_by_hour)
+			    .map$(function(pair){
+				      var time = formatTime(_.first(pair));
+				     var val = _.second(pair);
+				      return [time,
+					 _.combine(val,
+						   {
+						       timerange:time,
+						       avg_sales:val.transactions ? val.total_sales/val.transactions : 0
+						   }
+						  )];
+				 })
+			    .value();
+			function tally_hour_totals(hours){
+			    var totals = _.reduce(stats_by_hour_with_defaults,_.add);
+			    totals.avg_sales = totals.transactions ? totals.total_sales/totals.transactions : 0;
+			    return totals;
+			}
+			returnReport(null,{
+				    hours:stats_by_hour_with_defaults,
+				    totals:tally_hour_totals(stats_by_hour)
+				});
+		    });
+	};
+    }
+}
+
+function hourlyReportFetcher(id,start,end){
+    return originTodaysHourlySalesFetcher(id)(start,end)
 };
+
 
 function taxReportFetcher(terminals,startDate,endDate,callback){
     var transactionsView = cdb.view('reporting','cashouts_id_date');

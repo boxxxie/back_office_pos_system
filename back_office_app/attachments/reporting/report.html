@@ -1487,33 +1487,33 @@
 	  </tr>
 	</thead>
 	<tfoot>
-	  {{#totalrow}}
+	  {{#totals}}
 	  <tr>
 	    <th>Total</th>
-	    <th align="right">{{transactions}}</th>
-	    <th align="right">{{refunds}}</th>
-	    <th align="right">{{menu}}</th>
-	    <th align="right">{{inventory}}</th>
-	    <th align="right">{{ecr}}</th>
-	    <th align="right">{{total}}</th>
-	    <th align="right">{{avgsale}}</th>
+	    <th align="right">{{sale_transactions}}</th>
+	    <th align="right">{{refund_transactions}}</th>
+	    <th align="right">{{menu_sales}}</th>
+	    <th align="right">{{inventory_sales}}</th>
+	    <th align="right">{{ecr_sales}}</th>
+	    <th align="right">{{total_sales}}</th>
+	    <th align="right">{{avg_sales}}</th>
 	  </tr>
-	  {{/totalrow}}
+	  {{/totals}}
 	</tfoot>
 	<tbody>
-	  {{#items}}
+	  {{#hours}}
 	  <tr>
 	    <td>{{timerange}}</td>
-	    <td align="right">{{transactions}}</td>
-	    <td align="right">{{refunds}}</td>
-	    <td align="right">{{menu}}</td>
-	    <td align="right">{{inventory}}</td>
-	    <td align="right">{{ecr}}</td>
-	    <td align="right">{{total}}</td>
-	    <td align="right">{{avgsale}}</td>
+	    <td align="right">{{sale_transactions}}</td>
+	    <td align="right">{{refund_transactions}}</td>
+	    <td align="right">{{menu_sales}}</td>
+	    <td align="right">{{inventory_sales}}</td>
+	    <td align="right">{{ecr_sales}}</td>
+	    <td align="right">{{total_sales}}</td>
+	    <td align="right">{{avg_sales}}</td>
 	  </tr>
 	</tbody>
-	{{/items}}
+	{{/hours}}
       </table>
     </script> 
     

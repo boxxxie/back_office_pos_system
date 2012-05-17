@@ -17,7 +17,7 @@ function doc_setup() {
 
     var LoginDisplay = new reportLoginView();
 
-    var MenuReportsHourlyActivityDisplay = new menuReportsHourlyActivityView();
+//    var MenuReportsHourlyActivityDisplay = new menuReportsHourlyActivityView();
     var MenuReportsTaxCollcetedDisplay = new menuReportsTaxCollectedView();
     var MenuReportsElectronicPaymentsDisplay = new menuReportsElectronicPaymentsView();
     var MenuReportsCashOutsDisplay = new menuReportsCashOutsView();

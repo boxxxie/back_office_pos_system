@@ -12,7 +12,7 @@ ddoc.shows = {
 		var value = arr[i].toString().replace(/"/g, '""');
 		csv += '"' + value + '"';
 		if( i !== arr_last ){
-		    csv += ";";
+		    csv += ",";
 		}
 	    }
 	    return csv;

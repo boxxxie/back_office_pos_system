@@ -236,8 +236,7 @@ _.mixin({
 	    combinePropertiesTogether:function(transformation){
 		return function(addTo,addFrom){
 		    function addPropertiesTogether_helper(addTo,addFrom){
-		//	var addToClone = _.clone(addTo);   //probably do not need to clone here. if so, then dependance on underscore is removed
-			var addToClone = addTo;
+			var addToClone = _.clone(addTo);   //this is needed so that no side effects happen  (sadface)
 			for (var prop in addFrom) {
 			    if(addToClone[prop] === undefined){
 				addToClone[prop] = addFrom[prop];
@@ -534,7 +533,10 @@ _.mixin({
 	    mapRemoveKeys:_.mapVargFn(_.removeKeys),
 	    mapRenameKeys:_.mapVargFn(_.renameKeys),
 	    mapNest:_.mapVargFn(_.nest),
-	    mapMerge:_.mapVargFn(_.merge)
+	    mapMerge:_.mapVargFn(_.merge),
+	    mapReduce:_.mapVargFn(_.reduce),
+	    mapDefaults:_.mapVargFn(_.defaults),
+	    mapFill:_.mapVargFn(_.fill)
 	});
 
 _.mixin({
