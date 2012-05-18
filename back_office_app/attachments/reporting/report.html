@@ -2830,19 +2830,14 @@
     
     <script id="menuSetMenus_Left_TMP" type="text/html">
       <h2>Modifiers</h2>
-      <button id="menumodifiersbutton" class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false">
-	<span class="ui-button-text">Edit Modifiers</span>
-      </button>
-      <button id="menumodifiersbutton2" class="{{>commonButtonClasses_P}}" role="button" aria-disabled="false">
-    <span class="ui-button-text">Edit Modifiers2</span>
-      </button>	
+      <button id="menumodifiersbutton">Edit Modifiers</button>
+      <button id="menumodifiersbutton2">Edit Modifiers2</button>	
     </script>
     
     <script id="menuSetMenus_Center_TMP" type="text/html">
       <table class="menutable" style="background-color:#f4f4f4;">
 	<tr>
 	  <td align="center">
-	    <!--<span style="font-size:24px;color:fff;">{{menuscreentitle}}</span>-->
 	    <p style="font-size:24px;color:fff;">{{menuscreentitle}}</p>
 	  </td>
 	</tr>
@@ -2868,12 +2863,14 @@
       <table width="100%" cellpadding="0" cellspacing="0">
 	<tr>
 	  {{#menuButtonHeaders}}
-	  <td width="25%">
-	    <div class="menuLableBottomClass" id="menubuttonheader{{menu_id}}">
-	      {{#description1}}{{description1}}{{/description1}} <br />
-	      {{#description2}}{{description2}}{{/description2}} <br />
-	      {{#description3}}{{description3}}{{/description3}}
-	    </div>
+	  <td valign="middle" width="25%">
+	    <button class="menuEditBottomClass" id="menubuttonheader{{menu_id}}">
+	      <ul>
+	      {{#description1}}<li>{{description1}}</li>{{/description1}}
+	      {{#description2}}<li>{{description2}}</li>{{/description2}}
+	      {{#description3}}<li>{{description3}}</li>{{/description3}}
+	      </ul>
+	    </button>
 	  </td>
 	  {{/menuButtonHeaders}}
 	</tr>
@@ -2884,28 +2881,28 @@
         <table width="100%" cellpadding="0" cellspacing="0">
         <tr>
           <td valign="middle" width="25%">
-            <div class="menuEditBottomClass" id="menueditheader1">
+            <button class="menuEditBottomClass" id="menueditheader1">
                 Edit Menu 1<br /> 
                 Header
-            </div>
+            </button>
           </td>
           <td valign="middle" width="25%">
-              <div class="menuEditBottomClass" id="menueditheader2">
+              <button class="menuEditBottomClass" id="menueditheader2">
                 Edit Menu 2<br /> 
                 Header
-              </div>
+              </button>
           </td>
           <td valign="middle" width="25%">
-              <div class="menuEditBottomClass" id="menueditheader3">
+              <button class="menuEditBottomClass" id="menueditheader3">
                 Edit Menu 3<br /> 
                 Header
-              </div>
+              </button>
           </td>
           <td valign="middle" width="25%">
-              <div class="menuEditBottomClass" id="menueditheader4">
+              <button class="menuEditBottomClass" id="menueditheader4">
                 Edit Menu 4 <br />
                 Header
-              </div>
+              </button>
           </td>
         </tr>
       </table>
