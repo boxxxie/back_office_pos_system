@@ -76,7 +76,7 @@ var voucherHistoryView =
 									      }, 0));
 
 				 var data_TMP = _.sortBy(data,function(item){return item.time.start;});
-				 var html = ich.menuReportsVouchertable_TMP({items:data_TMP, totalrow:totalrow});
+				 var html = ich.menuReportsVouchertable_TMP({items:_.sortBy(data_TMP,function(datum){return datum.date}).reverse(), totalrow:totalrow});
 
 				 $("#voucherstable").html(html);
 				 $(".btndetails").button();

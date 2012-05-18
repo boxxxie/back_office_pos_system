@@ -85,7 +85,7 @@ function renderRefundsTable() {
 
 	     data_TMP = processTransactionsTMP(data_TMP);
 
-	     var html = ich.menuReportsRefundstable_TMP({items:data_TMP, totalrow:totalrow});
+	     var html = ich.menuReportsRefundstable_TMP({items:_.sortBy(data_TMP,function(datum){return datum.date}).reverse(), totalrow:totalrow});
 
 
 	     $("#refundstable").html(html);

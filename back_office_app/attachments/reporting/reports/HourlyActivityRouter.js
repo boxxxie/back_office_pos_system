@@ -44,7 +44,6 @@ var hourly_report_router =
 					 {totals:response.totals,
 					  hours:_.toArray(response.hours)}
 					)));
-
 		 });
 	    }
 	})

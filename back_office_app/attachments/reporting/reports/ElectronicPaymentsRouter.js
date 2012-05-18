@@ -14,14 +14,13 @@ var menuReportsElectronicPaymentsView =
 	     var view = this;
 	     view.el = $("#main");
 
-	     _.bindAll(view,
-		       'renderMenuReportsCompanyPayments');
-	     menuReportsElectronicPaymentsRouter
-		 .bind('route:menuReportsCompanyPayments',
-		       function(){
-			   console.log("menuReportsView, route:menuReportsCompanyPayments");
-			   view.renderMenuReportsCompanyPayments();
-		       });
+	     _.bindAll(view,'renderMenuReportsCompanyPayments');
+	     menuReportsElectronicPaymentsRouter.bind(
+		 'route:menuReportsCompanyPayments',
+		 function(){
+		     console.log("menuReportsView, route:menuReportsCompanyPayments");
+		     view.renderMenuReportsCompanyPayments();
+		 });
 
 	 },
 	 renderMenuReportsCompanyPayments: function() {
@@ -122,7 +121,7 @@ function renderElectronicPaymentsTable() {
 		     .value();
 	     }
 
-	     var html = ich.electronicPaymentstable_TMP({items:data,totals:formatted_totals});
+	     var html = ich.electronicPaymentstable_TMP({items:_.sortBy(data,function(datum){return datum.date}).reverse(),totals:formatted_totals});
 	     $("#reporttable").html(html);
 
 	     _.each(data_TMP, function(item){

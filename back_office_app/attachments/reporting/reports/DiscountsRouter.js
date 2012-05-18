@@ -1,4 +1,4 @@
-var menuReportsDiscountsRouter = 
+var menuReportsDiscountsRouter =
     new (Backbone.Router.extend(
 	     {routes: {
 		  "reports/discounts":"menuReportsCompanyDiscounts"
@@ -8,16 +8,16 @@ var menuReportsDiscountsRouter =
 	      }
 	     }));
 
-var menuReportsDiscountsView = 
+var menuReportsDiscountsView =
     Backbone.View.extend(
 	{initialize:function(){
 	     var view = this;
 	     view.el = $("#main");
-	     
-	     _.bindAll(view, 
+
+	     _.bindAll(view,
 		       'renderMenuReportsCompanyDiscounts');
 	     menuReportsDiscountsRouter
-		 .bind('route:menuReportsCompanyDiscounts', 
+		 .bind('route:menuReportsCompanyDiscounts',
 		       function(){
 			   console.log("menuReportsView, route:menuReportsCompanyDiscounts");
 			   view.renderMenuReportsCompanyDiscounts();
@@ -25,29 +25,29 @@ var menuReportsDiscountsView =
 
 	 },
 	 renderMenuReportsCompanyDiscounts: function() {
-	     
+
 	     var html = ich.menuReportsDiscountsReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
-	     
+
 	     resetDatePicker();
-	     
+
              resetDropdownBox(ReportData, true, true);
-	     
+
 	     var btn = $('#generalgobtn')
 		 .button()
 		 .click(function(){
 			    renderDiscountsTable();
 			});
-	     
+
 	     console.log("rendered general report");
-	 },
+	 }
 
 	});
 
 /******************************************** helper functions ************************************/
 function renderDiscountsTable() {
     console.log("renderDiscountsTable");
-    
+
     var dropdownGroup = $("#groupsdown");
     var dropdownStore = $("#storesdown");
     var dropdownTerminal = $("#terminalsdown");
@@ -57,7 +57,7 @@ function renderDiscountsTable() {
 	var endDate = new Date($("#dateTo").val());
 	var endDateForQuery = new Date($("#dateTo").val());
 	endDateForQuery.addDays(1);
-	
+
 	//TODO
 	if(dropdownTerminal.val()=="ALL") {
 	    ids = _($('option', dropdownTerminal)).chain()
@@ -71,10 +71,10 @@ function renderDiscountsTable() {
 	    ids =[{id:sd.val(), name:sd.text()}];
 	}
 	console.log(ids);
-	
+
 	discountTransactionsFromCashoutsFetcher(ids,startDate,endDateForQuery)
 	(function(err,data_TMP){
-	     
+
 	     var totalrow = {};
 	     totalrow.numofdiscount = data_TMP.length + "";
 	     totalrow.sales = (_.reduce(data_TMP, function(init, item){
@@ -92,9 +92,9 @@ function renderDiscountsTable() {
 	     totalrow.total = (_.reduce(data_TMP, function(init, item){
 					    return init + Number(item.total);
 					}, 0)).toFixed(2);
-	     
+
 	     totalrow.percentdiscount = (Number(totalrow.sales)>0)?(Number(totalrow.discount)/Number(totalrow.sales)*100).toFixed(2):(Number(0)).toFixed(2);
-	     
+
 	     _.applyToValues(totalrow, function(obj){
 				 var strObj = obj+"";
 				 if(strObj.indexOf(".")>=0) {
@@ -102,34 +102,34 @@ function renderDiscountsTable() {
 				 }
 				 return obj;
 			     }, true);
-	     
+
 	     data_TMP = _.map(data_TMP, function(item){
 	     			  item.totaldiscount = item.discount;
 	     			  if(_.isNumber(item.totaldiscount)) {
 	     			      item.totaldiscount = (item.totaldiscount>0)? "-"+currency_format(item.totaldiscount):currency_format(item.totaldiscount);
 	     			  }
-	     			  return item; 
+	     			  return item;
 			      });
-	     
+
 	     data_TMP = processTransactionsTMP(data_TMP);
-	     
-	     
-	     var html = ich.menuReportsDiscountstable_TMP({items:data_TMP, totalrow:totalrow});
-	     
+
+
+	     var html = ich.menuReportsDiscountstable_TMP({items:_.sortBy(data_TMP,function(datum){return datum.date}).reverse(), totalrow:totalrow});
+
 	     $("#discountstable").html(html);
-	     
-	     _.each(data_TMP, function(item){	
+
+	     _.each(data_TMP, function(item){
 			var item = _.clone(item);
-			
+
 			var dialogtitle=getDialogTitle(ReportData,item);
-			
+
 			var btn = $('#'+item._id)
 			    .button()
 			    .click(function(){
 				       var btnData = item;
 				       _.applyToValues(ReportData,
 						       function(o){
-							   if(o.store_id==btnData.store_id){
+							   if(o.store_id===btnData.store_id){
 							       btnData.storename = o.storeName;
 							   }
 							   return o;
@@ -142,13 +142,13 @@ function renderDiscountsTable() {
 				       				 }
 				       				 return orderitem;
 							     });
-				       
+
 				       var html = ich.generalTransactionQuickViewDialog_TMP(btnData);
 				       quickmenuReportsTransactionViewDialog(html, {title:dialogtitle});
 				   });
 		    });
 	 });
-	
+
     } else {
    	alert("Input Date");
     }

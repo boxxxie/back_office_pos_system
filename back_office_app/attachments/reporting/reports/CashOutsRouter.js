@@ -88,7 +88,7 @@ function rendermenuReportsCashOutsTable() {
 				  return _.extend(item, {dialogtitle:dialogtitle});
 			      });
 
-	     var html = ich.menuReportsCashOutstable_TMP({items:data_TMP, numofcashout:numofcashout});
+	     var html = ich.menuReportsCashOutstable_TMP({items:_.sortBy(data_TMP,function(datum){return datum.cashouttime}).reverse(), numofcashout:numofcashout});
 
 	     $("#cashoutstable").html(html);
 

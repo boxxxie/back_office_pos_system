@@ -101,7 +101,7 @@ var sales_details_report_router =
 						    });
 			  },
 			  function(a,nested_cashouts){
-	      		      var cashouts = _(nested_cashouts).flatten();
+	      		      var cashouts = _.chain(nested_cashouts).flatten().sortBy(function(cashout){return cashout.date}).reverse().value();
 			      callback(extractTableInfo(cashouts));
 			  });
 	    }

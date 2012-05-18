@@ -28,11 +28,11 @@ var menuReportsCancelledTransactionsView =
 
 	     var html = ich.menuReportsCancelledReports_TMP(autoBreadCrumb());
 	     $(this.el).html(html);
-	     
+
 	     resetDatePicker();
-	     
+
 	     resetDropdownBox(ReportData, true, true);
-	     
+
 	     var btn = $('#generalgobtn')
 		 .button()
 		 .click(function(){
@@ -88,10 +88,10 @@ function renderCancelledTransactionsTable() {
 							   return init + Number(item.total);
 						       }, 0));
 
-	     
-	     
+
+
 	     data_TMP = processTransactionsTMP(data_TMP);
-	     var html = ich.menuReportsCancelledtable_TMP({items:data_TMP, totalrow:totalrow});
+	     var html = ich.menuReportsCancelledtable_TMP({items:_.sortBy(data_TMP,function(datum){return datum.date}).reverse(), totalrow:totalrow});
 
 
 	     $("#cancelledtable").html(html);
