@@ -140,7 +140,7 @@ var adminRouter =
 		 load_users_for_id:function(id, entity_name){
 		     var router = this;
 		     router.current_entity_id = id;
-             $("#naviStringInOtherUser").html(entity_name);
+		     $("#naviStringInOtherUser").html(entity_name);
 		     router.user_collection.reset();
 		     console.log("menuAdministration: " + id);
 		     var breadCrumb = autoBreadCrumb(); //?
@@ -159,7 +159,7 @@ var adminRouter =
 		     var router = this;
 		     console.log("change_user_password");
 		     console.log(arguments);
-		     
+
 		     function login_with_new_password(user_doc,callback){
 			 var SE_handler = {
 			     success : function(){
@@ -179,23 +179,23 @@ var adminRouter =
 
 			 $.couch.login(login_options);
 		     }
-		     
+
 		     function edit_router_user_collection(user_doc,callback){
 			 var simple_user = simple_user_format(user_doc);
 			 router.user_collection.get(simple_user._id).set(simple_user);
 			 callback(undefined);
 		     }
-		     
+
 		     function setup_router_current_user(simple_user,callback){
 			 router.current_user.set(simple_user);
 			 callback(undefined,simple_user);
 		     }
-		     
+
 		     function setup_report_data(simple_user,callback){
 			 ReportData.currentUser = simple_user;
 			 callback(undefined);
 		     }
-		     
+
 		     function setup_session(callback){
 			 $.couch.session(
 			     {
@@ -220,221 +220,217 @@ var adminRouter =
 		     }
 
 		     var new_password = prompt("new password");
-		     // new_password == null ; click cancel
-		     // new_password == "" ; input empty and click ok
 		     if(new_password!=null) {
 		         var session = ReportData.session;
-                 if(is_logged_in_user(router.current_user,user_id)){
-                 var user = router.current_user;
-                 async.waterfall(
-                     [
-                     user.change_password(session,new_password),
-                     login_with_new_password,
-                     setup_router_current_user,
-                     setup_report_data,
-                     setup_session
-                     ],
-                     report);
-                 }
-                 else{
-                 var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
-                 async.waterfall(
-                     [
-                     user.change_password(session,new_password),
-                     edit_router_user_collection
-                     ],
-                     report);
-                 }
+			 if(is_logged_in_user(router.current_user,user_id)){
+			     var user = router.current_user;
+			     async.waterfall(
+				 [
+				     user.change_password(session,new_password),
+				     login_with_new_password,
+				     setup_router_current_user,
+				     setup_report_data,
+				     setup_session
+				 ],
+				 report);
+			 }
+			 else{
+			     var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
+			     async.waterfall(
+				 [
+				     user.change_password(session,new_password),
+				     edit_router_user_collection
+				 ],
+				 report);
+			 }
 		     }
 
 		 },
 		 edit_user:function(user_id){
 		     console.log("edit user: " + user_id);
-             //we_are_fixing_this_feature("editing users is being fixed right now");return;
-             
-             //assume that this is a company_admin level user making a company level user
+		     //assume that this is a company_admin level user making a company level user
 		     var router = this;
-		     
+
 		     function login_with_new_password(user_doc,callback){
-             var SE_handler = {
-                 success : function(){
-                 var simple_user = simple_user_format(user_doc);
-                 callback(undefined,simple_user);
-                 },
-                 error: function (code,type,message) {
-                 callback({code:code,type:type,message:message});
-                 }
-             };
-             var login_options =
-                 _.extend({
-                      name : user_doc.name,
-                      password : user_doc.password
-                      },
-                      SE_handler);
+			 var SE_handler = {
+			     success : function(){
+				 var simple_user = simple_user_format(user_doc);
+				 callback(undefined,simple_user);
+			     },
+			     error: function (code,type,message) {
+				 callback({code:code,type:type,message:message});
+			     }
+			 };
+			 var login_options =
+			     _.extend({
+					  name : user_doc.name,
+					  password : user_doc.password
+				      },
+				      SE_handler);
 
-             $.couch.login(login_options);
-             }
-             
-             function edit_router_user_collection(user_doc,callback){
-             var simple_user = simple_user_format(user_doc);
-             router.user_collection.get(simple_user._id).set(simple_user);
-             callback(undefined);
-             }
-             
-             function setup_router_current_user(simple_user,callback){
-             router.current_user.set(simple_user);
-             callback(undefined,simple_user);
-             }
-             
-             function setup_report_data(simple_user,callback){
-             ReportData.currentUser = simple_user;
-             callback(undefined);
-             }
-             
-             function setup_session(callback){
-             $.couch.session(
-                 {
-                 success:function(resp){
-                     ReportData.session = resp;
-                     callback(undefined);
-                 },
-                 error:function(code,type,message){
-                     callback({code:code,type:type,message:message});
-                 }
-                 });
-             }
+			 $.couch.login(login_options);
+		     }
 
-             function is_logged_in_user(logged_in_user,user_id_to_edit){
-             return logged_in_user.id === user_id_to_edit;
-             }
-             
-             function report(err){
-             if(err){
-                 alert(JSON.stringify(err));
-             }
-             }
-		     
-             if(is_logged_in_user(router.current_user,user_id)){
-                var user = router.current_user;
-             } else {
-                var user = router.user_collection.find(function(user){return user.get('_id') === user_id;}); 
-             }
-             
-             var userJSON = user.toJSON();
+		     function edit_router_user_collection(user_doc,callback){
+			 var simple_user = simple_user_format(user_doc);
+			 router.user_collection.get(simple_user._id).set(simple_user);
+			 callback(undefined);
+		     }
+
+		     function setup_router_current_user(simple_user,callback){
+			 router.current_user.set(simple_user);
+			 callback(undefined,simple_user);
+		     }
+
+		     function setup_report_data(simple_user,callback){
+			 ReportData.currentUser = simple_user;
+			 callback(undefined);
+		     }
+
+		     function setup_session(callback){
+			 $.couch.session(
+			     {
+				 success:function(resp){
+				     ReportData.session = resp;
+				     callback(undefined);
+				 },
+				 error:function(code,type,message){
+				     callback({code:code,type:type,message:message});
+				 }
+			     });
+		     }
+
+		     function is_logged_in_user(logged_in_user,user_id_to_edit){
+			 return logged_in_user.id === user_id_to_edit;
+		     }
+
+		     function report(err){
+			 if(err){
+			     alert(JSON.stringify(err));
+			 }
+		     }
+
+		     if(is_logged_in_user(router.current_user,user_id)){
+			 var user = router.current_user;
+		     } else {
+			 var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
+		     }
+
+		     var userJSON = user.toJSON();
 		     var user_edit_rules =  generate_retailer_user_dialog_blueprint(ReportData,router.current_entity_id,userJSON);
-             
-             if(_.isUndefined(user_edit_rules)){
-             we_are_fixing_this_feature("support for editing users at other levels is being worked on");
-             return;
-             }
-             
-             quickInputUserInfoDialog(
-             {
-                 title:"Edit User",
-                 html:ich.inputUserInfo_TMP(user_edit_rules.display), //here we have to merge the rules with the default_data to come up with the blueprint for the dialog
-                 on_submit:function(simple_user_data){
-                 
-                 var default_roles = _.selectKeys(userJSON,"company_admin","group_admin","store_admin");
-                 _.extend(simple_user_data,default_roles);
-                 
-                 
-                 function user_name(user){
-                     return _.combine(user, {name:_.either(user.store_id,user.group_id,user.company_id)+user.userName});
-                 }
-                 function apply_constants(consts){
-                     return function(user){
-                     return _.combine(user,consts);
-                     };
-                 }
-                 function complex_user_format(user_data){
-                     var extract_strings = ['company','company_admin','group','group_admin','store','store_admin','pos_sales','pos_admin'];
-                     var extract_obj = ['companyName','company_id','groupName','group_id','storeName','store_id','storeNumber','userName','enabled'].concat(extract_strings);
-                     var roles_strings = _.chain(user_data).selectKeys(extract_strings).filter$(_.identity).keys().value();
-                     var roles_complex = _.selectKeys(user_data,extract_obj);
-                     var roles = roles_strings.concat(roles_complex);
-                     return _.chain(user_data).removeKeys(extract_obj).combine({roles:roles}).value();
-                 }
 
-                 var user_data = _.compose(complex_user_format, user_name)
-                                    (_.combine(user_edit_rules.consts,
-                                          simple_user_data,
-                                          {exposed_password:simple_user_data.password}));
+		     if(_.isUndefined(user_edit_rules)){
+			 we_are_fixing_this_feature("support for editing users at other levels is being worked on");
+			 return;
+		     }
 
-                 console.log("submitted user");
-                 console.log(user_data);
-                    
-                 $.couch.session({
-                     success: function(session) {
-                     
-                     //TODO : 2 cases ; 1. loggedin user, 2. other user
-                     if(is_logged_in_user(router.current_user,user_id)){
-                        var user = router.current_user;
-                        async.waterfall(
-                        [
-                        user.updateUserDoc(session,user_data),
-                        login_with_new_password,
-                        setup_router_current_user,
-                        setup_report_data,
-                        setup_session
-                        ],
-                        report);
-                     } else {
-                        var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
-                        async.waterfall(
-                        [
-                        user.updateUserDoc(session,user_data),
-                        edit_router_user_collection
-                        ],
-                        report);                         
-                     }
-                     
-                     /*
-                      var session = ReportData.session;
-                     if(is_logged_in_user(router.current_user,user_id)){
-                     var user = router.current_user;
-                     async.waterfall(
-                         [
-                         user.change_password(session,new_password),
-                         login_with_new_password,
-                         setup_router_current_user,
-                         setup_report_data,
-                         setup_session
-                         ],
-                         report);
-                     }
-                     else{
-                     var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
-                     async.waterfall(
-                         [
-                         user.change_password(session,new_password),
-                         edit_router_user_collection
-                         ],
-                         report);
-                     }
-                      */
-                     
-                     },
-                     error:function() {
-                     console.log("session error");
-                     }
-                 });
-                         
-                 }
-             });
-		     
+		     quickInputUserInfoDialog(
+			 {
+			     title:"Edit User",
+			     html:ich.inputUserInfo_TMP(user_edit_rules.display), //here we have to merge the rules with the default_data to come up with the blueprint for the dialog
+			     on_submit:function(simple_user_data){
+
+				 var default_roles = _.selectKeys(userJSON,"company_admin","group_admin","store_admin");
+				 _.extend(simple_user_data,default_roles);
+
+
+				 function user_name(user){
+				     return _.combine(user, {name:_.either(user.store_id,user.group_id,user.company_id)+user.userName});
+				 }
+				 function apply_constants(consts){
+				     return function(user){
+					 return _.combine(user,consts);
+				     };
+				 }
+				 function complex_user_format(user_data){
+				     var extract_strings = ['company','company_admin','group','group_admin','store','store_admin','pos_sales','pos_admin'];
+				     var extract_obj = ['companyName','company_id','groupName','group_id','storeName','store_id','storeNumber','userName','enabled'].concat(extract_strings);
+				     var roles_strings = _.chain(user_data).selectKeys(extract_strings).filter$(_.identity).keys().value();
+				     var roles_complex = _.selectKeys(user_data,extract_obj);
+				     var roles = roles_strings.concat(roles_complex);
+				     return _.chain(user_data).removeKeys(extract_obj).combine({roles:roles}).value();
+				 }
+
+				 var user_data = _.compose(complex_user_format, user_name)
+                                 (_.combine(user_edit_rules.consts,
+                                            simple_user_data,
+                                            {exposed_password:simple_user_data.password}));
+
+				 console.log("submitted user");
+				 console.log(user_data);
+
+				 $.couch.session({
+						     success: function(session) {
+
+							 //TODO : 2 cases ; 1. loggedin user, 2. other user
+							 if(is_logged_in_user(router.current_user,user_id)){
+							     var user = router.current_user;
+							     async.waterfall(
+								 [
+								     user.updateUserDoc(session,user_data),
+								     login_with_new_password,
+								     setup_router_current_user,
+								     setup_report_data,
+								     setup_session
+								 ],
+								 report);
+							 } else {
+							     var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
+							     async.waterfall(
+								 [
+								     user.updateUserDoc(session,user_data),
+								     edit_router_user_collection
+								 ],
+								 report);
+							 }
+
+							 /*
+							  var session = ReportData.session;
+							  if(is_logged_in_user(router.current_user,user_id)){
+							  var user = router.current_user;
+							  async.waterfall(
+							  [
+							  user.change_password(session,new_password),
+							  login_with_new_password,
+							  setup_router_current_user,
+							  setup_report_data,
+							  setup_session
+							  ],
+							  report);
+							  }
+							  else{
+							  var user = router.user_collection.find(function(user){return user.get('_id') === user_id;});
+							  async.waterfall(
+							  [
+							  user.change_password(session,new_password),
+							  edit_router_user_collection
+							  ],
+							  report);
+							  }
+							  */
+
+						     },
+						     error:function() {
+							 console.log("session error");
+						     }
+						 });
+
+			     }
+			 });
+
 		 },
 		 add_user:function(){
 		     console.log("add user button pressed");
 		     var router = this;
 		     //assume that this is a company_admin level user making a company level user
 
-		     var user_creation_rules =  generate_retailer_user_dialog_blueprint(ReportData,router.current_entity_id); 
-		     
+		     var user_creation_rules =  generate_retailer_user_dialog_blueprint(ReportData,router.current_entity_id);
+
 		     if(_.isUndefined(user_creation_rules)){
 			 we_are_fixing_this_feature("support for creating users at other levels is being worked on");
 			 return;
 		     }
-		     
+
 		     quickInputUserInfoDialog(
 			 {
 			     title:"Add New User",
@@ -459,9 +455,9 @@ var adminRouter =
 				 }
 
 				 var user_data = _.compose(complex_user_format, user_name)
-				                    (_.combine(user_creation_rules.consts,
-									      simple_user_data,
-									      {exposed_password:simple_user_data.password}));
+				 (_.combine(user_creation_rules.consts,
+					    simple_user_data,
+					    {exposed_password:simple_user_data.password}));
 
 				 console.log("submitted user");
 				 console.log(user_data);
