@@ -1055,7 +1055,9 @@ terminalsView =
 								       title : "Edit the Terminal",
 								       //terminal : terminalToEdit
 								       companyCode:terminalToEdit.companyCode,
-								       storeCode:terminalToEdit.storeCode
+								       storeCode:terminalToEdit.storeCode,
+chase_terminal_id:terminalToEdit.chase_terminal_id,
+chase_serial_number:terminalToEdit.chase_serial_number
 								   }));
 		TerminalModifyDialog("edit-thing", editTerminal(companyID, groupID, storeID, terminalID));
 		console.log("renderModifyPage terminals view rendered");
