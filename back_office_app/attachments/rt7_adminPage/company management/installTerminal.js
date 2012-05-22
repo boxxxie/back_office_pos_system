@@ -61,9 +61,9 @@ function installTerminal(companyID,groupID,storeID,terminalID){
 				    emails:[store.contact.email]
 				},
 				store_number:store.number,
-				creation_user:user.userCtx.name,
+				creation_user:user.userCtx.name
 
-				chase_merchant_id:store.chase_merchant_id,
+			/*	chase_merchant_id:store.chase_merchant_id,
 				chase_merchant_number:store.chase_merchant_number,
 				chase_client_id:store.chase_client_id,
 				chase_sic_code:store.chase_sic_code,
@@ -71,7 +71,7 @@ function installTerminal(companyID,groupID,storeID,terminalID){
 				chase_user_password:store.chase_user_password,
 
 				chase_serial_number:terminal.chase_serial_number,
-				chase_terminal_id:terminal.chase_terminal_id
+				chase_terminal_id:terminal.chase_terminal_id*/
 			    };
 			callback(terminal_data);
 		    },
