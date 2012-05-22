@@ -561,6 +561,18 @@
             </tr>
           </tbody>
 	</table>
+	<label>Chase Merchant Number</label>
+	<input type="text" id="chase_merchant_number" value="{{chase_merchant_number}}" class="text ui-widget-content ui-corner-all" />
+	<label>Chase Merchant ID</label>
+	<input type="text" id="chase_merchant_id" value="{{chase_merchant_id}}" class="text ui-widget-content ui-corner-all" />
+	<label>Chase Client ID</label>
+	<input type="text" id="chase_client_id" value="{{chase_client_id}}" class="text ui-widget-content ui-corner-all" />
+	<label>Chase SIC Code</label>
+	<input type="text" id="chase_sic_code" value="{{chase_sic_code}}" class="text ui-widget-content ui-corner-all" />
+	<label>Chase User Name</label>
+	<input type="text" id="chase_user_name" value="{{chase_user_name}}" class="text ui-widget-content ui-corner-all" />
+	<label>Chase User Password</label>
+	<input type="text" id="chase_user_password" value="{{chase_user_password}}" class="text ui-widget-content ui-corner-all" />
       </form>
       {{/store}}
     </script>
@@ -651,44 +663,54 @@
 	<label for="storeCode">Store Code</label>
 	<input type="text" id="storeCode" value="{{storeCode}}" class="text ui-widget-content ui-corner-all" />
 	<label for="countryCode">Country Code</label>
-    <input type="text" id="countryCode" value="{{countryCode}}" class="text ui-widget-content ui-corner-all" />
+	<input type="text" id="countryCode" value="{{countryCode}}" class="text ui-widget-content ui-corner-all" />
 	<label for="provinceCode">Province Code</label>
-    <input type="text" id="provinceCode" value="{{provinceCode}}" class="text ui-widget-content ui-corner-all" />
+	<input type="text" id="provinceCode" value="{{provinceCode}}" class="text ui-widget-content ui-corner-all" />
 	<label for="cityCode">City Code</label>
 	<input type="text" id="cityCode" value="{{cityCode}}"  class="text ui-widget-content ui-corner-all" />
 	<label for="areaCode">Area Code</label>
-    <input type="text" id="areaCode" value="{{areaCode}}" class="text ui-widget-content ui-corner-all" />
+	<input type="text" id="areaCode" value="{{areaCode}}" class="text ui-widget-content ui-corner-all" />
 	<label for="postalCode">Postal Code</label>
 	<input type="text" id="postalCode" value="{{postalCode}}" class="text ui-widget-content ui-corner-all" />
+	<label>Chase Serial Number</label>
+	<input type="text" id="chase_serial_number" value="{{chase_serial_number}}" class="text ui-widget-content ui-corner-all" />
+	<label>Chase Terminal ID</label>
+	<input type="text" id="chase_terminal_id" value="{{chase_terminal_id}}" class="text ui-widget-content ui-corner-all" />
       </form>
       {{/terminal}}
     </script>
     
     <script id="terminalInputForm_P" class="partial" type="text/html">
       <form id="form">
-    <label for="terminal-id">Terminal ID</label>
-    <input type="text" id="terminal-id" class="text ui-widget-content ui-corner-all" />
-    <label for="companyCode">Company Code</label>
-    <input type="text" id="companyCode" value="{{companyCode}}" class="text ui-widget-content ui-corner-all" />
-    <label for="storeCode">Store Code</label>
-    <input type="text" id="storeCode" value="{{storeCode}}" class="text ui-widget-content ui-corner-all" />
-    <ul id="ulCodesDropDown">
-    <li>Country Code : 
-      <select id="countryCode" class="{{>commonClasses_P}}"></select>
-    </li>
-    <li>Province Code : 
-      <select id="provinceCode" class="{{>commonClasses_P}}"></select>
-    </li>
-    <li>City Code : 
-      <select id="cityCode" class="{{>commonClasses_P}}"></select>
-    </li>
-    <li>Area Code : 
-      <select id="areaCode" class="{{>commonClasses_P}}"></select>
-    </li>
-    <li>Postal Code : 
-      <input type="text" id="postalCode" class="text ui-widget-content ui-corner-all" />
-    </li>
-      </ul>
+	<label for="terminal-id">Terminal ID</label>
+	<input type="text" id="terminal-id" class="text ui-widget-content ui-corner-all" />
+	<label for="companyCode">Company Code</label>
+	<input type="text" id="companyCode" value="{{companyCode}}" class="text ui-widget-content ui-corner-all" />
+	<label for="storeCode">Store Code</label>
+	<input type="text" id="storeCode" value="{{storeCode}}" class="text ui-widget-content ui-corner-all" />
+	<ul id="ulCodesDropDown">
+	  <li>Country Code : 
+	    <select id="countryCode" class="{{>commonClasses_P}}"></select>
+	  </li>
+	  <li>Province Code : 
+	    <select id="provinceCode" class="{{>commonClasses_P}}"></select>
+	  </li>
+	  <li>City Code : 
+	    <select id="cityCode" class="{{>commonClasses_P}}"></select>
+	  </li>
+	  <li>Area Code : 
+	    <select id="areaCode" class="{{>commonClasses_P}}"></select>
+	  </li>
+	  <li>Postal Code : 
+	    <input type="text" id="postalCode" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>Chase Serial Number: 
+	    <input type="text" id="chase_serial_number" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	  <li>Chase Terminal ID: 
+	    <input type="text" id="chase_terminal_id" class="text ui-widget-content ui-corner-all" />
+	  </li>
+	</ul>
       </form>
     </script>
     

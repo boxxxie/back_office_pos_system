@@ -15,7 +15,7 @@ ddoc.views.names_to_id = {
     map:function(doc){
 	var _ = require("views/lib/underscore");
 
-	var opName = doc.companyName.toLowerCase();
+	var opName = doc.companyName.toLowerCase().trim();
 	var compID = doc._id;
 
 	var company_emit_value = compID;
@@ -23,8 +23,8 @@ ddoc.views.names_to_id = {
 	emit(company_emit_key,company_emit_value);
 	_.each(doc.hierarchy.groups,
 	       function(group){
-		   var gpName = group.groupName.toLowerCase();
-		   var user = group.user.toLowerCase();
+		   var gpName = group.groupName.toLowerCase().trim();
+		   var user = group.user.toLowerCase().trim();
 		   var gpID = group.group_id;
 		   var group_emit_value = gpID;
 		   var group_emit_key = {company:opName, group:gpName};
@@ -32,8 +32,8 @@ ddoc.views.names_to_id = {
 
 		   _.each(group.stores,
 			  function(store){
-			      var sName = store.number.toLowerCase();
-			      var user = store.user.toLowerCase();
+			      var sName = store.storeName.toLowerCase().trim();
+			      var user = store.user.toLowerCase().trim();
 			      var store_emit_value = store.store_id;
 			      var store_emit_key = {company:opName, group:gpName, store:sName};
 			      var store_emit_key2 = {company:opName, store:sName};

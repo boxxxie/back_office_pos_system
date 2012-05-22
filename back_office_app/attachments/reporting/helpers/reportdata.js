@@ -105,7 +105,7 @@ var reportDataToArray = _.memoize(
 	//todo: this may be the expand function that i wrote tests for in underscore_extended
 	function combineWithSubpart(field){
 	    return function(o){
-		if (o[field]){
+		if (o && o[field]){
 		    if(_.isObj(o[field])){
 			var fields = o[field];
 		    }
@@ -113,16 +113,15 @@ var reportDataToArray = _.memoize(
 			var fields = _.flatten(o[field]);
 		    }
 		    var o_without_field = _.removeKeys(o,field);
-		    var expandedCombinedFields = _.mapCombine(fields,o_without_field);
-		    return expandedCombinedFields;
+		    return _.mapCombine(fields,o_without_field);
 		}
 		return o;
 	    };
 	}
-	return _.chain(reportData)
-	    .selectKeys('company','group','store')
+	var flattened_entity = _.chain(reportData)
+	    .pick('company','group','store')
             .prewalk_r(function(o){
-			  if (o.hierarchy){
+			  if (o && o.hierarchy){
 			      var groups = o.hierarchy.groups;
 			      var o_without_field = _.removeKeys(o,'hierarchy');
 			      var expandedCombinedFields = _.mapCombine(groups,o_without_field);
@@ -134,9 +133,11 @@ var reportDataToArray = _.memoize(
             .prewalk_r(combineWithSubpart('stores'))
             .prewalk_r(combineWithSubpart('groups'))
             .prewalk_r(combineWithSubpart('company'))
-	    .prewalk_r(combineWithSubpart('group'))
-	    .prewalk_r(combineWithSubpart('store'))
 	    .value();
+	if(_.isArray(flattened_entity)){return flattened_entity;}
+	else{return _.flatten([_.either(flattened_entity.store,
+				   flattened_entity.group,
+				   flattened_entity.company)]);}
     },
     reportDataHash
 );
@@ -167,26 +168,27 @@ function _find_entity_from_id(reportData,id){
 }
 var extract_entity_info={
     company:function(entity_data){
-	return _.selectKeys(entity_data,
-		       'company_id',
-		       'companyName')
+	return _.chain(entity_data)
+	    .pick('company_id','companyName','companyCode') //FIXME: wtf is company code, also there is no company_id when this executes at store/group level login
+	    .renameKeys('companyCode','companyName')
+	    .value();
     },
     group:function(entity_data){
 	return _.combine(this.company(entity_data),
-		    _.selectKeys(entity_data,
+		    _.pick(entity_data,
 				 'group_id',
 				 'groupName'))
     },
     store:function(entity_data){
 	return _.combine(this.group(entity_data),
-		    _.selectKeys(entity_data,
+		    _.pick(entity_data,
 				 'store_id',
 				 'storeName',
 				 'storeNumber'))
     },
     terminal:function(entity_data){
 	return _.combine(this.store(entity_data),
-		    _.selectKeys(entity_data,
+		    _.pick(entity_data,
 				 'terminal_id',
 				 'terminal_label'))
     }

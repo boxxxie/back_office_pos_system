@@ -1,7 +1,7 @@
 var genericErrorClass = "ui-state-error";
 var genericHighlightClass = "ui-state-highlight";
 function PostValidator($node,tips,validationResults) {
-    function clearErrorsAndTips(){	
+    function clearErrorsAndTips(){
 	tips.html("");
     }
     function tagFieldName($node,fieldName){
@@ -15,22 +15,22 @@ function PostValidator($node,tips,validationResults) {
     function displayTip(tips,message){
 	$(tips).html(message);
 	$(tips).addClass(genericHighlightClass);
-	setTimeout(function() {$(tips).removeClass(genericHighlightClass, 1500 );}, 500 ); 
+	setTimeout(function() {$(tips).removeClass(genericHighlightClass, 1500 );}, 500 );
     };
-    
+
     clearErrorsAndTips();
     var invalidsWithEmptyMessages = _.filter(validationResults, function(validationResult){return validationResult.isInvalid && _.isEmpty(validationResult.errMsg);});
     var foundInvalidFieldWithMessage = _.filter(validationResults, function(validationResult){return validationResult.isInvalid && !_.isEmpty(validationResult.errMsg);});
-    if(!_.isEmpty(foundInvalidFieldWithMessage) && 
+    if(!_.isEmpty(foundInvalidFieldWithMessage) &&
        _.isEmpty(invalidsWithEmptyMessages)){
 	var tipMessage = ich.tips_TMP({tips: _.map(foundInvalidFieldWithMessage,function(invalid){return invalid.errMsg;})});
 	_.each(foundInvalidFieldWithMessage,tag_fieldname_field);
 	displayTip(tips,tipMessage);
     }
-    else { 
+    else {
 	_.each(invalidsWithEmptyMessages,tag_fieldname_field);
 	displayTip(tips,"The highlighted fields are required!");
-    }	 
+    }
 };
 
 function CompanyCreateDialog (attachTo,options){
@@ -84,7 +84,7 @@ function CompanyInputDialog (attachTo,options) {
     postalcode = d.find("#address\\.postalcode"),
     operationalname = d.find("#operationalname"),
 
-    
+
     allFields = $([])
     	.add(user)
 	.add(companyName)
@@ -114,55 +114,55 @@ function CompanyInputDialog (attachTo,options) {
 		    allFields.val("").removeClass(genericErrorClass);
 		}
 	    },
-	    buttons: {			 
+	    buttons: {
 		"Submit" : function() {
 		    $.couch.session({
-		        success:function(sessionData) {
-		            var newCompanyData = 
-            {user:user.val(),
-             password:password.val(),
-             contact:{firstname : firstname.val(),
-                  lastname : lastname.val(),
-                  website : website.val(),
-                  email : email.val(),
-                  phone : phone.val()},
-             address:{street0:street0.val(),
-                  street1:street1.val(),
-                  street2:street2.val(),
-                  city:city.val(),
-                  country:country.val(),
-                  province:province.val(),
-                  postalcode:postalcode.val()},
-             operationalname:operationalname.val(),
-             companyName:companyName.val()};
+					success:function(sessionData) {
+					    var newCompanyData =
+						{user:user.val(),
+						 password:password.val(),
+						 contact:{firstname : firstname.val(),
+							  lastname : lastname.val(),
+							  website : website.val(),
+							  email : email.val(),
+							  phone : phone.val()},
+						 address:{street0:street0.val(),
+							  street1:street1.val(),
+							  street2:street2.val(),
+							  city:city.val(),
+							  country:country.val(),
+							  province:province.val(),
+							  postalcode:postalcode.val()},
+						 operationalname:operationalname.val(),
+						 companyName:companyName.val()};
 
-            var newCompanyData_w_options = _.clone(newCompanyData);
+					    var newCompanyData_w_options = _.clone(newCompanyData);
 
-            if(options.isCreate) {
-            _.extend(newCompanyData, {creationdate:new Date(),creation_user:sessionData.userCtx.name});
-            _.extend(newCompanyData_w_options, {isCreate:options.isCreate});
-            }
+					    if(options.isCreate) {
+						_.extend(newCompanyData, {creationdate:new Date(),creation_user:sessionData.userCtx.name});
+						_.extend(newCompanyData_w_options, {isCreate:options.isCreate});
+					    }
 
-            var validationResults = options.validator(newCompanyData_w_options);
+					    var validationResults = options.validator(newCompanyData_w_options);
 
-            var passedValidation;
-            (_.isEmpty(validationResults))?passedValidation=true:passedValidation=false;
-            allFields.removeClass(genericErrorClass);
+					    var passedValidation;
+					    (_.isEmpty(validationResults))?passedValidation=true:passedValidation=false;
+					    allFields.removeClass(genericErrorClass);
 
-            if (passedValidation) {
-            options.success(newCompanyData);
-            allFields.val("");
-            d.dialog("close");
-            }
-            else{
-            PostValidator(d,tips,validationResults);
-            } 
-		        },
-		        error:function() {
-		            alert("Error occured while creating Company!");
-		        }
-		    });		    
-		},	
+					    if (passedValidation) {
+						options.success(newCompanyData);
+						allFields.val("");
+						d.dialog("close");
+					    }
+					    else{
+						PostValidator(d,tips,validationResults);
+					    }
+					},
+					error:function() {
+					    alert("Error occured while creating Company!");
+					}
+				    });
+		},
 		Cancel: function() {
 		    d.dialog("close");
 		}
@@ -212,7 +212,7 @@ function GroupInputDialog (attachTo,options) {
 	.add(country)
 	.add(postalcode)
 	.add(password);
-    
+
     var dialogOptions = _.extend(
 	{autoOpen: false,
 	 height: 900,
@@ -225,7 +225,7 @@ function GroupInputDialog (attachTo,options) {
 	 },
 	 buttons: {
 	     "Submit": function() {
-		 var newGroupData = 
+		 var newGroupData =
 		     {user:user.val(),
 		      password:password.val(),
 		      contact:{firstname : firstname.val(),
@@ -261,13 +261,13 @@ function GroupInputDialog (attachTo,options) {
 		 else{
 		     PostValidator(d,tips,validationResults);
 		 }
-	     },		
+	     },
 	     Cancel: function() {
 		 d.dialog("close");
 	     }
 	 }
 	},_.clone(options));
-    
+
     d.dialog(dialogOptions);
     $("#"+attachTo).button().click(function() {
 				       d.dialog( "open" );
@@ -295,8 +295,14 @@ function StoreInputDialog (attachTo,options) {
     province = d.find("#address\\.province"),
     country = d.find("#address\\.country"),
     postalcode = d.find("#address\\.postalcode"),
-    
-    
+    chase_merchant_number = d.find("#chase_merchant_number"),
+    chase_merchant_id = d.find("#chase_merchant_id"),
+    chase_client_id = d.find("#chase_client_id"),
+    chase_sic_code = d.find("#chase_sic_code"),
+    chase_user_name = d.find("#chase_user_name"),
+    chase_user_password = d.find("#chase_user_password"),
+
+
     allFields = $([])
 	.add(user)
 	.add(storeName)
@@ -313,8 +319,14 @@ function StoreInputDialog (attachTo,options) {
 	.add(province)
 	.add(country)
 	.add(postalcode)
-	.add(password);
-    
+	.add(password)
+        .add(chase_merchant_number)
+	.add(chase_merchant_id)
+	.add(chase_client_id)
+	.add(chase_sic_code)
+	.add(chase_user_name)
+	.add(chase_user_password);
+
     d.dialog(
 	{
 	    autoOpen: false,
@@ -324,7 +336,7 @@ function StoreInputDialog (attachTo,options) {
 	    buttons: {
 		"Submit": function() {
 
-		    var newStoreData = 
+		    var newStoreData =
 			{user:user.val(),
 			 password:password.val(),
 			 contact:{firstname : firstname.val(),
@@ -340,7 +352,15 @@ function StoreInputDialog (attachTo,options) {
 				  province:province.val(),
 				  postalcode:postalcode.val()},
 			 storeName:storeName.val(),
-			 number:storeNum.val()};
+			 number:storeNum.val(),
+			 storeNumber:storeNum.val(),
+			 chase_merchant_number:chase_merchant_number.val(),
+			 chase_merchant_id:chase_merchant_id.val(),
+			 chase_client_id:chase_client_id.val(),
+			 chase_sic_code:chase_sic_code.val(),
+			 chase_user_name:chase_user_name.val(),
+			 chase_user_password:chase_user_password.val()
+			};
 
 		    var newStoreData_w_options = _.clone(newStoreData);
 
@@ -362,7 +382,7 @@ function StoreInputDialog (attachTo,options) {
 		    }
 		    else{
 			PostValidator(d,tips,validationResults);
-		    }  
+		    }
 		},
 		Cancel: function() {
 		    d.dialog("close");
@@ -396,120 +416,26 @@ function TerminalInputDialog (attachTo,options) {
     centrallycontrolmenus = d.find("#centrallycontrolmenus"),
     usingautomatedpayment = d.find("#usingautomatedpayment"),
     usingmobqredits = d.find("#usingmobqredits"),
-
-    allFields = $([])
-    .add(label)
-    .add(areaCode)
-    .add(postalCode)
-    .add(countryCode)
-    .add(provinceCode)
-    .add(cityCode)
-    .add(storeCode)
-    .add(companyCode)
-    .add(centrallycontrolmenus)
-    .add(usingautomatedpayment)
-    .add(usingmobqredits);
-    
-    companyCode.attr('disabled',true);
-    storeCode.attr('disabled',true);
-    
-    var tips = $(".validateTips");
-    
-    d.dialog(
-    {autoOpen: false,
-     height: 600,
-     width: 500,
-     modal: true,
-     close: function() {
-         if(options.clearOnExit) {
-         allFields.val("").removeClass(genericErrorClass);
-         allFields.filter("input:checked").attr("checked",false);
-         }
-     },
-     buttons: {
-         "Submit": function() {
-         var newTerminalData = {
-             terminal_label:label.val(),
-             areaCode:areaCode.val(),
-             postalCode:postalCode.val(),
-             countryCode:countryCode.val(),
-             provinceCode:provinceCode.val(),
-             cityCode:cityCode.val(),
-             storeCode:storeCode.val(),
-             companyCode:companyCode.val(),
-             usingautomatedpayment:usingautomatedpayment.is(":checked"),
-             usingmobqredits:usingmobqredits.is(":checked"),
-             centrallycontrolmenus:centrallycontrolmenus.is(":checked"),
-             usingautomatedpayment:usingautomatedpayment.is(":checked")
-             
-         };
-
-         var newTerminalData_w_options = _.clone(newTerminalData);
-         if(options.isCreate) {
-             _.extend(newTerminalData, {creationdate:new Date(), installed:false});
-             _.extend(newTerminalData_w_options, {isCreate:options.isCreate});
-         }
-
-
-         var validationResults = options.validator(newTerminalData_w_options);
-
-         var passedValidation;
-         (_.isEmpty(validationResults))?passedValidation=true:passedValidation=false;
-         allFields.removeClass(genericErrorClass);
-
-         if(passedValidation) {
-             options.success(newTerminalData);
-             allFields.val("");
-             d.dialog("close");
-         }
-         else{
-             PostValidator(d,tips,validationResults);
-         }  
-         },
-         Cancel: function() {
-         d.dialog("close");
-         }
-     }
-    });
-    
-    
-    $("#"+attachTo).button().click(function() {
-                        if(!options.isCreate) {
-                            var unmodifiedTerminal = options.getUnmodifiedTerminal();
-                            console.log(unmodifiedTerminal);
-                        }
-                        CompanyManagementRouter.view._reset(d, unmodifiedTerminal);
-                       d.dialog("open");
-                   });
-};
-
-/*
-function TerminalInputDialog (attachTo,options) {
-    // a workaround for a flaw in the demo system (http://dev.jqueryui.com/ticket/4375), ignore!
-    $( "#dialog:ui-dialog" ).dialog( "destroy" );
-    var d = $("#dialog-form");
-    var label = d.find("#terminal-id"),
-    areaCode = d.find("#areaCode"),
-    postalCode = d.find("#postalCode"),
-    countryCode = d.find("#countryCode"),
-    cityCode = d.find("#cityCode"),
-    storeCode = d.find("#storeCode"),
-    companyCode = d.find("#companyCode"),
-    centrallycontrolmenus = d.find("#centrallycontrolmenus"),
-    usingautomatedpayment = d.find("#usingautomatedpayment"),
-    usingmobqredits = d.find("#usingmobqredits"),
+    chase_serial_number = d.find("#chase_serial_number"),
+    chase_terminal_id = d.find("#chase_terminal_id"),
 
     allFields = $([])
 	.add(label)
 	.add(areaCode)
 	.add(postalCode)
 	.add(countryCode)
+	.add(provinceCode)
 	.add(cityCode)
 	.add(storeCode)
 	.add(companyCode)
 	.add(centrallycontrolmenus)
 	.add(usingautomatedpayment)
-	.add(usingmobqredits);
+	.add(usingmobqredits)
+	.add(chase_serial_number)
+	.add(chase_terminal_id);
+
+    companyCode.attr('disabled',true);
+    storeCode.attr('disabled',true);
 
     var tips = $(".validateTips");
 
@@ -519,26 +445,28 @@ function TerminalInputDialog (attachTo,options) {
 	 width: 500,
 	 modal: true,
 	 close: function() {
-	     if(options.clearOnExit) {
+             if(options.clearOnExit) {
 		 allFields.val("").removeClass(genericErrorClass);
 		 allFields.filter("input:checked").attr("checked",false);
-	     }
+             }
 	 },
 	 buttons: {
-	     "Submit": function() {
+             "Submit": function() {
 		 var newTerminalData = {
 		     terminal_label:label.val(),
 		     areaCode:areaCode.val(),
 		     postalCode:postalCode.val(),
 		     countryCode:countryCode.val(),
+		     provinceCode:provinceCode.val(),
 		     cityCode:cityCode.val(),
 		     storeCode:storeCode.val(),
 		     companyCode:companyCode.val(),
 		     usingautomatedpayment:usingautomatedpayment.is(":checked"),
 		     usingmobqredits:usingmobqredits.is(":checked"),
 		     centrallycontrolmenus:centrallycontrolmenus.is(":checked"),
-		     usingautomatedpayment:usingautomatedpayment.is(":checked")
-		     
+		     usingautomatedpayment:usingautomatedpayment.is(":checked"),
+		     chase_serial_number:chase_serial_number.val(),
+		     chase_terminal_id:chase_terminal_id.val()
 		 };
 
 		 var newTerminalData_w_options = _.clone(newTerminalData);
@@ -561,23 +489,27 @@ function TerminalInputDialog (attachTo,options) {
 		 }
 		 else{
 		     PostValidator(d,tips,validationResults);
-		 }  
-	     },
-	     Cancel: function() {
+		 }
+             },
+             Cancel: function() {
 		 d.dialog("close");
-	     }
+             }
 	 }
 	});
-    
-    
+
+
     $("#"+attachTo).button().click(function() {
+				       if(!options.isCreate) {
+					   var unmodifiedTerminal = options.getUnmodifiedTerminal();
+					   console.log(unmodifiedTerminal);
+				       }
+				       CompanyManagementRouter.view._reset(d, unmodifiedTerminal);
 				       d.dialog("open");
 				   });
 };
-*/
 
 function quickViewDialog (html,options) {
-    var d = $("#dialog-quickView");    	
+    var d = $("#dialog-quickView");
     d.html(html);
     d.find('input').attr('disabled',true);
     var dialogOptions = _.extend(
@@ -602,15 +534,15 @@ function quickViewDialog (html,options) {
 function companyModifyRewardsViewDialog (html,options) {
     //var stores = options.stores;
     var form = $(html).filter('#dialog-form-forRewards');
-    var d = $("#dialog-hook-forRewards");    	
+    var d = $("#dialog-hook-forRewards");
     d.html(form);
-    
+
     var MobQredits = options.MobQredits;
     var rewardsdown = $("#rewardsdown");
     var optlist = $('option', rewardsdown);
-    
+
     if(MobQredits.use_mobqredits) {
-	optlist[1].selected=true;	
+	optlist[1].selected=true;
     } else if(MobQredits.use_qriket) {
 	optlist[2].selected=true;
     } else {
@@ -628,19 +560,19 @@ function companyModifyRewardsViewDialog (html,options) {
 	     	 var mobqreditsconversion = form.find("#mobqredits_conversion").val();
 	     	 var qriketconversion = form.find("#qriket_conversion").val();
 	     	 var qriketpercentage = form.find("#qriket_percentage").val();
-	     	 
+
 	     	 if(_.isEmpty(mobqreditsconversion)){
 	     	     mobqreditsconversion = "0";
 	     	 }
-	     	 
+
 	     	 if(_.isEmpty(qriketconversion)){
 	     	     qriketconversion = "0";
 	     	 }
-	     	 
+
 	     	 if(_.isEmpty(qriketpercentage)) {
 	     	     qriketpercentage = "0";
 	     	 }
-	     	   
+
 		 options.saveRewardsProgram(Number(mobqreditsconversion), Number(qriketconversion), Number(qriketpercentage));
 		 d.dialog('close');
 	     },
@@ -650,7 +582,7 @@ function companyModifyRewardsViewDialog (html,options) {
 	 },
 	 title:options.title
 	},_.clone(options));
-    
+
     d.dialog(dialogOptions);
     d.dialog("open");
 };
