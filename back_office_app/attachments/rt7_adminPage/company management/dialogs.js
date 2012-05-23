@@ -301,6 +301,12 @@ function StoreInputDialog (attachTo,options) {
     chase_sic_code = d.find("#chase_sic_code"),
     chase_user_name = d.find("#chase_user_name"),
     chase_user_password = d.find("#chase_user_password"),
+    tax_1_number = d.find("#tax_1_number"),
+    tax_1_rate = d.find("#tax_1_rate"),
+    tax_2_number = d.find("#tax_2_number"),
+    tax_2_rate = d.find("#tax_2_rate"),
+    tax_3_number = d.find("#tax_3_number"),
+    tax_3_rate = d.find("#tax_3_rate"),
 
 
     allFields = $([])
@@ -325,7 +331,13 @@ function StoreInputDialog (attachTo,options) {
 	.add(chase_client_id)
 	.add(chase_sic_code)
 	.add(chase_user_name)
-	.add(chase_user_password);
+	.add(chase_user_password)
+	.add(tax_1_rate)
+	.add(tax_1_number)
+	.add(tax_2_rate)
+	.add(tax_2_number)
+	.add(tax_3_rate)
+	.add(tax_3_number);
 
     d.dialog(
 	{
@@ -359,7 +371,13 @@ function StoreInputDialog (attachTo,options) {
 			 chase_client_id:chase_client_id.val(),
 			 chase_sic_code:chase_sic_code.val(),
 			 chase_user_name:chase_user_name.val(),
-			 chase_user_password:chase_user_password.val()
+			 chase_user_password:chase_user_password.val(),
+			 tax_1_number:tax_1_number.val(),
+			 tax_1_rate:tax_1_rate.val(),
+			 tax_2_number:tax_2_number.val(),
+			 tax_2_rate:tax_2_rate.val(),
+			 tax_3_number:tax_3_number.val(),
+			 tax_3_rate:tax_3_rate.val()
 			};
 
 		    var newStoreData_w_options = _.clone(newStoreData);
